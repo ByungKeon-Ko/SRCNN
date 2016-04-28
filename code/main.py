@@ -63,23 +63,23 @@ with tf.device(CONST.SEL_GPU) :
 		sess.close()
 	
 	
-	## Test
-	if CONST.SKIP_TRAIN : 
-		if CONST.nBATCH == 128 :
-			ITER_TEST = 78
-		else :
-			ITER_TEST = 156
+	# ## Test
+	# if CONST.SKIP_TRAIN : 
+	# 	if CONST.nBATCH == 128 :
+	# 		ITER_TEST = 78
+	# 	else :
+	# 		ITER_TEST = 156
 
-		acc_sum = 0
-		for i in xrange(ITER_TEST) :
-			tbatch = BM.testsample(i)
-			acc_sum = acc_sum + NET.accuracy.eval( feed_dict = {NET.x:tbatch[0], NET.y_:tbatch[1]} )
-	
-		print "Test mAP = ", acc_sum/float(ITER_TEST)
-		
-		std_file = open("./std_monitor.txt" , 'w')
-		save_std( std_file, BM, NET, 1)
-		print "Save response of each node  "
+	# 	acc_sum = 0
+	# 	for i in xrange(ITER_TEST) :
+	# 		tbatch = BM.testsample(i)
+	# 		acc_sum = acc_sum + NET.accuracy.eval( feed_dict = {NET.x:tbatch[0], NET.y_:tbatch[1]} )
+	# 
+	# 	print "Test mAP = ", acc_sum/float(ITER_TEST)
+	# 	
+	# 	std_file = open("./std_monitor.txt" , 'w')
+	# 	save_std( std_file, BM, NET, 1)
+	# 	print "Save response of each node  "
 
 
 

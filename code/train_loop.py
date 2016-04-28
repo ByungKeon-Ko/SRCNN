@@ -18,7 +18,7 @@ import time
 import CONST
 import batch_manager
 # from res_network import ResNet
-from save_std import save_std
+# from save_std import save_std
 
 if CONST.nBATCH == 128 :
 	ITER_TEST = 78

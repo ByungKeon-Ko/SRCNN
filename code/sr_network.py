@@ -54,41 +54,24 @@ with tf.device(CONST.SEL_GPU) :
 			self.bn_intro		= batch_normalize( self.linear_intro, 64 )
 			self.relu_intro		= tf.nn.relu( self.bn_intro.output_y )
 	
-			# ----- 32x32 mapsize Convolutional Layers --------- #
+			# ----- Residual Unit Layers --------- #
 			self.gr_mat1 = range(n)		# Graph Matrix
 			for i in xrange(n) :
 				if i == 0 :
 					self.gr_mat1[i] = inst_res_unit(self.relu_intro, i, CONST.lenPATCH, 64, short_cut, 1, 1 )
 				else :
 					self.gr_mat1[i] = inst_res_unit(self.gr_mat1[i-1].out, i, CONST.lenPATCH, 64, short_cut, 1, 0 )
-	
-			# ----- 16x16 mapsize Convolutional Layers --------- #
-			self.gr_mat2 = range(n)		# Graph Matrix
-			for i in xrange(n) :
-				if i == 0 :
-					self.gr_mat2[i] = inst_res_unit(self.gr_mat1[n-1].out, i, CONST.lenPATCH, 64, short_cut, 1, 0 )
-				else :
-					self.gr_mat2[i] = inst_res_unit(self.gr_mat2[i-1].out, i, CONST.lenPATCH, 64, short_cut, 1, 0 )
-	
-			# ----- 8x8 mapsize Convolutional Layers --------- #
-			self.gr_mat3 = range(n)		# Graph Matrix
-			for i in xrange(n) :
-				if i == 0 :
-					self.gr_mat3[i] = inst_res_unit(self.gr_mat2[n-1].out, i, CONST.lenPATCH, 64, short_cut, 1, 0 )
-				else :
-					self.gr_mat3[i] = inst_res_unit(self.gr_mat3[i-1].out, i, CONST.lenPATCH, 64, short_cut, 1, 0 )
-	
-			self.bn_avgin	= batch_normalize( self.gr_mat3[n-1].out, 64 )
+
+			self.bn_avgin	= batch_normalize( self.gr_mat1[n-1].out, 64 )
 			self.relu_avgin	= tf.nn.relu( self.bn_avgin.output_y )
 			self.fc_in = self.relu_avgin
-	
+
 			# ----- FC layer --------------------- #
 			self.W_fc1		= weight_variable_uniform( [1, 1, 64, 3], 'w_fc1', 1./math.sqrt(64.) )
 			self.b_fc1		= bias_variable( [3], 'b_fc1')
 			self.linear_flat	= conv2d(self.fc_in, self.W_fc1, 1) + self.b_fc1
-	
 			self.y_gen		= self.linear_flat
-	
+
 		def objective (self):
 			self.y_			= tf.placeholder(tf.float32, [None], name	= 'y_' )
 			self.l2_loss 	= CONST.WEIGHT_DECAY * tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables()])

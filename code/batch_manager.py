@@ -50,8 +50,8 @@ class BatchManager ( ) :
 		for i in xrange(nBatch) :
 			x_batch[i], y_batch[i] = self.ps_batch()
 
-		x_batch = np.reshape(x_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
-		y_batch = np.reshape(y_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
+		# x_batch = np.reshape(x_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
+		# y_batch = np.reshape(y_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
 
 		return [x_batch, y_batch, new_epoch_flag]
 
@@ -65,15 +65,7 @@ class BatchManager ( ) :
 		org_image = self.dset_train[0]
 		sub_image = random_crop(org_image, CONST.lenPATCH)
 
-		im = Image.fromarray(sub_image)
-		# blur_image = im.filter(ImageFilter.GaussianBlur(radius=2) )
-		blur_image = im
-		blur_resize = blur_image.resize( [CONST.lenPATCH/2, CONST.lenPATCH/2] )
-		# blur_upsmpl = blur_image.resize( [CONST.lenPATCH, CONST.lenPATCH], Image.BICUBIC )
-		blur_upsmpl = im
-
-		x_batch = np.asarray( blur_upsmpl, np.float32 )
-		y_batch = sub_image - np.asarray( blur_upsmpl, np.float32 )
+		x_batch, y_batch = divide_freq_img(sub_image, [CONST.lenPATCH, CONST.lenPATCH])
 
 		x_batch = np.divide( x_batch, 255.0).astype(np.float32)
 		y_batch = np.divide( y_batch, 255.0).astype(np.float32)
@@ -81,16 +73,16 @@ class BatchManager ( ) :
 
 		return [x_batch, y_batch]
 
-	def testsample (self, index):
-		x_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
-		y_batch = np.zeros([CONST.nBATCH, 10]).astype('uint8')
+	# def testsample (self, index):
+	# 	x_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
+	# 	y_batch = np.zeros([CONST.nBATCH, 10]).astype('uint8')
 
-		x_batch = self.tbatch_img[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
-		y_batch = self.tbatch_lab[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
+	# 	x_batch = self.tbatch_img[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
+	# 	y_batch = self.tbatch_lab[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
 
-		x_batch = np.reshape(x_batch, [CONST.nBATCH, CONST.lenPATCH*CONST.lenPATCH*3] )
+	# 	x_batch = np.reshape(x_batch, [CONST.nBATCH, CONST.lenPATCH*CONST.lenPATCH*3] )
 
-		return [x_batch, y_batch]
+	# 	return [x_batch, y_batch]
 
 def random_crop(img_mat, crop_size):
 	tmp_size = np.shape(img_mat)
@@ -104,4 +96,15 @@ def random_crop(img_mat, crop_size):
 	# 	tmp_img = np.fliplr(tmp_img)
 
 	return tmp_img
+
+def divide_freq_img(sub_image, shape):
+	im = Image.fromarray(sub_image)
+	blur_image = im.filter(ImageFilter.GaussianBlur(radius=2) )
+	blur_resize = blur_image.resize( [shape[0]/2, shape[1]/2] )
+	blur_upsmpl = blur_resize.resize( [shape[0], shape[1]], Image.BICUBIC )
+
+	im_low_freq = np.asarray( blur_upsmpl, np.float32 )
+	im_high_freq = sub_image - np.asarray( blur_upsmpl, np.float32 )
+
+	return im_low_freq, im_high_freq
 

@@ -17,7 +17,7 @@ from train_loop import train_loop
 # from save_std import save_std
 
 print "main.py start!!"
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.40 )
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.90 )
 
 ## Image Loading & PreProcessing
 dset_train, dset_test = ImageLoader.ImageLoad()
@@ -27,7 +27,10 @@ dset_train, dset_test = ImageLoader.ImageLoad()
 
 ## Batch Manager Instantiation
 BM = batch_manager.BatchManager()
-BM.init(dset_train, dset_test)
+BM.init(dset_train, 0)
+
+## Garbage Collecting
+dset_train = 0
 
 ## Session Open
 with tf.device(CONST.SEL_GPU) :
@@ -36,34 +39,43 @@ with tf.device(CONST.SEL_GPU) :
 
 	print "STAGE : Batch Init Finish!"
 	
-	# Garbage Collecting
-	dset_train = 0
-	dset_test = 0
-
-	## Network Instantiation
-	NET = sr_network.SrNet()
-	NET.infer(CONST.nLAYER, CONST.SHORT_CUT)
-	NET.objective()
-	NET.train(CONST.LEARNING_RATE1)
-	print "STAGE : Network Init Finish!"
-	
-	## Open Tensorlfow Session
-	init_op = tf.initialize_all_variables()
-	saver = tf.train.Saver( )
-	sess.run( init_op )
-	if (CONST.ITER_OFFSET != 0) | CONST.SKIP_TRAIN :
-		saver.restore(sess, CONST.CKPT_FILE )
-		print "Load previous CKPT file!", CONST.CKPT_FILE
-	print "STAGE : Session Init Finish!"
-	
-	## Training
 	if not CONST.SKIP_TRAIN :
+		## Network Instantiation
+		NET = sr_network.SrNet()
+		NET.infer(CONST.nLAYER, CONST.SHORT_CUT)
+		NET.objective()
+		NET.train(CONST.LEARNING_RATE1)
+		print "STAGE : Network Init Finish!"
+		
+		## Open Tensorlfow Session
+		init_op = tf.initialize_all_variables()
+		saver = tf.train.Saver( )
+		sess.run( init_op )
+		if (CONST.ITER_OFFSET != 0) | CONST.SKIP_TRAIN :
+			saver.restore(sess, CONST.CKPT_FILE )
+			print "Load previous CKPT file!", CONST.CKPT_FILE
+		print "STAGE : Session Init Finish!"
+		
+		## Training
 		train_loop(NET, BM, saver, sess )
 		print "STAGE : Training Loop Finish!"
 		sess.close()
+
+	## Test
+	t_smpl = dset_test[0]
+	tbatch_size = np.shape( t_smpl )
+	t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
 	
+	NET = 0
+	NET = sr_network_test.NET()
+	NET.infr(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size )
 	
-	# ## Test
+	saver = tf.train.Saver( )
+	saver.restore(sess, CONST.CKPT_FILE )
+
+	t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )
+
+	
 	# if CONST.SKIP_TRAIN : 
 	# 	if CONST.nBATCH == 128 :
 	# 		ITER_TEST = 78

@@ -3,14 +3,18 @@
 lenPATCH = 50
 nBATCH = 64
 
-
-nLAYER = 16		# 6*3+2 = 20, 6*9+2 = 56, 3*3*18+2 = 164, 3*2*18+2 = 110, 3*3*16+2 = 146
+## About Networks
+nLAYER = 16		# 3*16+2 = 50
 SHORT_CUT = 1	# '1' : residual, '0' : plain
-SKIP_TRAIN = 0
+
+## About Training
+SKIP_TRAIN = 1
 WARM_UP = 0
 PRE_ACTIVE = 1
 BOTTLENECK = 1
-
+WEIGHT_DECAY = 0.0001
+MOMENTUM = 0.9
+WEIGHT_INIT = "paper"
 
 if WARM_UP == 0 :
 	LEARNING_RATE1 = 0.1
@@ -28,12 +32,8 @@ ITER1 = 32*1000
 ITER2 = 48*1000
 ITER3 = 64*1000
 
-WEIGHT_DECAY = 0.0001
-MOMENTUM = 0.9
-WEIGHT_INIT = "paper"
-
-CKPT_FILE	= "ckpt_file/model_plain_20layer.ckpt"
-ACC_TRAIN	= "output_data/train_acc_plain_20layer.txt"
-ACC_TEST	= "output_data/test_acc_plain_20layer.txt"
+CKPT_FILE	= "../ckpt_file/sr_50.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.txt"
+ACC_TEST	= "../output_data/sr_50_test.txt"
 
 SEL_GPU = '/gpu:1'

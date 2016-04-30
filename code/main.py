@@ -3,6 +3,7 @@
 ##   - Deep Residual Learning for Image Recognition, Kaiming He
 ##   - Identity Mappings in Deep Residual Networks
 ## 
+## MSE about 0.006 is default value for only using bicubic interpolation
 
 import numpy as np
 import tensorflow as tf
@@ -27,7 +28,7 @@ dset_train, dset_test = ImageLoader.ImageLoad()
 
 ## Batch Manager Instantiation
 BM = batch_manager.BatchManager()
-BM.init(dset_train, 0)
+BM.init(dset_train, dset_test)
 
 ## Garbage Collecting
 dset_train = 0
@@ -42,7 +43,7 @@ with tf.device(CONST.SEL_GPU) :
 	if not CONST.SKIP_TRAIN :
 		## Network Instantiation
 		NET = sr_network.SrNet()
-		NET.infer(CONST.nLAYER, CONST.SHORT_CUT)
+		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, [CONST.lenPATCH, CONST.lenPATCH, 3], 0 )
 		NET.objective()
 		NET.train(CONST.LEARNING_RATE1)
 		print "STAGE : Network Init Finish!"
@@ -65,35 +66,19 @@ with tf.device(CONST.SEL_GPU) :
 	t_smpl = dset_test[0]
 	tbatch_size = np.shape( t_smpl )
 	t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
+	t_x = np.divide(t_x, 255.0)
+	t_y = np.divide(t_y, 255.0)
 	
 	NET = 0
-	NET = sr_network_test.NET()
-	NET.infr(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size )
+	NET = sr_network.SrNet()
+	NET.infer(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size, 1 )
 	
 	saver = tf.train.Saver( )
 	saver.restore(sess, CONST.CKPT_FILE )
 
-	t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )
-
-	
-	# if CONST.SKIP_TRAIN : 
-	# 	if CONST.nBATCH == 128 :
-	# 		ITER_TEST = 78
-	# 	else :
-	# 		ITER_TEST = 156
-
-	# 	acc_sum = 0
-	# 	for i in xrange(ITER_TEST) :
-	# 		tbatch = BM.testsample(i)
-	# 		acc_sum = acc_sum + NET.accuracy.eval( feed_dict = {NET.x:tbatch[0], NET.y_:tbatch[1]} )
-	# 
-	# 	print "Test mAP = ", acc_sum/float(ITER_TEST)
-	# 	
-	# 	std_file = open("./std_monitor.txt" , 'w')
-	# 	save_std( std_file, BM, NET, 1)
-	# 	print "Save response of each node  "
-
-
+	t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )[0]
+	shape = np.shape(t_out)
+	t_out2 = np.max([t_out, np.zeros(shape)], 0)
 
 # import Image
 # from PIL import ImageFilter

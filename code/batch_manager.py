@@ -33,7 +33,7 @@ class BatchManager ( ) :
 		self.index_list = range(self.max_index)
 
 		# test mini-batch
-		self.tbatch_img = dset_test
+		self.dset_test = dset_test
 
 	def next_batch (self, nBatch):
 		x_batch = np.zeros([nBatch, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
@@ -50,50 +50,50 @@ class BatchManager ( ) :
 		for i in xrange(nBatch) :
 			x_batch[i], y_batch[i] = self.ps_batch()
 
-		# x_batch = np.reshape(x_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
-		# y_batch = np.reshape(y_batch, [nBatch, CONST.lenPATCH*CONST.lenPATCH*3] )
-
 		return [x_batch, y_batch, new_epoch_flag]
 
 	def ps_batch (self):
 		x_batch = np.zeros([CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
-		y_batch = np.zeros([1]).astype('float32')
+		y_batch = np.zeros([CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
 
-		rand_index = self.index_list.pop( random.randint(0, self.max_index-1)     )
-		# org_image = np.divide(self.dset_train[rand_index], 255.0).astype(np.float32)
-		# org_image = self.dset_train[rand_index]
-		org_image = self.dset_train[0]
+		# rand_index = self.index_list.pop( random.randint(0, self.max_index-1)     )
+		rand_index = random.randint(0, self.nDSET-1)
+		org_image = self.dset_train[rand_index]
 		sub_image = random_crop(org_image, CONST.lenPATCH)
 
 		x_batch, y_batch = divide_freq_img(sub_image, [CONST.lenPATCH, CONST.lenPATCH])
 
 		x_batch = np.divide( x_batch, 255.0).astype(np.float32)
 		y_batch = np.divide( y_batch, 255.0).astype(np.float32)
-		self.max_index = self.max_index -1
+		# self.max_index = self.max_index -1
 
 		return [x_batch, y_batch]
 
-	# def testsample (self, index):
-	# 	x_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
-	# 	y_batch = np.zeros([CONST.nBATCH, 10]).astype('uint8')
+	def testsample (self):
+		nTBATCH = len(self.dset_test)
+		x_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
+		y_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
 
-	# 	x_batch = self.tbatch_img[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
-	# 	y_batch = self.tbatch_lab[index*CONST.nBATCH:(index+1)*CONST.nBATCH]
+		for i in xrange(CONST.nBATCH) :
+			rand_index = random.randint(0, nTBATCH-1)
+			org_image = self.dset_test[i]
+			sub_image = random_crop(org_image, CONST.lenPATCH)
+			x_img, y_img = divide_freq_img(sub_image, [CONST.lenPATCH, CONST.lenPATCH])
+			x_img = np.divide( x_img, 255.0).astype(np.float32)
+			y_img = np.divide( y_img, 255.0).astype(np.float32)
+			x_batch[i] = x_img
+			y_batch[i] = y_img
 
-	# 	x_batch = np.reshape(x_batch, [CONST.nBATCH, CONST.lenPATCH*CONST.lenPATCH*3] )
-
-	# 	return [x_batch, y_batch]
+		return [x_batch, y_batch]
 
 def random_crop(img_mat, crop_size):
 	tmp_size = np.shape(img_mat)
-	# rand_x = random.randint(0, tmp_size[1] -crop_size )
-	# rand_y = random.randint(0, tmp_size[0] -crop_size )
-	rand_x = 0
-	rand_y = 0
+	rand_x = random.randint(0, tmp_size[1] -crop_size )
+	rand_y = random.randint(0, tmp_size[0] -crop_size )
 
 	tmp_img = img_mat[rand_y:rand_y+CONST.lenPATCH, rand_x:rand_x+CONST.lenPATCH]
-	# if random.randint(0,1) :
-	# 	tmp_img = np.fliplr(tmp_img)
+	if random.randint(0,1) :
+		tmp_img = np.fliplr(tmp_img)
 
 	return tmp_img
 

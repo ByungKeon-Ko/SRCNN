@@ -1,17 +1,17 @@
 
 ## About Batch
-lenPATCH = 50
+lenPATCH = 35
 nBATCH = 64
 
 ## About Networks
 nLAYER = 16		# 3*16+2 = 50
 SHORT_CUT = 1	# '1' : residual, '0' : plain
-
-## About Training
-SKIP_TRAIN = 1
-WARM_UP = 0
 PRE_ACTIVE = 1
 BOTTLENECK = 1
+
+## About Training
+SKIP_TRAIN = 0
+WARM_UP = 0
 WEIGHT_DECAY = 0.0001
 MOMENTUM = 0.9
 WEIGHT_INIT = "paper"
@@ -28,9 +28,9 @@ else :
 
 ITER_OFFSET = 0
 
-ITER1 = 32*1000
-ITER2 = 48*1000
-ITER3 = 64*1000
+ITER1 = 70*1000
+ITER2 = 90*1000
+ITER3 =100*1000
 
 CKPT_FILE	= "../ckpt_file/sr_50.ckpt"
 ACC_TRAIN	= "../output_data/sr_50_train.txt"

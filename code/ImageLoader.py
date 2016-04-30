@@ -2,7 +2,7 @@ import numpy as np
 import Image
 
 path_train = "../../SRCNN_dataset/Train/"
-path_test = "../../SRCNN_dataset/Test/Set5/"
+path_test = "../../SRCNN_dataset/Test/"
 
 # --- Image Load ------------------------------------------------------------ #
 def ImageLoad():
@@ -20,7 +20,7 @@ def ImageLoad():
 
 	dset_test = [0]*len(datalist)
 	for i in xrange( len(datalist) ) :
-		print i, "%s%s" %(path_test, datalist[i].rstrip() )
+		# print i, "%s%s" %(path_test, datalist[i].rstrip() )
 		dset_test[i] = np.asarray( Image.open( "%s%s" %(path_test, datalist[i].rstrip() ) ), np.uint8)
 
 	return dset_train, dset_test

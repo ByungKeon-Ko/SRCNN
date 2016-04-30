@@ -17,8 +17,6 @@ import time
 
 import CONST
 import batch_manager
-# from res_network import ResNet
-# from save_std import save_std
 
 if CONST.nBATCH == 128 :
 	ITER_TEST = 78
@@ -26,7 +24,6 @@ else :
 	ITER_TEST = 156
 
 def train_loop (NET, BM, saver, sess) :
-	std_file = open("./std_monitor.txt" , 'w')
 
 	print "train loop start!!"
 	iterate = CONST.ITER_OFFSET
@@ -52,16 +49,15 @@ def train_loop (NET, BM, saver, sess) :
 		# t_stmp2 = time.time()
 		# print 'stmp2 - stmp1 = ', t_stmp2-t_stmp1
 		if iterate == 0 :
-			# save_std( std_file, BM, NET, iterate)
 			test_loss = 0
 			test_mse = 0
-			# for i in xrange(ITER_TEST) :
-			# 	tbatch = BM.testsample(i)
-			# 	test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
+			for i in xrange(10) :
+				tbatch = BM.testsample()
+				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
-			test_mse = test_mse/float(ITER_TEST)
-			print "epoch : %d, test acc : %1.4f" %(epoch, test_mse)
-			accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
+		test_mse = test_mse/float(ITER_TEST)
+		print "epoch : %d, test acc : %1.4f" %(epoch, test_mse)
+		accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
 
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
@@ -90,17 +86,14 @@ def train_loop (NET, BM, saver, sess) :
 			saver.restore(sess, CONST.CKPT_FILE )
 			print "########## ITER3 start ########## "
 
-		if (new_epoch_flag == 1) :
-			epoch = epoch + 1
-
-		if (iterate%1)==0 :
+		if ( (iterate%5)==0 ) | (iterate==1) :
 			loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			sum_loss	= sum_loss + loss
 			sum_mse		= sum_mse + train_mse
 			cnt_loss	= cnt_loss + 1
 
-			if iterate%1 == 0 :
+			if (iterate%100 == 0) | (iterate==1) :
 				avg_loss = sum_loss / float( cnt_loss + 1e-40 )
 				avg_mse  = sum_mse / float( cnt_loss + 1e-40)
 				sum_loss = 0
@@ -109,20 +102,20 @@ def train_loop (NET, BM, saver, sess) :
 				print "step : %d, epoch : %d, mse : %0.4f, loss : %0.4f, time : %0.4f" %(iterate, epoch, avg_mse, avg_loss, (time.time() - start_time)/60. )
 				start_time = time.time()
 				acctr_file.write("%d %0.4f\n" %(iterate, 1-avg_mse) )
-				# save_std( std_file, BM, NET, iterate)
 
-		if (new_epoch_flag == 1) :
+		# if (new_epoch_flag == 1) :
+		if iterate % (10000) == 0 :
+			epoch = epoch + 1
 			test_loss = 0
 			test_mse = 0
-			# for i in xrange(ITER_TEST) :
-			# 	tbatch = BM.testsample(i)
-			# 	# test_loss	= test_loss + NET.loss_func.eval(	feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
-			# 	test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
+			for i in xrange(10) :
+				tbatch = BM.testsample()
+				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
 			test_mse = test_mse/float(ITER_TEST)
 			print "epoch : %d, iter : %d, test acc : %1.4f" %(epoch, iterate, test_mse)
 			accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
-			if epoch%10 == 0 :
+			if epoch%1 == 0 :
 				if not math.isnan(avg_loss) :
 					save_path = saver.save(sess, CONST.CKPT_FILE)
 					print "Save ckpt file", CONST.CKPT_FILE

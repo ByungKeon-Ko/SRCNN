@@ -78,7 +78,9 @@ with tf.device(CONST.SEL_GPU) :
 			else :
 				sizeFeature = [-1, sizeImage[0] -2*(1+CONST.nLAYER), sizeImage[1] -2*(1+CONST.nLAYER), 3]
 				self.x_center	= tf.slice(self.x,  [0, 1, 1, 0], sizeFeature )
-			self.image_gen	= self.y_gen + self.x_center
+			self.img_1	= self.y_gen + self.x_center
+			self.img_2	= tf.maximum(self.img_1, 0.0)
+			self.image_gen	= tf.minimum(self.img_2, 1.0)
 
 		def objective (self):
 			self.y_			= tf.placeholder(tf.float32, name	= 'y_' )

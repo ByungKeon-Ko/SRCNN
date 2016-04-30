@@ -1,6 +1,7 @@
 
 ## About Batch
-lenPATCH = 35
+# lenPATCH = 35
+lenPATCH = 36
 nBATCH = 64
 
 ## About Networks
@@ -36,4 +37,4 @@ CKPT_FILE	= "../ckpt_file/sr_50.2.ckpt"
 ACC_TRAIN	= "../output_data/sr_50_train.2.txt"
 ACC_TEST	= "../output_data/sr_50_test.2.txt"
 
-SEL_GPU = '/gpu:0'
+SEL_GPU = '/gpu:1'

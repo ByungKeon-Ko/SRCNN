@@ -18,10 +18,7 @@ import time
 import CONST
 import batch_manager
 
-if CONST.nBATCH == 128 :
-	ITER_TEST = 78
-else :
-	ITER_TEST = 156
+ITER_TEST = 10
 
 def train_loop (NET, BM, saver, sess) :
 
@@ -51,13 +48,13 @@ def train_loop (NET, BM, saver, sess) :
 		if iterate == 0 :
 			test_loss = 0
 			test_mse = 0
-			for i in xrange(10) :
+			for i in xrange(ITER_TEST) :
 				tbatch = BM.testsample()
 				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
 			test_mse = test_mse/float(ITER_TEST)
 			print "epoch : %d, test mse : %1.4f" %(epoch, test_mse)
-			accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
+			accte_file.write("%d %0.4f\n" %(iterate, test_mse) )
 
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
@@ -101,20 +98,20 @@ def train_loop (NET, BM, saver, sess) :
 				cnt_loss = 0
 				print "step : %d, epoch : %d, mse : %0.4f, loss : %0.4f, time : %0.4f" %(iterate, epoch, avg_mse, avg_loss, (time.time() - start_time)/60. )
 				start_time = time.time()
-				acctr_file.write("%d %0.4f\n" %(iterate, 1-avg_mse) )
+				acctr_file.write("%d %0.4f\n" %(iterate, avg_mse) )
 
 		# if (new_epoch_flag == 1) :
 		if iterate % (1000) == 0 :
 			epoch = epoch + 1
 			test_loss = 0
 			test_mse = 0
-			for i in xrange(10) :
+			for i in xrange(ITER_TEST) :
 				tbatch = BM.testsample()
 				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
 			test_mse = test_mse/float(ITER_TEST)
-			print "epoch : %d, iter : %d, test acc : %1.4f" %(epoch, iterate, test_mse)
-			accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
+			print "epoch : %d, iter : %d, test mse : %1.4f" %(epoch, iterate, test_mse)
+			accte_file.write("%d %0.4f\n" %(iterate, test_mse) )
 			if epoch%1 == 0 :
 				if not math.isnan(avg_loss) :
 					save_path = saver.save(sess, CONST.CKPT_FILE)

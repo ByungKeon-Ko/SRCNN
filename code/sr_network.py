@@ -36,7 +36,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.offset = tf.Variable(offset_init, name = 'offset')
 			scale_init = tf.random_uniform([depth], minval=0, maxval=1, name='scale_initial')
 			self.scale = tf.Variable(scale_init, name = 'scale')
-			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, False)
+			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, True)
 
 	class SrNet () :
 		def infer (self, n, short_cut, sizeImage, zero_pad ):

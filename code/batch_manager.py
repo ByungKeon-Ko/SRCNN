@@ -76,13 +76,17 @@ class BatchManager ( ) :
 
 		for i in xrange(CONST.nBATCH) :
 			rand_index = random.randint(0, nTBATCH-1)
-			org_image = self.dset_test[i]
+			org_image = self.dset_test[rand_index]
 			sub_image = random_crop(org_image, CONST.lenPATCH)
 			x_img, y_img = divide_freq_img(sub_image, [CONST.lenPATCH, CONST.lenPATCH])
 			x_img = np.divide( x_img, 255.0).astype(np.float32)
 			y_img = np.divide( y_img, 255.0).astype(np.float32)
-			x_batch[i] = x_img
-			y_batch[i] = y_img
+			if len(np.shape(x_img)) == 3 :
+				x_batch[i] = x_img
+				y_batch[i] = y_img
+			else :
+				x_batch[i] = [x_img, x_img, x_img]
+				y_batch[i] = [y_img, y_img, y_img]
 
 		return [x_batch, y_batch]
 

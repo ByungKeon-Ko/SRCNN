@@ -32,8 +32,8 @@ ITER1 = 70*1000
 ITER2 = 90*1000
 ITER3 =100*1000
 
-CKPT_FILE	= "../ckpt_file/sr_50.ckpt"
-ACC_TRAIN	= "../output_data/sr_50_train.txt"
-ACC_TEST	= "../output_data/sr_50_test.txt"
+CKPT_FILE	= "../ckpt_file/sr_50.2.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.2.txt"
+ACC_TEST	= "../output_data/sr_50_test.2.txt"
 
-SEL_GPU = '/gpu:1'
+SEL_GPU = '/gpu:0'

@@ -55,9 +55,9 @@ def train_loop (NET, BM, saver, sess) :
 				tbatch = BM.testsample()
 				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
-		test_mse = test_mse/float(ITER_TEST)
-		print "epoch : %d, test acc : %1.4f" %(epoch, test_mse)
-		accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
+			test_mse = test_mse/float(ITER_TEST)
+			print "epoch : %d, test mse : %1.4f" %(epoch, test_mse)
+			accte_file.write("%d %0.4f\n" %(iterate, 1-test_mse) )
 
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
@@ -104,7 +104,7 @@ def train_loop (NET, BM, saver, sess) :
 				acctr_file.write("%d %0.4f\n" %(iterate, 1-avg_mse) )
 
 		# if (new_epoch_flag == 1) :
-		if iterate % (10000) == 0 :
+		if iterate % (1000) == 0 :
 			epoch = epoch + 1
 			test_loss = 0
 			test_mse = 0

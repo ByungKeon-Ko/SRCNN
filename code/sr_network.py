@@ -36,7 +36,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.offset = tf.Variable(offset_init, name = 'offset')
 			scale_init = tf.random_uniform([depth], minval=0, maxval=1, name='scale_initial')
 			self.scale = tf.Variable(scale_init, name = 'scale')
-			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, False)
+			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, True)
 
 	class SrNet () :
 		def infer (self, n, short_cut, sizeImage, zero_pad ):
@@ -87,7 +87,8 @@ with tf.device(CONST.SEL_GPU) :
 			self.y_center	= tf.slice(self.y_, [0, 1, 1, 0], [-1, CONST.lenPATCH-2*(1+CONST.nLAYER), CONST.lenPATCH-2*(1+CONST.nLAYER), 3] )
 			self.l2_loss 	= CONST.WEIGHT_DECAY * tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables()])
 			self.mse 		= tf.reduce_mean(tf.reduce_mean(tf.reduce_mean(tf.square(self.y_gen -self.y_center))))
-			self.loss_func	= self.mse + self.l2_loss
+			# self.loss_func	= self.mse + self.l2_loss
+			self.loss_func	= self.mse
 
 		def train (self, LearningRate ):
 			# self.train_step	= tf.train.MomentumOptimizer(LearningRate, CONST.MOMENTUM).minimize(self.loss_func)

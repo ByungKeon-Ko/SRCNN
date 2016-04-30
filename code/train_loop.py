@@ -53,8 +53,9 @@ def train_loop (NET, BM, saver, sess) :
 				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
 			test_mse = test_mse/float(ITER_TEST)
-			print "epoch : %d, test mse : %1.6f" %(epoch, test_mse)
-			accte_file.write("%d %0.6f\n" %(iterate, test_mse) )
+			test_psnr = 10*math.log10(1.*1./test_mse)
+			print "epoch : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, test_mse, test_psnr)
+			accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
 
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
@@ -84,9 +85,9 @@ def train_loop (NET, BM, saver, sess) :
 			print "########## ITER3 start ########## "
 
 		if ( (iterate%5)==0 ) | (iterate==1) :
-			loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
+			# loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
-			sum_loss	= sum_loss + loss
+			# sum_loss	= sum_loss + loss
 			sum_mse		= sum_mse + train_mse
 			cnt_loss	= cnt_loss + 1
 
@@ -96,9 +97,10 @@ def train_loop (NET, BM, saver, sess) :
 				sum_loss = 0
 				sum_mse = 0
 				cnt_loss = 0
-				print "step : %d, epoch : %d, mse : %0.6f, loss : %0.6f, time : %0.4f" %(iterate, epoch, avg_mse, avg_loss, (time.time() - start_time)/60. )
+				psnr = 10*math.log10(1.*1./avg_mse)
+				print "step : %d, epoch : %d, mse : %0.6f, psnr : %3.4f, time : %0.4f" %(iterate, epoch, avg_mse, psnr, (time.time() - start_time)/60. )
 				start_time = time.time()
-				acctr_file.write("%d %0.6f\n" %(iterate, avg_mse) )
+				acctr_file.write("%d %0.6f\n" %(iterate, psnr) )
 
 		# if (new_epoch_flag == 1) :
 		if iterate % (1000) == 0 :
@@ -110,8 +112,9 @@ def train_loop (NET, BM, saver, sess) :
 				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
 
 			test_mse = test_mse/float(ITER_TEST)
-			print "epoch : %d, iter : %d, test mse : %1.6f" %(epoch, iterate, test_mse)
-			accte_file.write("%d %0.6f\n" %(iterate, test_mse) )
+			test_psnr = 10*math.log10(1.*1./test_mse)
+			print "epoch : %d, iter : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, iterate, test_mse, test_psnr)
+			accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
 			if epoch%1 == 0 :
 				if not math.isnan(avg_loss) :
 					save_path = saver.save(sess, CONST.CKPT_FILE)

@@ -33,6 +33,16 @@ BM.init(dset_train, dset_test)
 ## Garbage Collecting
 dset_train = 0
 
+## Calculate PSNR, MSE of BICUBIC
+mse = 0
+for i in xrange(100):
+	bic_batch = BM.testsample()
+	mse = mse + np.mean(np.square(bic_batch[1]))
+
+mse = mse/100.
+psnr = 10*math.log10(1.*1./mse)
+print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
+
 ## Session Open
 with tf.device(CONST.SEL_GPU) :
 	sess = tf.Session( config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True, log_device_placement=False ) )

@@ -1,7 +1,7 @@
 
 ## About Batch
-# lenPATCH = 35
-lenPATCH = 36
+lenPATCH = 35
+# lenPATCH = 36
 nBATCH = 64
 
 ## About Networks
@@ -13,8 +13,9 @@ BOTTLENECK = 1
 ## About Training
 SKIP_TRAIN = 0
 WARM_UP = 0
-# WEIGHT_DECAY = 0.0001
-WEIGHT_DECAY = 1e-7
+WEIGHT_DECAY = 1e-4
+# WEIGHT_DECAY = 1e-7
+# WEIGHT_DECAY = 0
 MOMENTUM = 0.9
 WEIGHT_INIT = "paper"
 

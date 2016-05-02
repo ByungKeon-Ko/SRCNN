@@ -104,8 +104,9 @@ def random_crop(img_mat, crop_size):
 def divide_freq_img(sub_image, shape):
 	im = Image.fromarray(sub_image)
 	blur_image = im.filter(ImageFilter.GaussianBlur(radius=3.00) )
-	blur_resize = blur_image.resize( [shape[0]/2, shape[1]/2], Image.NEAREST )
-	blur_upsmpl = blur_resize.resize( [shape[0], shape[1]], Image.BICUBIC )
+	blur_resize = blur_image.resize( [shape[1]/2, shape[0]/2], Image.NEAREST )
+	# blur_resize = im.resize( [shape[1]/2, shape[0]/2], Image.BICUBIC )
+	blur_upsmpl = blur_resize.resize( [shape[1], shape[0]], Image.BICUBIC )
 
 	im_low_freq = np.asarray( blur_upsmpl, np.float32 )
 	im_high_freq = sub_image - im_low_freq

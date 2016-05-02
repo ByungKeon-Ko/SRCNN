@@ -1,7 +1,7 @@
 
 ## About Batch
-lenPATCH = 35
-# lenPATCH = 36
+# lenPATCH = 35
+lenPATCH = 36
 nBATCH = 64
 
 ## About Networks

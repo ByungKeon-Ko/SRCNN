@@ -24,7 +24,6 @@ def train_loop (NET, BM, saver, sess) :
 
 	print "train loop start!!"
 	iterate = CONST.ITER_OFFSET
-	sum_loss = 0
 	sum_mse = 0
 	cnt_loss = 0
 	epoch = 0
@@ -36,8 +35,8 @@ def train_loop (NET, BM, saver, sess) :
 		accte_file = open(CONST.ACC_TEST, 'a')
 	start_time = time.time()
 
-	# t_stmp1 = 0
-	# t_stmp2 = 0
+	t_stmp1 = 0
+	t_stmp2 = 0
 
 	while iterate <= CONST.ITER3:
 		# t_stmp1 = time.time()
@@ -87,14 +86,11 @@ def train_loop (NET, BM, saver, sess) :
 		if ( (iterate%5)==0 ) | (iterate==1) :
 			# loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
-			# sum_loss	= sum_loss + loss
 			sum_mse		= sum_mse + train_mse
 			cnt_loss	= cnt_loss + 1
 
-			if (iterate%100 == 0) | (iterate==1) :
-				avg_loss = sum_loss / float( cnt_loss + 1e-40 )
+			if (iterate%200 == 0) | (iterate==1) :
 				avg_mse  = sum_mse / float( cnt_loss + 1e-40)
-				sum_loss = 0
 				sum_mse = 0
 				cnt_loss = 0
 				psnr = 10*math.log10(1.*1./avg_mse)
@@ -116,16 +112,13 @@ def train_loop (NET, BM, saver, sess) :
 			print "epoch : %d, iter : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, iterate, test_mse, test_psnr)
 			accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
 			if epoch%1 == 0 :
-				if not math.isnan(avg_loss) :
-					save_path = saver.save(sess, CONST.CKPT_FILE)
-					print "Save ckpt file", CONST.CKPT_FILE
+				save_path = saver.save(sess, CONST.CKPT_FILE)
+				print "Save ckpt file", CONST.CKPT_FILE
 
 		NET.train_step.run( feed_dict= {NET.x:batch[0], NET.y_: batch[1] } )
 
-	if not math.isnan(avg_loss) :
-		save_path = saver.save(sess, CONST.CKPT_FILE)
-		print "Save ckpt file", CONST.CKPT_FILE
-
+	save_path = saver.save(sess, CONST.CKPT_FILE)
+	print "Save ckpt file", CONST.CKPT_FILE
 	print "Finish training!!"
 
 	return 1

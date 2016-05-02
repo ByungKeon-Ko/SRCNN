@@ -11,7 +11,7 @@ PRE_ACTIVE = 1
 BOTTLENECK = 1
 
 ## About Training
-SKIP_TRAIN = 1
+SKIP_TRAIN = 0
 WARM_UP = 0
 WEIGHT_DECAY = 1e-4
 # WEIGHT_DECAY = 1e-7
@@ -35,8 +35,8 @@ ITER1 = 70*1000
 ITER2 = 90*1000
 ITER3 =100*1000
 
-CKPT_FILE	= "../ckpt_file/sr_50.mmt.ckpt"
-ACC_TRAIN	= "../output_data/sr_50_train.mmt.txt"
-ACC_TEST	= "../output_data/sr_50_test.mmt.txt"
+CKPT_FILE	= "../ckpt_file/sr_50.test.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.test.txt"
+ACC_TEST	= "../output_data/sr_50_test.test.txt"
 
 SEL_GPU = '/gpu:1'

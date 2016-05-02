@@ -1,2 +1,2 @@
-model_checkpoint_path: "sr_50.mmt.ckpt"
-all_model_checkpoint_paths: "sr_50.mmt.ckpt"
+model_checkpoint_path: "sr_50.test.ckpt"
+all_model_checkpoint_paths: "sr_50.test.ckpt"

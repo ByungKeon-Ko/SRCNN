@@ -1,4 +1,5 @@
 import tensorflow as tf
+from scipy import ndimage
 import numpy as np
 from PIL import ImageFilter
 import Image
@@ -77,7 +78,7 @@ class BatchManager ( ) :
 		for i in xrange(CONST.nBATCH) :
 			rand_index = random.randint(0, nTBATCH-1)
 			org_image = self.dset_test[rand_index]
-			sub_image = random_crop(org_image, CONST.lenPATCH)
+			sub_image = random_crop(org_image, CONST.lenPATCH).astype(np.float32)
 			x_img, y_img = divide_freq_img(sub_image, [CONST.lenPATCH, CONST.lenPATCH])
 			x_img = np.divide( x_img, 255.0).astype(np.float32)
 			y_img = np.divide( y_img, 255.0).astype(np.float32)
@@ -102,14 +103,16 @@ def random_crop(img_mat, crop_size):
 	return tmp_img
 
 def divide_freq_img(sub_image, shape):
-	im = Image.fromarray(sub_image)
-	blur_image = im.filter(ImageFilter.GaussianBlur(radius=3.00) )
-	blur_resize = blur_image.resize( [shape[1]/2, shape[0]/2], Image.NEAREST )
-	# blur_resize = im.resize( [shape[1]/2, shape[0]/2], Image.BICUBIC )
-	blur_upsmpl = blur_resize.resize( [shape[1], shape[0]], Image.BICUBIC )
+	tmp_img			= np.divide(sub_image[0:shape[0], 0:shape[1]], 1.0).astype(np.float64)
+	blur_image_r	= ndimage.zoom(tmp_img[:,:,0], zoom=0.5, order=2, prefilter=False)
+	im_low_freq_r	= ndimage.zoom(blur_image_r, zoom=2.0, order=4, prefilter=True)
+	blur_image_g	= ndimage.zoom(tmp_img[:,:,1], zoom=0.5, order=2, prefilter=False)
+	im_low_freq_g	= ndimage.zoom(blur_image_g, zoom=2.0, order=4, prefilter=True)
+	blur_image_b	= ndimage.zoom(tmp_img[:,:,2], zoom=0.5, order=2, prefilter=False)
+	im_low_freq_b	= ndimage.zoom(blur_image_b, zoom=2.0, order=4, prefilter=True)
 
-	im_low_freq = np.asarray( blur_upsmpl, np.float32 )
-	im_high_freq = sub_image - im_low_freq
+	im_low_freq = np.array([im_low_freq_r, im_low_freq_g, im_low_freq_b]).transpose( (1,2,0) )
+	im_high_freq = (tmp_img - im_low_freq +0.5).astype(np.int16).astype(np.float32)
 
 	return im_low_freq, im_high_freq
 

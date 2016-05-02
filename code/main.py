@@ -70,7 +70,6 @@ with tf.device(CONST.SEL_GPU) :
 		## Training
 		train_loop(NET, BM, saver, sess )
 		print "STAGE : Training Loop Finish!"
-		sess.close()
 
 	## Test
 	t_smpl = dset_test[0]
@@ -89,6 +88,8 @@ with tf.device(CONST.SEL_GPU) :
 	t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )[0]
 	shape = np.shape(t_out)
 	t_out2 = np.max([t_out, np.zeros(shape)], 0)
+	sess.close()
+
 
 # import Image
 # from PIL import ImageFilter

@@ -91,8 +91,8 @@ with tf.device(CONST.SEL_GPU) :
 			# self.loss_func	= self.mse
 
 		def train (self, LearningRate ):
-			# self.train_step	= tf.train.MomentumOptimizer(LearningRate, CONST.MOMENTUM).minimize(self.loss_func)
-			self.train_step	= tf.train.AdamOptimizer(LearningRate, beta1 = 0.9, beta2 = 0.999, epsilon=1e-08 ).minimize(self.loss_func)
+			self.train_step	= tf.train.MomentumOptimizer(LearningRate, CONST.MOMENTUM).minimize(self.loss_func)
+			# self.train_step	= tf.train.AdamOptimizer(LearningRate, beta1 = 0.9, beta2 = 0.999, epsilon=1e-08 ).minimize(self.loss_func)
 			# self.train_step	= tf.train.AdagradOptimizer(LearningRate ).minimize(self.loss_func)
 
 	class inst_res_unit(object):

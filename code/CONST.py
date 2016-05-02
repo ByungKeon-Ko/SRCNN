@@ -1,7 +1,7 @@
 
 ## About Batch
-lenPATCH = 35
-# lenPATCH = 36
+# lenPATCH = 35
+lenPATCH = 36
 nBATCH = 64
 
 ## About Networks
@@ -35,8 +35,8 @@ ITER1 = 70*1000
 ITER2 = 90*1000
 ITER3 =100*1000
 
-CKPT_FILE	= "../ckpt_file/sr_50.2.ckpt"
-ACC_TRAIN	= "../output_data/sr_50_train.2.txt"
-ACC_TEST	= "../output_data/sr_50_test.2.txt"
+CKPT_FILE	= "../ckpt_file/sr_50.mmt.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.mmt.txt"
+ACC_TEST	= "../output_data/sr_50_test.mmt.txt"
 
 SEL_GPU = '/gpu:1'

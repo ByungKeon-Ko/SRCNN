@@ -1,0 +1,9 @@
+main.py start!!
+========= total number of subimage : 2738, with size 36 =========
+========= BICUBIC MSE : 0.00291165517643, PSNR : 25.3586005925 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.189113, psnr : 7.2328, time : 0.0112
+step : 200, epoch : 0, mse : 0.056412, psnr : 12.4863, time : 1.4676

@@ -44,17 +44,18 @@ def train_loop (NET, BM, saver, sess) :
 		batch = BM.next_batch(CONST.nBATCH)
 		# t_stmp2 = time.time()
 		# print 'stmp2 - stmp1 = ', t_stmp2-t_stmp1
-		if iterate == 0 :
-			test_loss = 0
-			test_mse = 0
-			for i in xrange(ITER_TEST) :
-				tbatch = BM.testsample()
-				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
+		# if iterate == 1 :
+		# 	test_loss = 0
+		# 	test_mse = 0
+		# 	for i in xrange(ITER_TEST) :
+		# 		tbatch = BM.testsample()
+		# 		test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1], NET.phase_train:False } )
 
-			test_mse = test_mse/float(ITER_TEST)
-			test_psnr = 10*math.log10(1.*1./test_mse)
-			print "epoch : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, test_mse, test_psnr)
-			accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
+		# 	test_mse = test_mse/float(ITER_TEST)
+		# 	print test_mse, type(test_mse)
+		# 	test_psnr = 20*math.log10(1./math.sqrt(test_mse) )
+		# 	print "epoch : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, test_mse, test_psnr)
+		# 	accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
 
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
@@ -85,7 +86,7 @@ def train_loop (NET, BM, saver, sess) :
 
 		if ( (iterate%5)==0 ) | (iterate==1) :
 			# loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
-			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
+			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True } )
 			sum_mse		= sum_mse + train_mse
 			cnt_loss	= cnt_loss + 1
 
@@ -105,7 +106,7 @@ def train_loop (NET, BM, saver, sess) :
 			test_mse = 0
 			for i in xrange(ITER_TEST) :
 				tbatch = BM.testsample()
-				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1] } )
+				test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1], NET.phase_train:False } )
 
 			test_mse = test_mse/float(ITER_TEST)
 			test_psnr = 10*math.log10(1.*1./test_mse)
@@ -115,7 +116,7 @@ def train_loop (NET, BM, saver, sess) :
 				save_path = saver.save(sess, CONST.CKPT_FILE)
 				print "Save ckpt file", CONST.CKPT_FILE
 
-		NET.train_step.run( feed_dict= {NET.x:batch[0], NET.y_: batch[1] } )
+		NET.train_step.run( feed_dict= {NET.x:batch[0], NET.y_: batch[1], NET.phase_train:True } )
 
 	save_path = saver.save(sess, CONST.CKPT_FILE)
 	print "Save ckpt file", CONST.CKPT_FILE

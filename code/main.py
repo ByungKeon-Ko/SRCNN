@@ -22,6 +22,7 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.90 )
 
 ## Image Loading & PreProcessing
 dset_train, dset_test = ImageLoader.ImageLoad()
+print "Image Loading Done !!"
 
 # img_train, img_test = PreProc.PreProc(preimg_train, preimg_test)
 # print "STAGE : Image Preprocessing Finish!"
@@ -31,7 +32,7 @@ BM = batch_manager.BatchManager()
 BM.init(dset_train, dset_test)
 
 ## Garbage Collecting
-dset_train = 0
+# dset_train = 0
 
 ## Calculate PSNR, MSE of BICUBIC
 mse = 0
@@ -71,24 +72,26 @@ with tf.device(CONST.SEL_GPU) :
 		train_loop(NET, BM, saver, sess )
 		print "STAGE : Training Loop Finish!"
 
-	## Test
-	t_smpl = dset_test[0]
-	tbatch_size = np.shape( t_smpl )
-	t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
-	t_x = np.divide(t_x, 255.0)
-	t_y = np.divide(t_y, 255.0)
-	
-	NET = 0
-	NET = sr_network.SrNet()
-	NET.infer(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size, 1 )
-	
-	saver = tf.train.Saver( )
-	saver.restore(sess, CONST.CKPT_FILE )
+	if CONST.SKIP_TRAIN :
+		## Test
+		t_smpl = dset_test[0]
+		tbatch_size = np.shape( t_smpl )
+		t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
+		t_x = np.divide(t_x, 255.0)
+		t_y = np.divide(t_y, 255.0)
+		
+		NET = 0
+		NET = sr_network.SrNet()
+		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size, 1 )
+		
+		saver = tf.train.Saver( )
+		saver.restore(sess, CONST.CKPT_FILE )
 
-	t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )[0]
-	shape = np.shape(t_out)
-	t_out2 = np.max([t_out, np.zeros(shape)], 0)
-	sess.close()
+		t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )[0]
+		# sess.close()
+
+		mse = np.mean(np.square((t_out-t_smpl).astype(np.float32)))
+
 
 
 # import Image

@@ -122,6 +122,10 @@ def divide_freq_img(sub_image, shape):
 		im_low_freq		= ndimage.zoom(blur_image,     zoom=CONST.SCALE,    order=2, mode='reflect', prefilter=True)
 		im_low_freq 	= np.reshape( im_low_freq, [shape[0], shape[1], 1] )
 
+	upper_bound = np.multiply(np.ones( [shape[0], shape[1], CONST.COLOR_IN]), 255.0)
+	lower_bound = np.zeros([shape[0], shape[1], CONST.COLOR_IN])
+	im_low_freq = np.minimum( im_low_freq, upper_bound )
+	im_low_freq = np.maximum( im_low_freq, lower_bound )
 	im_high_freq = (tmp_img - im_low_freq +0.5).astype(np.int16).astype(np.float32)
 
 	return im_low_freq, im_high_freq

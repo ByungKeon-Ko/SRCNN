@@ -84,7 +84,7 @@ def train_loop (NET, BM, saver, sess) :
 			saver.restore(sess, CONST.CKPT_FILE )
 			print "########## ITER3 start ########## "
 
-		if ( (iterate%5)==0 ) | (iterate==1) :
+		if ( ((iterate%5)==0 ) | (iterate==1)) & (iterate!=0) :
 			# loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True } )
 			sum_mse		= sum_mse + train_mse
@@ -94,7 +94,11 @@ def train_loop (NET, BM, saver, sess) :
 				avg_mse  = sum_mse / float( cnt_loss + 1e-40)
 				sum_mse = 0
 				cnt_loss = 0
-				psnr = 10*math.log10(1.*1./avg_mse)
+				try :
+					psnr = 10*math.log10(1.*1./avg_mse)
+				except ValueError:
+					print "Value Error 1 : %f", avg_mse
+					sdlkfjwlefjlwef
 				print "step : %d, epoch : %d, mse : %0.6f, psnr : %3.4f, time : %0.4f" %(iterate, epoch, avg_mse, psnr, (time.time() - start_time)/60. )
 				start_time = time.time()
 				acctr_file.write("%d %0.6f\n" %(iterate, psnr) )

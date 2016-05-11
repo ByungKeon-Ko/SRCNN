@@ -18,7 +18,7 @@ import time
 import CONST
 import batch_manager
 
-ITER_TEST = 10
+ITER_TEST = 1000
 
 def train_loop (NET, BM, saver, sess) :
 
@@ -84,7 +84,7 @@ def train_loop (NET, BM, saver, sess) :
 			saver.restore(sess, CONST.CKPT_FILE )
 			print "########## ITER3 start ########## "
 
-		if ( ((iterate%5)==0 ) | (iterate==1)) & (iterate!=0) :
+		if ( ((iterate%1)==0 ) | (iterate==1)) & (iterate!=0) :
 			# loss		= NET.loss_func.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1] } )
 			train_mse	= NET.mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True } )
 			sum_mse		= sum_mse + train_mse

@@ -74,11 +74,11 @@ with tf.device(CONST.SEL_GPU) :
 
 	if CONST.SKIP_TRAIN :
 		## Test
-		t_smpl = dset_test[0]
+		t_smpl, t_x, t_y = dset_test[0]
 		tbatch_size = np.shape( t_smpl )
-		t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
-		t_x = np.divide(t_x, 255.0)
-		t_y = np.divide(t_y, 255.0)
+		# t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
+		t_x_1 = np.divide(t_x, 255.0)
+		t_y_1 = np.divide(t_y, 255.0)
 		
 		NET = 0
 		NET = sr_network.SrNet()
@@ -87,12 +87,31 @@ with tf.device(CONST.SEL_GPU) :
 		saver = tf.train.Saver( )
 		saver.restore(sess, CONST.CKPT_FILE )
 
-		t_out = NET.image_gen.eval(feed_dict={NET.x:[t_x]} )[0]
+		print "Network Restore Done!!", CONST.CKPT_FILE
+
+		baby_out = NET.image_gen.eval(feed_dict={NET.x:[t_x_1], NET.phase_train:False} )[0]
 		# sess.close()
+		shape = np.shape(baby_out)
+		baby_out_255 = np.maximum((np.multiply(baby_out, 255.0) + 0.5), 1.0).astype(np.uint8).astype(np.float32)
 
-		mse = np.mean(np.square((t_out-t_smpl).astype(np.float32)))
+		mse = np.mean(np.square((baby_out_255-t_smpl.astype(np.float32)).astype(np.float32)))
+		psnr = 20*math.log10(255.0/math.sqrt(mse) )
+		print "========= BABY MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
-
+		## Calculate PSNR, MSE of BICUBIC
+		mse = 0
+		for j in xrange(100):
+			bic_batch = BM.testsample()
+			# bic_batch = BM.next_batch(CONST.nBATCH)
+			for i in xrange(64):
+				tmp_bic = bic_batch[1][i]
+				t_out = NET.image_gen.eval(feed_dict={NET.x:[tmp_bic], NET.phase_train:False} )[0]
+				t_out_255 = np.maximum((np.multiply(t_out, 255.0) + 0.5), 1.0).astype(np.uint8).astype(np.float32)
+				mse = mse + np.mean( np.square(tmp_bic) )
+		
+		mse = mse/64./100.
+		psnr = 20*math.log10(1.0/math.sqrt(mse) )
+		print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
 # import Image
 # from PIL import ImageFilter

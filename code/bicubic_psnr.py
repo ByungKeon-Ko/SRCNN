@@ -20,8 +20,8 @@ BM.init(dset_train, dset_test)
 ## Calculate PSNR, MSE of BICUBIC
 mse = 0
 for j in xrange(100):
-	bic_batch = BM.testsample()
-	# bic_batch = BM.next_batch(CONST.nBATCH)
+	# bic_batch = BM.testsample()
+	bic_batch = BM.next_batch(CONST.nBATCH)
 	for i in xrange(64):
 		tmp_bic = bic_batch[1][i]
 		mse = mse + np.mean( np.square(tmp_bic) )

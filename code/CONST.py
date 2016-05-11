@@ -16,16 +16,18 @@ COLOR_OUT = 1
 ## About Training
 SKIP_TRAIN = 0
 WARM_UP = 0
-WEIGHT_DECAY = 1e-4
+# WEIGHT_DECAY = 1e-4
 # WEIGHT_DECAY = 1e-7
 # WEIGHT_DECAY = 0
+# WEIGHT_DECAY = -1e-7
+WEIGHT_DECAY = -1e-9
 MOMENTUM = 0.9
 WEIGHT_INIT = "paper"
 
 if WARM_UP == 0 :
-	LEARNING_RATE1 = 0.1
-	LEARNING_RATE2 = 0.01
-	LEARNING_RATE3 = 0.001
+	LEARNING_RATE1 = 0.0001
+	LEARNING_RATE2 = 0.00001
+	LEARNING_RATE3 = 0.000001
 else :
 	LEARNING_RATE1 = 0.01
 	LEARNING_RATE1_1 = 0.1
@@ -34,16 +36,24 @@ else :
 
 ITER_OFFSET = 0
 
-ITER1 = 70*1000
-ITER2 = 90*1000
-ITER3 =100*1000
+ITER1 = 10*1000
+ITER2 = 20*1000
+ITER3 = 30*1000
 
 # CKPT_FILE	= "../ckpt_file/sr_50.test.ckpt"
 # ACC_TRAIN	= "../output_data/sr_50_train.test.txt"
 # ACC_TEST	= "../output_data/sr_50_test.test.txt"
 
-CKPT_FILE	= "../ckpt_file/sr_50.test.ckpt"
-ACC_TRAIN	= "../output_data/sr_50_train.test.txt"
-ACC_TEST	= "../output_data/sr_50_test.test.txt"
+# CKPT_FILE	= "../ckpt_file/sr_50.adam2.ckpt"
+# ACC_TRAIN	= "../output_data/sr_50_train.adam2.txt"
+# ACC_TEST	= "../output_data/sr_50_test.adam2.txt"
 
-SEL_GPU = '/gpu:1'
+CKPT_FILE	= "../ckpt_file/sr_50.nobn_0p0001.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.nobn_0p0001.txt"
+ACC_TEST	= "../output_data/sr_50_test.nobn_0p0001.txt"
+
+# CKPT_FILE	= "../ckpt_file/sr_50.nobn_0p001.ckpt"
+# ACC_TRAIN	= "../output_data/sr_50_train.nobn_0p001.txt"
+# ACC_TEST	= "../output_data/sr_50_test.nobn_0p001.txt"
+
+SEL_GPU = '/gpu:0'

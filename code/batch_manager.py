@@ -102,6 +102,9 @@ def random_crop(img_mat, img_mat2, crop_size):
 	if random.randint(0,1) :
 		tmp_img = np.fliplr(tmp_img)
 		tmp_img2 = np.fliplr(tmp_img2)
+	if random.randint(0,1) :
+		tmp_img = np.flipud(tmp_img)
+		tmp_img2 = np.flipud(tmp_img2)
 
 	return tmp_img.astype(np.float32), tmp_img2.astype(np.float32)
 

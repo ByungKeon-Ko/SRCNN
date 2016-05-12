@@ -3,12 +3,12 @@ import Image
 import CONST
 import batch_manager
 
-path_train = "../../SRCNN_dataset/Train/"
-path_test = "../../SRCNN_dataset/Test/"
+path_train = "../SRCNN_dataset/Train/"
+path_test = "../SRCNN_dataset/Test/"
 
 # --- Image Load ------------------------------------------------------------ #
 def ImageLoad():
-	list_file = "../../SRCNN_dataset/datalist_train.txt"
+	list_file = "../SRCNN_dataset/datalist_train.txt"
 	list_file_obj = open(list_file, 'r')
 	datalist = list_file_obj.readlines()
 
@@ -40,7 +40,7 @@ def ImageLoad():
 		low, high = batch_manager.divide_freq_img( org, shape )
 		dset_train[i] = [org, low, high]
 
-	list_file = "../../SRCNN_dataset/datalist_test_set5.txt"
+	list_file = "../SRCNN_dataset/datalist_test_set5.txt"
 	list_file_obj = open(list_file, 'r')
 	datalist = list_file_obj.readlines()
 

@@ -1,9 +1,9 @@
 clear;close all;
 %% settings
 folder = '../../SRCNN_dataset/SRCNN/Train';
-size_input = 36;
+size_input = 42;
 % size_label = 21;
-size_label = 36;
+size_label = 42;
 scale = 3;
 stride = 14;
 
@@ -22,10 +22,9 @@ for i = 1 : length(filepaths)
     image = imread(fullfile(folder,filepaths(i).name));
     image = rgb2ycbcr(image);
     image = im2double(image(:, :, 1));
-    
+
     im_label = modcrop(image, scale);
     [hei,wid] = size(im_label);
-	% Can be developed by interpolating before modcrop
     im_input = imresize(imresize(im_label,1/scale,'bicubic'),[hei,wid],'bicubic');
 
     for x = 1 : stride : hei-size_input+1

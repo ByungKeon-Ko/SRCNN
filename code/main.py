@@ -35,13 +35,18 @@ BM.init(dset_train, dset_test)
 # dset_train = 0
 
 ## Calculate PSNR, MSE of BICUBIC
-mse = 0
-for i in xrange(100):
-	bic_batch = BM.testsample()
-	mse = mse + np.mean(np.square(bic_batch[1]))
+mse_sum = 0
+psnr = 0
+bic_batch = BM.testsample()
+nTBATCH = np.shape(bic_batch)[1]
+for i in xrange(nTBATCH):
+	tmp_bic = bic_batch[1][i,:,:,0]
+	mse = np.mean( np.square(tmp_bic) )
+	mse_sum = mse_sum + mse
+	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
 
-mse = mse/100.
-psnr = 10*math.log10(1.*1./mse)
+mse = mse_sum/nTBATCH
+psnr = psnr/nTBATCH
 print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
 ## Session Open

@@ -18,25 +18,46 @@ BM = batch_manager.BatchManager()
 BM.init(dset_train, dset_test)
 
 ## Calculate PSNR, MSE of BICUBIC
-mse = 0
-for j in xrange(100):
-	# bic_batch = BM.testsample()
-	bic_batch = BM.next_batch(CONST.nBATCH)
-	for i in xrange(64):
-		tmp_bic = bic_batch[1][i]
-		mse = mse + np.mean( np.square(tmp_bic) )
+mse_sum = 0
+psnr = 0
+bic_batch = BM.testsample()
+nTBATCH = np.shape(bic_batch)[1]
+for i in xrange(nTBATCH):
+	tmp_bic = bic_batch[1][i,:,:,0]
+	mse = np.mean( np.square(tmp_bic) )
+	mse_sum = mse_sum + mse
+	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
 
-mse = mse/64./100.
-psnr = 20*math.log10(1.0/math.sqrt(mse) )
+mse = mse_sum/nTBATCH
+psnr = psnr/nTBATCH
+# for j in xrange(100):
+# 	bic_batch = BM.next_batch(CONST.nBATCH)
+# 	for i in xrange(CONST.nBATCH):
+# 		tmp_bic = bic_batch[1][i,:,:,0]
+# 		mse = np.mean( np.square(tmp_bic) )
+# 		mse_sum = mse_sum + mse
+# 		psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
+# 
+# mse = mse_sum/CONST.nBATCH/100.
+# psnr = psnr/CONST.nBATCH/100.
 print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
-## Calculate PSNR on whole image
-im_low_freq = dset_test[0][1]
-im_high_freq = dset_test[0][2]
+patch_low  = np.multiply( bic_batch[0][0, :,:,0], 255.0 ).astype(np.uint8) 
+patch_high = np.multiply( bic_batch[1][0, :,:,0]+0.5, 255.0 ).astype(np.uint8) 
+# Image.fromarray( patch_low ).show()
+# Image.fromarray( patch_high ).show()
 
-mse = 0
-mse = np.mean(np.square(im_high_freq.astype(np.float32)))
-psnr = 20*math.log10(255./math.sqrt(mse) )
-print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse, psnr)
+#	## Calculate PSNR on whole image
+#	im_low_freq  = dset_test[1][:,:,0]
+#	im_high_freq = dset_test[2][:,:,0]
+#	
+#	im_org = np.multiply( dset_test[0][:,:,0], 255.0).astype(np.uint8)
+#	im_low_freq_1 = np.multiply( im_low_freq, 255.0).astype(np.uint8)
+#	im_high_freq_1 = np.multiply( im_high_freq + 0.5, 255.0).astype(np.uint8)
+#	
+#	mse = 0
+#	mse = np.mean(np.square(im_high_freq.astype(np.float32)))
+#	psnr = 20*math.log10(1./math.sqrt(mse) )
+#	print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse, psnr)
 
 

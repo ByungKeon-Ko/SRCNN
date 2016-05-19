@@ -2,6 +2,7 @@
 ## About Batch
 # lenPATCH = 35
 lenPATCH = 36
+# lenPATCH = 300
 nBATCH = 64
 SCALE = 3.
 

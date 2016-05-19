@@ -10,25 +10,10 @@ import CONST
 # ----------------------------------------- 
 class BatchManager ( ) :
 	def init (self, dset_train, dset_test):
-		len_list = np.zeros([91])
-		for i in xrange(len(dset_train)):
-			len_list[i] = len(dset_train[i])
-
-		total_num = 0
-		for i in xrange(len(dset_train)):
-			# temp_num = (len_list[i]-CONST.lenPATCH+1)
-			## TODO : need to update this number calculation with size of network output
-			temp_num = int( len_list[i] / CONST.lenPATCH )
-			temp_num = temp_num * temp_num
-			total_num = total_num + temp_num
-
-		print "========= total number of subimage : %s, with size %s =========" %(total_num, CONST.lenPATCH)
-
-		self.nDSET = len(dset_train)
+		self.nDSET = np.shape(dset_train)[3]
 
 		self.dset_train = dset_train
 		self.max_index = self.nDSET
-		self.cnt_in_epoch = 0
 
 		# prepare data
 		self.index_list = range(self.max_index)
@@ -40,16 +25,16 @@ class BatchManager ( ) :
 		x_batch = np.zeros([nBatch, CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
 		y_batch = np.zeros([nBatch, CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
 
-		self.cnt_in_epoch = self.cnt_in_epoch + nBatch
-		new_epoch_flag = 0
-		if ( self.max_index <= nBatch ) :
-			self.cnt_in_epoch = 0
-			new_epoch_flag = 1
-			self.max_index = self.nDSET
-			self.index_list = range(self.max_index)
-
 		for i in xrange(nBatch) :
 			x_batch[i], y_batch[i] = self.ps_batch()
+
+		self.max_index = self.max_index - nBatch
+
+		new_epoch_flag = 0
+		if ( self.max_index <= nBatch ) :
+			new_epoch_flag = 1
+			self.max_index = self.nDSET
+			self.index_list = np.random.permutation(range(self.max_index))
 
 		return [x_batch, y_batch, new_epoch_flag]
 
@@ -57,38 +42,32 @@ class BatchManager ( ) :
 		x_batch = np.zeros([CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
 		y_batch = np.zeros([CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
 
-		rand_index = random.randint(0, self.nDSET-1)
-		org_image = self.dset_train[rand_index]
-		x_batch, y_batch = random_crop(org_image[1], org_image[2], CONST.lenPATCH)
+		rand_index = self.index_list[0]
+		self.index_list = self.index_list[1:]
 
-		x_batch = np.divide( x_batch, 255.0).astype(np.float32)
-		y_batch = np.divide( y_batch, 255.0).astype(np.float32)
+		x_batch = self.dset_train[1][:,:,rand_index]
+		y_batch = self.dset_train[2][:,:,rand_index]
+
+		x_batch = np.reshape(x_batch, (CONST.lenPATCH, CONST.lenPATCH, 1 ) )
+		y_batch = np.reshape(y_batch, (CONST.lenPATCH, CONST.lenPATCH, 1 ) )
+
+		## Data Augmentation
+		if random.randint(0,1) :
+			x_batch = np.fliplr(x_batch)
+			y_batch = np.fliplr(y_batch)
+		if random.randint(0,1) :
+			x_batch = np.flipud(x_batch)
+			y_batch = np.flipud(y_batch)
 
 		return [x_batch, y_batch]
 
 	def testsample (self):
-		nTBATCH = len(self.dset_test)
-		x_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
-		y_batch = np.zeros([CONST.nBATCH, CONST.lenPATCH, CONST.lenPATCH, CONST.COLOR_IN]).astype('float32')
+		nTBATCH = np.shape(self.dset_test)[3]
+		x_batch = self.dset_test[1][:,:,0:0+nTBATCH]
+		y_batch = self.dset_test[2][:,:,0:0+nTBATCH]
 
-		for i in xrange(CONST.nBATCH) :
-			rand_index = random.randint(0, nTBATCH-1)
-			org_image = self.dset_test[rand_index]
-			shape = np.array( np.shape(org_image) )
-
-			x_img, y_img = random_crop(org_image[1], org_image[2], CONST.lenPATCH)
-			x_img = np.divide( x_img, 255.0).astype(np.float32)
-			y_img = np.divide( y_img, 255.0).astype(np.float32)
-			if CONST.COLOR_IN == 3 :
-				if len(np.shape(x_img)) == 3 :
-					x_batch[i] = x_img
-					y_batch[i] = y_img
-				else :
-					x_batch[i] = [x_img, x_img, x_img]
-					y_batch[i] = [y_img, y_img, y_img]
-			else :
-				x_batch[i] = x_img
-				y_batch[i] = y_img
+		x_batch = np.reshape(x_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )
+		y_batch = np.reshape(y_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )
 
 		return [x_batch, y_batch]
 

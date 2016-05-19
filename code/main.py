@@ -18,7 +18,7 @@ from train_loop import train_loop
 # from save_std import save_std
 
 print "main.py start!!"
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.90 )
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.95 )
 
 ## Image Loading & PreProcessing
 dset_train, dset_test = ImageLoader.ImageLoad()
@@ -59,7 +59,7 @@ with tf.device(CONST.SEL_GPU) :
 	if not CONST.SKIP_TRAIN :
 		## Network Instantiation
 		NET = sr_network.SrNet()
-		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, [CONST.lenPATCH, CONST.lenPATCH, 3], 0 )
+		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, [CONST.lenPATCH, CONST.lenPATCH, 3], 1 )
 		NET.objective()
 		NET.train(CONST.LEARNING_RATE1)
 		print "STAGE : Network Init Finish!"

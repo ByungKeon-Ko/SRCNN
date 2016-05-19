@@ -5,7 +5,7 @@ size_input = 36;
 % size_label = 21;
 size_label = 36;
 scale = 3;
-stride = 36;
+stride = 14;
 
 %% initialization
 data = zeros(size_input, size_input, 1, 1);
@@ -25,6 +25,7 @@ for i = 1 : length(filepaths)
     
     im_label = modcrop(image, scale);
     [hei,wid] = size(im_label);
+	% Can be developed by interpolating before modcrop
     im_input = imresize(imresize(im_label,1/scale,'bicubic'),[hei,wid],'bicubic');
 
     for x = 1 : stride : hei-size_input+1

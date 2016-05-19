@@ -59,7 +59,7 @@ class BatchManager ( ) :
 			x_batch = np.flipud(x_batch)
 			y_batch = np.flipud(y_batch)
 
-		return [x_batch, y_batch]
+		return np.array([x_batch, y_batch])
 
 	def testsample (self):
 		nTBATCH = np.shape(self.dset_test)[3]
@@ -69,7 +69,7 @@ class BatchManager ( ) :
 		x_batch = np.reshape(x_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )
 		y_batch = np.reshape(y_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )
 
-		return [x_batch, y_batch]
+		return np.array([x_batch, y_batch])
 
 def random_crop(img_mat, img_mat2, crop_size):
 	tmp_size = np.shape(img_mat)

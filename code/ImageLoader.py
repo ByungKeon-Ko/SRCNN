@@ -44,8 +44,8 @@ def ImageLoad():
 	test_label = np.transpose( test_label, (2,1,0) )
 	# test_label_1 = np.multiply( test_label, 255.0 ).astype(np.uint8)
 
-	dset_train = [train_label, train_data, train_label-train_data]
-	dset_test  = [test_label,  test_data,  test_label -test_data ]
+	dset_train = [train_label-train_data, train_data, train_label ]
+	dset_test  = [test_label -test_data,  test_data,  test_label  ]
 
 	return dset_train, dset_test
 

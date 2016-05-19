@@ -52,3 +52,5 @@ fileID = fopen('train_label.bin', 'w');
 fwrite(fileID, label, 'float');
 fclose(fileID);
 
+%%
+

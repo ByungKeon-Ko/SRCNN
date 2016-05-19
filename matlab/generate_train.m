@@ -1,9 +1,15 @@
 clear;close all;
 %% settings
 folder = '../../SRCNN_dataset/SRCNN/Train';
+<<<<<<< HEAD
 size_input = 42;
 % size_label = 21;
 size_label = 42;
+=======
+size_input = 36;
+% size_label = 21;
+size_label = 36;
+>>>>>>> c66cc691ada07a665fc7f4a531be2d0ec2ec8e7d
 scale = 3;
 stride = 14;
 
@@ -22,9 +28,16 @@ for i = 1 : length(filepaths)
     image = imread(fullfile(folder,filepaths(i).name));
     image = rgb2ycbcr(image);
     image = im2double(image(:, :, 1));
+<<<<<<< HEAD
 
     im_label = modcrop(image, scale);
     [hei,wid] = size(im_label);
+=======
+    
+    im_label = modcrop(image, scale);
+    [hei,wid] = size(im_label);
+	% Can be developed by interpolating before modcrop
+>>>>>>> c66cc691ada07a665fc7f4a531be2d0ec2ec8e7d
     im_input = imresize(imresize(im_label,1/scale,'bicubic'),[hei,wid],'bicubic');
 
     for x = 1 : stride : hei-size_input+1
@@ -52,5 +65,8 @@ fileID = fopen('train_label.bin', 'w');
 fwrite(fileID, label, 'float');
 fclose(fileID);
 
+<<<<<<< HEAD
 %%
 
+=======
+>>>>>>> c66cc691ada07a665fc7f4a531be2d0ec2ec8e7d

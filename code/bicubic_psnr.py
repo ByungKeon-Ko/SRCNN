@@ -20,26 +20,28 @@ BM.init(dset_train, dset_test)
 ## Calculate PSNR, MSE of BICUBIC
 mse_sum = 0
 psnr = 0
+
 bic_batch = BM.testsample()
 nTBATCH = np.shape(bic_batch)[1]
 for i in xrange(nTBATCH):
-	tmp_bic = bic_batch[1][i,:,:,0]
+	tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
 	mse = np.mean( np.square(tmp_bic) )
 	mse_sum = mse_sum + mse
 	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
 
 mse = mse_sum/nTBATCH
 psnr = psnr/nTBATCH
-# for j in xrange(100):
-# 	bic_batch = BM.next_batch(CONST.nBATCH)
-# 	for i in xrange(CONST.nBATCH):
-# 		tmp_bic = bic_batch[1][i,:,:,0]
-# 		mse = np.mean( np.square(tmp_bic) )
-# 		mse_sum = mse_sum + mse
-# 		psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
-# 
-# mse = mse_sum/CONST.nBATCH/100.
-# psnr = psnr/CONST.nBATCH/100.
+
+#	for j in xrange(100):
+#		bic_batch = BM.next_batch(CONST.nBATCH)
+#		for i in xrange(CONST.nBATCH):
+#			tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
+#			mse = np.mean( np.square(tmp_bic) )
+#			mse_sum = mse_sum + mse
+#			psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
+#	
+#	mse = mse_sum/CONST.nBATCH/100.
+#	psnr = psnr/CONST.nBATCH/100.
 print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
 patch_low  = np.multiply( bic_batch[0][0, :,:,0], 255.0 ).astype(np.uint8) 

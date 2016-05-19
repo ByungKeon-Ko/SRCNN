@@ -1,2 +1,0 @@
-model_checkpoint_path: "sr_50.nobn_0p0001.ckpt"
-all_model_checkpoint_paths: "sr_50.nobn_0p0001.ckpt"

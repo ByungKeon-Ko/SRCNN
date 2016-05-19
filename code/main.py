@@ -132,4 +132,4 @@ with tf.device(CONST.SEL_GPU) :
 # 
 # x_batch = np.zeros([CONST.lenPATCH, CONST.lenPATCH, 3]).astype('float32')
 # y_batch = np.zeros([1]).astype('float32')
-# 
+

@@ -12,8 +12,8 @@ def ImageLoad():
 	list_file_obj = open(list_file, 'r')
 	datalist = list_file_obj.readlines()
 
-	dset_train = [0]*91
-	for i in xrange(91) :
+	dset_train = [0]*len(datalist)
+	for i in xrange(len(datalist)) :
 		if CONST.COLOR_IN == 3 :
 			tmp = np.asarray( Image.open( "%s%s" %(path_train, datalist[i].rstrip() ) ).convert('RGB'), np.uint8)
 

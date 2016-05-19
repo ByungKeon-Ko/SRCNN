@@ -7,7 +7,7 @@ SCALE = 3.
 
 ## About Networks
 nLAYER = 16		# 3*16+2 = 50
-SHORT_CUT = 1	# '1' : residual, '0' : plain
+SHORT_CUT = 0	# '1' : residual, '0' : plain
 PRE_ACTIVE = 1
 BOTTLENECK = 1
 COLOR_IN = 1
@@ -16,18 +16,14 @@ COLOR_OUT = 1
 ## About Training
 SKIP_TRAIN = 0
 WARM_UP = 0
-# WEIGHT_DECAY = 1e-4
-# WEIGHT_DECAY = 1e-7
-# WEIGHT_DECAY = 0
-# WEIGHT_DECAY = -1e-7
-WEIGHT_DECAY = -1e-9
+WEIGHT_DECAY = 1e-4
 MOMENTUM = 0.9
 WEIGHT_INIT = "paper"
 
 if WARM_UP == 0 :
-	LEARNING_RATE1 = 0.0001
-	LEARNING_RATE2 = 0.00001
-	LEARNING_RATE3 = 0.000001
+	LEARNING_RATE1 = 0.1
+	LEARNING_RATE2 = 0.01
+	LEARNING_RATE3 = 0.001
 else :
 	LEARNING_RATE1 = 0.01
 	LEARNING_RATE1_1 = 0.1
@@ -56,4 +52,4 @@ ACC_TEST	= "../output_data/sr_50_test.nobn_0p0001.txt"
 # ACC_TRAIN	= "../output_data/sr_50_train.nobn_0p001.txt"
 # ACC_TEST	= "../output_data/sr_50_test.nobn_0p001.txt"
 
-SEL_GPU = '/gpu:0'
+SEL_GPU = '/gpu:1'

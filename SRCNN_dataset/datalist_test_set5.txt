@@ -1,7 +1,3 @@
-Set5/baby_GT.bmp
-Set5/bird_GT.bmp
-Set5/head_GT.bmp
-Set5/woman_GT.bmp
 Set14/baboon.bmp
 Set14/barbara.bmp
 Set14/bridge.bmp

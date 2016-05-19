@@ -66,15 +66,6 @@ with tf.device(CONST.SEL_GPU) :
 		else :
 			return tf.nn.conv2d(x,W,strides=[1,stride,stride,1], padding='VALID')
 
-	#	class batch_normalize(object):
-	#		def __init__(self, input_x, depth):
-	#			self.mean, self.var = tf.nn.moments( input_x, [1, 2], name='moment' )
-	#			offset_init = tf.zeros([depth], name='offset_initial')
-	#			self.offset = tf.Variable(offset_init, name = 'offset')
-	#			scale_init = tf.random_uniform([depth], minval=0, maxval=1, name='scale_initial')
-	#			self.scale = tf.Variable(scale_init, name = 'scale')
-	#			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, True)
-
 	class SrNet () :
 		def infer (self, n, short_cut, sizeImage, zero_pad ):
 			self.x			= tf.placeholder(tf.float32, name = 'x' )
@@ -84,8 +75,6 @@ with tf.device(CONST.SEL_GPU) :
 			self.W_conv_intro	= weight_variable([3, 3, CONST.COLOR_IN, 64], 'w_conv_intro', sizeImage[0]*sizeImage[1]*64 )
 			self.B_conv_intro	= bias_variable([64], 'B_conv_intro' )
 			self.linear_intro	= conv2d(self.x, self.W_conv_intro, 1, zero_pad) + self.B_conv_intro
-			# self.bn_intro		= batch_normalize( self.linear_intro, 64 )
-			# self.relu_intro		= tf.nn.relu( self.bn_intro.output_y )
 			self.bn_intro 		= batch_norm(self.linear_intro, 64, self.phase_train)
 			self.relu_intro		= tf.nn.relu( self.bn_intro )
 
@@ -101,8 +90,6 @@ with tf.device(CONST.SEL_GPU) :
 				else :
 					self.gr_mat1[i] = inst_res_unit(self.gr_mat1[i-1].out, i, sizeFeature, 64, short_cut, 1, 0, zero_pad, self.phase_train )
 
-			# self.bn_avgin	= batch_normalize( self.gr_mat1[n-1].out, 64 )
-			# self.relu_avgin	= tf.nn.relu( self.bn_avgin.output_y )
 			self.bn_avgin	= batch_norm(self.gr_mat1[n-1].out, 64, self.phase_train)
 			self.relu_avgin	= tf.nn.relu( self.bn_avgin)
 			self.fc_in = self.relu_avgin
@@ -113,7 +100,6 @@ with tf.device(CONST.SEL_GPU) :
 			self.linear_flat	= conv2d(self.fc_in, self.W_fc1, 1, zero_pad) + self.b_fc1
 
 			self.y_gen	= self.linear_flat
-			# self.y_gen	= tf.sigmoid( self.y_tmp ) -0.5
 			if zero_pad :
 				sizeFeature = [-1, sizeImage[0], sizeImage[1], 3]
 				self.x_center	= self.x
@@ -135,48 +121,80 @@ with tf.device(CONST.SEL_GPU) :
 
 		def train (self, LearningRate ):
 			# self.train_step	= tf.train.MomentumOptimizer(LearningRate, CONST.MOMENTUM).minimize(self.loss_func)
-			self.train_step	= tf.train.AdamOptimizer(LearningRate, beta1 = 0.9, beta2 = 0.999, epsilon=1e-08 ).minimize(self.loss_func)
+			# self.train_step	= tf.train.AdamOptimizer(LearningRate, beta1 = 0.9, beta2 = 0.999, epsilon=1e-08 ).minimize(self.loss_func)
 			# self.train_step	= tf.train.AdagradOptimizer(LearningRate ).minimize(self.loss_func)
+
+			self.train_step	= tf.train.MomentumOptimizer(LearningRate, CONST.MOMENTUM)
+			self.gvs             = self.train_step.compute_gradients(self.loss_func)
+			self.capped_gvs      = [(tf.clip_by_value(grad, -1e-4, 1e-4), var) for grad, var in self.gvs]
+			self.train_step_run  = self.train_step.apply_gradients(self.capped_gvs)
+
+			self.w_grad_0  = tf.gradients(self.loss_func, self.W_conv_intro)[0]
+			self.w_grad_5  = tf.gradients(self.loss_func, self.gr_mat1[5].W_conv1 )[0]
+			self.w_grad_10 = tf.gradients(self.loss_func, self.gr_mat1[10].W_conv1)[0]
+			self.w_grad_15 = tf.gradients(self.loss_func, self.gr_mat1[15].W_conv1)[0]
+			#self.w_grad_20 = tf.gradients(self.loss_func, self.gr_mat1[19].W_conv1)[0]
 
 	class inst_res_unit(object):
 		if CONST.BOTTLENECK == 1 :
 			def __init__(self, input_x, index, sizeFeature, filt_depth, short_cut, stride, IsFirst, zero_pad, phase_train):
-				# self.bn_unit1 = batch_normalize( input_x, filt_depth);
-				# self.relu_unit1	= tf.nn.relu ( self.bn_unit1.output_y )
+				## Bottleneck Structure
+				#		# self.bn_unit1 = batch_normalize( input_x, filt_depth);
+				#		# self.relu_unit1	= tf.nn.relu ( self.bn_unit1.output_y )
+				#		self.bn_unit1	= batch_norm(input_x, filt_depth, phase_train)
+				#		self.relu_unit1	= tf.nn.relu ( self.bn_unit1)
+		
+				#		k2d = sizeFeature[0]*sizeFeature[1]*filt_depth
+				#		self.W_conv1	= weight_variable ( [1, 1, filt_depth/stride, filt_depth], 'w_conv%d_%d'%(filt_depth, index), k2d )
+				#		self.B_conv1	= bias_variable ( [filt_depth], 'B_conv%d_%d'%(filt_depth, index) )
+				#		self.linear_unit1	= conv2d(self.relu_unit1, self.W_conv1, 1, zero_pad) + self.B_conv1
+
+				#		# self.bn_unit2 = batch_normalize( self.linear_unit1, filt_depth )
+				#		# self.relu_unit2	= tf.nn.relu ( self.bn_unit2.output_y )
+				#		self.bn_unit2	= batch_norm(self.linear_unit1, filt_depth, phase_train)
+				#		self.relu_unit2	= tf.nn.relu ( self.bn_unit2 )
+	
+				#		self.W_conv2	= weight_variable ( [3, 3, filt_depth, filt_depth], 'w_conv%d_%d' %(filt_depth, index+1), k2d )
+				#		self.B_conv2	= bias_variable ( [filt_depth], 'B_conv%d_%d' %(filt_depth, index+1) )
+				#		self.linear_unit2	= conv2d(self.relu_unit2, self.W_conv2, stride, zero_pad) + self.B_conv2
+
+				#		# self.bn_unit3 = batch_normalize( self.linear_unit2, filt_depth )
+				#		# self.relu_unit3	= tf.nn.relu ( self.bn_unit3.output_y )
+				#		self.bn_unit3	= batch_norm(self.linear_unit2, filt_depth, phase_train)
+				#		self.relu_unit3	= tf.nn.relu ( self.bn_unit3 )
+	
+				#		self.W_conv3	= weight_variable ( [1, 1, filt_depth, filt_depth], 'w_conv%d_%d' %(filt_depth, index+2), k2d )
+				#		self.B_conv3	= bias_variable ( [filt_depth], 'B_conv%d_%d' %(filt_depth, index+2) )
+				#		self.linear_unit3	= conv2d(self.relu_unit3, self.W_conv3, 1, zero_pad) + self.B_conv3
+	
+				#		if short_cut :
+				#			if zero_pad :
+				#				self.shortcut_path = input_x
+				#			else :
+				#				self.shortcut_path = tf.slice(input_x, [0, 1, 1, 0], [-1, sizeFeature[0]-2, sizeFeature[1]-2, 64] )
+				#			self.add_unit = self.linear_unit3 + self.shortcut_path
+				#		else :
+				#			self.add_unit = self.linear_unit3
+	
+				#		self.out = self.add_unit
+
+				## 3x3 one layer Structure
 				self.bn_unit1	= batch_norm(input_x, filt_depth, phase_train)
 				self.relu_unit1	= tf.nn.relu ( self.bn_unit1)
-		
+
 				k2d = sizeFeature[0]*sizeFeature[1]*filt_depth
-				self.W_conv1	= weight_variable ( [1, 1, filt_depth/stride, filt_depth], 'w_conv%d_%d'%(filt_depth, index), k2d )
+				self.W_conv1	= weight_variable ( [3, 3, filt_depth/stride, filt_depth], 'w_conv%d_%d'%(filt_depth, index), k2d )
 				self.B_conv1	= bias_variable ( [filt_depth], 'B_conv%d_%d'%(filt_depth, index) )
 				self.linear_unit1	= conv2d(self.relu_unit1, self.W_conv1, 1, zero_pad) + self.B_conv1
 
-				# self.bn_unit2 = batch_normalize( self.linear_unit1, filt_depth )
-				# self.relu_unit2	= tf.nn.relu ( self.bn_unit2.output_y )
-				self.bn_unit2	= batch_norm(self.linear_unit1, filt_depth, phase_train)
-				self.relu_unit2	= tf.nn.relu ( self.bn_unit2 )
-	
-				self.W_conv2	= weight_variable ( [3, 3, filt_depth, filt_depth], 'w_conv%d_%d' %(filt_depth, index+1), k2d )
-				self.B_conv2	= bias_variable ( [filt_depth], 'B_conv%d_%d' %(filt_depth, index+1) )
-				self.linear_unit2	= conv2d(self.relu_unit2, self.W_conv2, stride, zero_pad) + self.B_conv2
-
-				# self.bn_unit3 = batch_normalize( self.linear_unit2, filt_depth )
-				# self.relu_unit3	= tf.nn.relu ( self.bn_unit3.output_y )
-				self.bn_unit3	= batch_norm(self.linear_unit2, filt_depth, phase_train)
-				self.relu_unit3	= tf.nn.relu ( self.bn_unit3 )
-	
-				self.W_conv3	= weight_variable ( [1, 1, filt_depth, filt_depth], 'w_conv%d_%d' %(filt_depth, index+2), k2d )
-				self.B_conv3	= bias_variable ( [filt_depth], 'B_conv%d_%d' %(filt_depth, index+2) )
-				self.linear_unit3	= conv2d(self.relu_unit3, self.W_conv3, 1, zero_pad) + self.B_conv3
-	
 				if short_cut :
 					if zero_pad :
 						self.shortcut_path = input_x
 					else :
 						self.shortcut_path = tf.slice(input_x, [0, 1, 1, 0], [-1, sizeFeature[0]-2, sizeFeature[1]-2, 64] )
-					self.add_unit = self.linear_unit3 + self.shortcut_path
+					self.add_unit = self.linear_unit1 + self.shortcut_path
 				else :
-					self.add_unit = self.linear_unit3
+					self.add_unit = self.linear_unit1
 	
 				self.out = self.add_unit
 	
@@ -205,3 +223,12 @@ with tf.device(CONST.SEL_GPU) :
 	
 				self.out = self.add_unit
 	
+	#	class batch_normalize(object):
+	#		def __init__(self, input_x, depth):
+	#			self.mean, self.var = tf.nn.moments( input_x, [1, 2], name='moment' )
+	#			offset_init = tf.zeros([depth], name='offset_initial')
+	#			self.offset = tf.Variable(offset_init, name = 'offset')
+	#			scale_init = tf.random_uniform([depth], minval=0, maxval=1, name='scale_initial')
+	#			self.scale = tf.Variable(scale_init, name = 'scale')
+	#			self.output_y = tf.nn.batch_norm_with_global_normalization(input_x, self.mean, self.var, self.offset, self.scale, 1e-20, True)
+

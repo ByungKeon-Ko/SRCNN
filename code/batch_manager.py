@@ -11,11 +11,11 @@ import CONST
 class BatchManager ( ) :
 	def init (self, dset_train, dset_test):
 		len_list = np.zeros([91])
-		for i in xrange(91):
+		for i in xrange(len(dset_train)):
 			len_list[i] = len(dset_train[i])
 
 		total_num = 0
-		for i in xrange(91):
+		for i in xrange(len(dset_train)):
 			# temp_num = (len_list[i]-CONST.lenPATCH+1)
 			## TODO : need to update this number calculation with size of network output
 			temp_num = int( len_list[i] / CONST.lenPATCH )
@@ -24,7 +24,7 @@ class BatchManager ( ) :
 
 		print "========= total number of subimage : %s, with size %s =========" %(total_num, CONST.lenPATCH)
 
-		self.nDSET = 91
+		self.nDSET = len(dset_train)
 
 		self.dset_train = dset_train
 		self.max_index = self.nDSET
@@ -99,12 +99,12 @@ def random_crop(img_mat, img_mat2, crop_size):
 
 	tmp_img  = img_mat[rand_y:rand_y+crop_size, rand_x:rand_x+crop_size]
 	tmp_img2 = img_mat2[rand_y:rand_y+crop_size, rand_x:rand_x+crop_size]
-	if random.randint(0,1) :
-		tmp_img = np.fliplr(tmp_img)
-		tmp_img2 = np.fliplr(tmp_img2)
-	if random.randint(0,1) :
-		tmp_img = np.flipud(tmp_img)
-		tmp_img2 = np.flipud(tmp_img2)
+	# if random.randint(0,1) :
+	# 	tmp_img = np.fliplr(tmp_img)
+	# 	tmp_img2 = np.fliplr(tmp_img2)
+	# if random.randint(0,1) :
+	# 	tmp_img = np.flipud(tmp_img)
+	# 	tmp_img2 = np.flipud(tmp_img2)
 
 	return tmp_img.astype(np.float32), tmp_img2.astype(np.float32)
 

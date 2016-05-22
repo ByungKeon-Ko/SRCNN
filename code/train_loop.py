@@ -20,7 +20,7 @@ import batch_manager
 
 ITER_TEST = 1000
 
-def train_loop (NET, BM, saver, sess) :
+def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 
 	print "train loop start!!"
 	iterate = CONST.ITER_OFFSET
@@ -43,21 +43,6 @@ def train_loop (NET, BM, saver, sess) :
 		# t_stmp1 = time.time()
 		# print 'stmp1 - stmp2 = ', t_stmp1-t_stmp2
 		batch = BM.next_batch(CONST.nBATCH)
-		# t_stmp2 = time.time()
-		# print 'stmp2 - stmp1 = ', t_stmp2-t_stmp1
-		# if iterate == 1 :
-		# 	test_loss = 0
-		# 	test_mse = 0
-		# 	for i in xrange(ITER_TEST) :
-		# 		tbatch = BM.testsample()
-		# 		test_mse	= test_mse + NET.mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1], NET.phase_train:False } )
-
-		# 	test_mse = test_mse/float(ITER_TEST)
-		# 	print test_mse, type(test_mse)
-		# 	test_psnr = 20*math.log10(1./math.sqrt(test_mse) )
-		# 	print "epoch : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, test_mse, test_psnr)
-		# 	accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
-
 		new_epoch_flag = batch[2]
 		iterate = iterate + 1
 
@@ -90,7 +75,7 @@ def train_loop (NET, BM, saver, sess) :
 			train_mse	= NET.test_mse.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True } )
 			for j in xrange(CONST.nBATCH) :
 				sum_mse = sum_mse + train_mse[j]
-				sum_psnr = sum_psnr + 20*math.log10(1.0/math.sqrt(train_mse[j]) )
+				sum_psnr = sum_psnr + 20*math.log10(1.0/math.sqrt(train_mse[j]+1e-10) )
 
 			cnt_loss	= cnt_loss + 1
 
@@ -102,45 +87,51 @@ def train_loop (NET, BM, saver, sess) :
 				cnt_loss = 0
 
 				print "step : %d, epoch : %d, mse : %0.6f, psnr : %3.4f, time : %0.4f" %(iterate, epoch, avg_mse, psnr, (time.time() - start_time)/60. )
-				print "==================================================================================="
-				grad_0  = NET.w_grad_0.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				grad_5  = NET.w_grad_5.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				grad_10 = NET.w_grad_10.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				# grad_15 = NET.w_grad_15.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				# grad_20 = NET.w_grad_20.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
-				print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
-				print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
-				# print " grad_15 : ", np.mean(abs(grad_15) ), np.max(abs(grad_15 )), np.shape(grad_15)
-				# print " grad_20 : ", np.mean(abs(grad_20) ), np.max(abs(grad_20 )), np.shape(grad_20)
-				print "==================================================================================="
+				# print "==================================================================================="
+				# grad_0  = NET.w_grad_0.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
+				# grad_5  = NET.w_grad_5.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
+				# grad_10 = NET.w_grad_10.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
+				# # grad_15 = NET.w_grad_15.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
+				# # grad_20 = NET.w_grad_20.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
+				# print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
+				# print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
+				# print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
+				# # print " grad_15 : ", np.mean(abs(grad_15) ), np.max(abs(grad_15 )), np.shape(grad_15)
+				# # print " grad_20 : ", np.mean(abs(grad_20) ), np.max(abs(grad_20 )), np.shape(grad_20)
+				# print "==================================================================================="
 				start_time = time.time()
 				acctr_file.write("%d %0.6f\n" %(iterate, psnr) )
 
 		if (new_epoch_flag == 1) :
 			epoch = epoch + 1
-			if epoch % 4 == 0 :
-				test_loss = 0
-				test_mse = 0
+			if epoch % 2 == 0 :
 				mse_sum = 0
-				test_psnr = 0
-				tbatch_all = BM.testsample()
-				tbatch_iter = int(np.shape(tbatch_all)[1] / 32)
-				for i in xrange(tbatch_iter) :
-					tbatch = tbatch_all[:,i*32:(i+1)*32, :, :, :]
-					test_mse	= NET.test_mse.eval(		feed_dict={NET.x:tbatch[0], NET.y_:tbatch[1], NET.phase_train:False } )
-					for j in xrange(32) :
-						mse = test_mse[j]
-						mse_sum = mse_sum + test_mse[j]
-						test_psnr = test_psnr + 20*math.log10(1./math.sqrt(mse) )
+				psnr_sum = 0
 
-				test_mse = mse_sum / 32. /tbatch_iter
-				test_psnr = test_psnr / 32. / tbatch_iter
-				print "epoch : %d, iter : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, iterate, test_mse, test_psnr)
-				accte_file.write("%d %0.6f\n" %(iterate, test_psnr) )
-				if epoch%1 == 0 :
-					save_path = saver.save(sess, CONST.CKPT_FILE)
-					print "Save ckpt file", CONST.CKPT_FILE
+				for k in xrange(14) :
+					t_x   = dset_full_low[k]
+					t_org = dset_full_gt[k]
+	
+					size = np.shape(t_x)
+					t_x_1   = np.reshape(t_x,   [1, size[0], size[1], 1] )
+					t_org_1 = np.reshape(t_org, [1, size[0], size[1], 1] )
+
+					full_out = NET.image_gen.eval(feed_dict={NET.x:t_x_1, NET.phase_train:False} )[0]
+					shape = np.shape(full_out)
+					error = full_out - t_org_1
+					mse = np.mean(np.square( error ).astype(np.float32))
+					mse_sum = mse_sum + mse
+					psnr = 20*math.log10(1.0/math.sqrt(mse) )
+					psnr_sum = psnr_sum + psnr
+
+				mse_sum = mse_sum / 14.
+				psnr_sum = psnr_sum / 14.
+				print "epoch : %d, iter : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, iterate, mse_sum, psnr_sum)
+				accte_file.write("%d %0.6f\n" %(iterate, psnr_sum) )
+
+				# if epoch%1 == 0 :
+				# 	save_path = saver.save(sess, CONST.CKPT_FILE)
+				# 	print "Save ckpt file", CONST.CKPT_FILE
 
 		# NET.train_step_run( feed_dict= {NET.x:batch[0], NET.y_: batch[1], NET.phase_train:True } )
 		sess.run(NET.train_step_run, feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True})

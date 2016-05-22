@@ -11,43 +11,44 @@ import batch_manager
 import Image
 from scipy import ndimage
 
-dset_train, dset_test = ImageLoader.ImageLoad()
+dset_train, dset_test, dset_full_gt, dset_full_low = ImageLoader.ImageLoad()
 
 ## Batch Manager Instantiation
 BM = batch_manager.BatchManager()
 BM.init(dset_train, dset_test)
 
-## Calculate PSNR, MSE of BICUBIC
 mse_sum = 0
 psnr = 0
+## Calculate PSNR, MSE of BICUBIC
 
-bic_batch = BM.testsample()
-nTBATCH = np.shape(bic_batch)[1]
-for i in xrange(nTBATCH):
-	tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
-	mse = np.mean( np.square(tmp_bic) )
-	mse_sum = mse_sum + mse
-	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
+# bic_batch = BM.testsample()
+# nTBATCH = np.shape(bic_batch)[1]
+# for i in xrange(nTBATCH):
+# 	tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
+# 	mse = np.mean( np.square(tmp_bic) )
+# 	mse_sum = mse_sum + mse
+# 	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse+1e-10) )
+# 
+# mse = mse_sum/nTBATCH
+# psnr = psnr/nTBATCH
 
-mse = mse_sum/nTBATCH
-psnr = psnr/nTBATCH
+for j in xrange(100):
+	bic_batch = BM.next_batch(CONST.nBATCH)
+	for i in xrange(CONST.nBATCH):
+		tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
+		mse = np.mean( np.square(tmp_bic) )
+		mse_sum = mse_sum + mse
+		psnr = psnr + 20*math.log10(1.0/math.sqrt(mse+1e-10) )
 
-#	for j in xrange(100):
-#		bic_batch = BM.next_batch(CONST.nBATCH)
-#		for i in xrange(CONST.nBATCH):
-#			tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
-#			mse = np.mean( np.square(tmp_bic) )
-#			mse_sum = mse_sum + mse
-#			psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
-#	
-#	mse = mse_sum/CONST.nBATCH/100.
-#	psnr = psnr/CONST.nBATCH/100.
+mse = mse_sum/CONST.nBATCH/100.
+psnr = psnr/CONST.nBATCH/100.
+
 print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
-patch_low  = np.multiply( bic_batch[0][0, :,:,0], 255.0 ).astype(np.uint8) 
-patch_high = np.multiply( bic_batch[1][0, :,:,0]+0.5, 255.0 ).astype(np.uint8) 
-# Image.fromarray( patch_low ).show()
-# Image.fromarray( patch_high ).show()
+patch_low  = np.multiply(                       bic_batch[0][3, :,:,0], 255.0 ).astype(np.uint8) 
+patch_high = np.multiply( np.minimum(np.maximum(bic_batch[1][3, :,:,0]+0.5, 0.0), 1.0), 255.0 ).astype(np.uint8) 
+Image.fromarray( patch_low ).show()
+Image.fromarray( patch_high ).show()
 
 #	## Calculate PSNR on whole image
 #	im_low_freq  = dset_test[1][:,:,0]
@@ -61,5 +62,22 @@ patch_high = np.multiply( bic_batch[1][0, :,:,0]+0.5, 255.0 ).astype(np.uint8)
 #	mse = np.mean(np.square(im_high_freq.astype(np.float32)))
 #	psnr = 20*math.log10(1./math.sqrt(mse) )
 #	print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse, psnr)
+
+## Calculate PSNR on whole image --- Set14
+mse_sum = 0
+psnr = 0
+
+for i in xrange(14):
+	bic_img =[dset_full_low[i], dset_full_gt[i] ]
+	mse = np.mean( np.square( bic_img[1] - bic_img[0] ) )
+	mse_sum = mse_sum + mse
+	psnr = psnr + 20*math.log10( 1.0/math.sqrt(mse) )
+
+mse = mse_sum/14.
+psnr = psnr/14.
+
+print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse, psnr)
+
+
 
 

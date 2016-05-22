@@ -58,6 +58,9 @@ class BatchManager ( ) :
 		if random.randint(0,1) :
 			x_batch = np.flipud(x_batch)
 			y_batch = np.flipud(y_batch)
+		rand_rot = random.randint(0,3)
+		x_batch = np.rot90(x_batch, rand_rot)
+		y_batch = np.rot90(y_batch, rand_rot)
 
 		return np.array([x_batch, y_batch])
 
@@ -65,6 +68,9 @@ class BatchManager ( ) :
 		nTBATCH = np.shape(self.dset_test)[3]
 		x_batch = self.dset_test[1][:,:,0:0+nTBATCH]
 		y_batch = self.dset_test[2][:,:,0:0+nTBATCH]
+
+		x_batch = np.transpose( x_batch, (2,0,1) )
+		y_batch = np.transpose( y_batch, (2,0,1) )
 
 		x_batch = np.reshape(x_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )
 		y_batch = np.reshape(y_batch, (-1, CONST.lenPATCH, CONST.lenPATCH, 1 ) )

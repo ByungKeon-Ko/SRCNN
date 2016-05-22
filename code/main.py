@@ -8,6 +8,7 @@
 import numpy as np
 import tensorflow as tf
 import math
+import Image
 
 import ImageLoader
 import batch_manager
@@ -21,7 +22,7 @@ print "main.py start!!"
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.95 )
 
 ## Image Loading & PreProcessing
-dset_train, dset_test = ImageLoader.ImageLoad()
+dset_train, dset_test, dset_full_gt, dset_full_low = ImageLoader.ImageLoad()
 print "Image Loading Done !!"
 
 # img_train, img_test = PreProc.PreProc(preimg_train, preimg_test)
@@ -40,10 +41,10 @@ psnr = 0
 bic_batch = BM.testsample()
 nTBATCH = np.shape(bic_batch)[1]
 for i in xrange(nTBATCH):
-	tmp_bic = bic_batch[1][i,:,:,0]
+	tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
 	mse = np.mean( np.square(tmp_bic) )
 	mse_sum = mse_sum + mse
-	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse) )
+	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse+1e-10) )
 
 mse = mse_sum/nTBATCH
 psnr = psnr/nTBATCH
@@ -74,49 +75,52 @@ with tf.device(CONST.SEL_GPU) :
 		print "STAGE : Session Init Finish!"
 		
 		## Training
-		train_loop(NET, BM, saver, sess )
+		train_loop(NET, BM, saver, sess, dset_full_low, dset_full_gt )
 		print "STAGE : Training Loop Finish!"
 
 	if CONST.SKIP_TRAIN :
-		## Test
-		t_smpl, t_x, t_y = dset_test[0]
-		tbatch_size = np.shape( t_smpl )
-		# t_x, t_y = batch_manager.divide_freq_img(t_smpl, tbatch_size)
-		t_x_1 = np.divide(t_x, 255.0)
-		t_y_1 = np.divide(t_y, 255.0)
-		
+		## Test Entire Images
 		NET = 0
 		NET = sr_network.SrNet()
-		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, tbatch_size, 1 )
+		NET.infer(CONST.nLAYER, CONST.SHORT_CUT, [100,100], 1 )
 		
 		saver = tf.train.Saver( )
 		saver.restore(sess, CONST.CKPT_FILE )
 
 		print "Network Restore Done!!", CONST.CKPT_FILE
 
-		baby_out = NET.image_gen.eval(feed_dict={NET.x:[t_x_1], NET.phase_train:False} )[0]
-		# sess.close()
-		shape = np.shape(baby_out)
-		baby_out_255 = np.maximum((np.multiply(baby_out, 255.0) + 0.5), 1.0).astype(np.uint8).astype(np.float32)
+		mse_sum = 0
+		psnr_sum = 0
 
-		mse = np.mean(np.square((baby_out_255-t_smpl.astype(np.float32)).astype(np.float32)))
-		psnr = 20*math.log10(255.0/math.sqrt(mse) )
-		print "========= BABY MSE : %s, PSNR : %s ==================" %(mse, psnr)
+		for k in xrange(14):
+			t_x   = dset_full_low[k]
+			t_org = dset_full_gt[k]
 
-		## Calculate PSNR, MSE of BICUBIC
-		mse = 0
-		for j in xrange(100):
-			bic_batch = BM.testsample()
-			# bic_batch = BM.next_batch(CONST.nBATCH)
-			for i in xrange(64):
-				tmp_bic = bic_batch[1][i]
-				t_out = NET.image_gen.eval(feed_dict={NET.x:[tmp_bic], NET.phase_train:False} )[0]
-				t_out_255 = np.maximum((np.multiply(t_out, 255.0) + 0.5), 1.0).astype(np.uint8).astype(np.float32)
-				mse = mse + np.mean( np.square(tmp_bic) )
-		
-		mse = mse/64./100.
-		psnr = 20*math.log10(1.0/math.sqrt(mse) )
-		print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
+			size = np.shape(t_x)
+			t_x_1   = np.reshape(t_x,   [1, size[0], size[1], 1] )
+			t_org_1 = np.reshape(t_org, [1, size[0], size[1], 1] )
+
+			full_out = NET.image_gen.eval(feed_dict={NET.x:t_x_1, NET.phase_train:False} )[0]
+			shape = np.shape(full_out)
+			# tmp_a = np.multiply(full_out, 255.0) + 0.5
+			# tmp_b = np.maximum( tmp_a, 1.0 ).astype(np.uint8).astype(np.float32)
+
+			error = full_out - t_org_1
+			mse = np.mean(np.square( error ).astype(np.float32))
+			mse_sum = mse_sum + mse
+			psnr = 20*math.log10(1.0/math.sqrt(mse) )
+			psnr_sum = psnr_sum + psnr
+			print mse, psnr
+
+			x_img = np.multiply(t_x, 255.0).astype(np.uint8)
+			y_img = np.reshape( full_out, size )
+			y_img = np.multiply( y_img, 255.0).astype(np.uint8)
+			label = np.multiply( t_org, 255.0).astype(np.uint8)
+
+		mse_sum = mse_sum / 14.
+		psnr_sum = psnr_sum / 14.
+		print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse_sum, psnr_sum)
+
 
 # import Image
 # from PIL import ImageFilter

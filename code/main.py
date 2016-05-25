@@ -19,7 +19,7 @@ from compute_psnr import compute_psnr
 # import PreProc
 # from save_std import save_std
 
-print "main.py start!!"
+print "main.py start!!", CONST.CKPT_FILE, CONST.SEL_GPU, CONST.SHORT_CUT, CONST.ABS_PATH
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.95 )
 
 ## Image Loading & PreProcessing
@@ -75,6 +75,10 @@ with tf.device(CONST.SEL_GPU) :
 			saver.restore(sess, CONST.CKPT_FILE )
 			print "Load previous CKPT file!", CONST.CKPT_FILE
 		print "STAGE : Session Init Finish!"
+
+		batch = BM.next_batch(CONST.nBATCH)
+		# a = NET.abstr_path.eval( feed_dict={NET.x:batch[0], NET.phase_train:True} )
+		# print "a shape : ", np.shape(a)
 		
 		## Training
 		train_loop(NET, BM, saver, sess, dset_full_low, dset_full_gt )

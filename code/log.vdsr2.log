@@ -1,0 +1,106 @@
+main.py start!!
+Image Loading Done !!
+========= BICUBIC MSE : 0.00227523048358, PSNR : 27.5445308928 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.001915, psnr : 29.8998, time : 0.0140
+step : 100, epoch : 0, mse : 0.001573, psnr : 31.0941, time : 1.8927
+step : 200, epoch : 0, mse : 0.001934, psnr : 32.0912, time : 1.9032
+step : 300, epoch : 0, mse : 0.001920, psnr : 32.3158, time : 1.8996
+step : 400, epoch : 0, mse : 0.001936, psnr : 32.4196, time : 1.9004
+step : 500, epoch : 0, mse : 0.001941, psnr : 32.1940, time : 1.9019
+step : 600, epoch : 0, mse : 0.001903, psnr : 32.1924, time : 1.8943
+step : 700, epoch : 0, mse : 0.001888, psnr : 32.4187, time : 1.8900
+step : 800, epoch : 0, mse : 0.001887, psnr : 32.2712, time : 1.8898
+epoch : 1, iter : 823, test mse : 0.001774, test_psnr : 28.7213
+step : 900, epoch : 1, mse : 0.001775, psnr : 32.4894, time : 2.0086
+step : 1000, epoch : 1, mse : 0.001837, psnr : 32.3199, time : 1.8916
+step : 1100, epoch : 1, mse : 0.001814, psnr : 32.4168, time : 1.8864
+step : 1200, epoch : 1, mse : 0.001733, psnr : 32.6477, time : 1.8863
+step : 1300, epoch : 1, mse : 0.001789, psnr : 32.4197, time : 1.8875
+step : 1400, epoch : 1, mse : 0.001744, psnr : 32.4981, time : 1.8927
+step : 1500, epoch : 1, mse : 0.001806, psnr : 32.3905, time : 1.8885
+step : 1600, epoch : 1, mse : 0.001772, psnr : 32.3703, time : 1.8870
+epoch : 2, iter : 1646, test mse : 0.001719, test_psnr : 28.9083
+step : 1700, epoch : 2, mse : 0.001714, psnr : 32.6910, time : 2.0099
+step : 1800, epoch : 2, mse : 0.001776, psnr : 32.3971, time : 1.8853
+step : 1900, epoch : 2, mse : 0.001761, psnr : 32.6061, time : 1.8852
+step : 2000, epoch : 2, mse : 0.001747, psnr : 32.4705, time : 1.8890
+step : 2100, epoch : 2, mse : 0.001790, psnr : 32.3541, time : 1.8869
+step : 2200, epoch : 2, mse : 0.001750, psnr : 32.6513, time : 1.8867
+step : 2300, epoch : 2, mse : 0.001779, psnr : 32.6092, time : 1.8868
+step : 2400, epoch : 2, mse : 0.001732, psnr : 32.6506, time : 1.8884
+epoch : 3, iter : 2469, test mse : 0.001781, test_psnr : 28.8039
+step : 2500, epoch : 3, mse : 0.001713, psnr : 32.6115, time : 2.0053
+step : 2600, epoch : 3, mse : 0.001774, psnr : 32.4971, time : 1.8861
+step : 2700, epoch : 3, mse : 0.001727, psnr : 32.7297, time : 1.8875
+step : 2800, epoch : 3, mse : 0.001724, psnr : 32.6317, time : 1.8888
+step : 2900, epoch : 3, mse : 0.001717, psnr : 32.6079, time : 1.8855
+step : 3000, epoch : 3, mse : 0.001747, psnr : 32.6283, time : 1.8857
+step : 3100, epoch : 3, mse : 0.001791, psnr : 32.4751, time : 1.8869
+step : 3200, epoch : 3, mse : 0.001720, psnr : 32.5639, time : 1.8876
+epoch : 4, iter : 3292, test mse : 0.001727, test_psnr : 28.8912
+step : 3300, epoch : 4, mse : 0.001721, psnr : 32.6692, time : 2.0050
+step : 3400, epoch : 4, mse : 0.001738, psnr : 32.5419, time : 1.8873
+step : 3500, epoch : 4, mse : 0.001743, psnr : 32.6586, time : 1.8871
+step : 3600, epoch : 4, mse : 0.001725, psnr : 32.6029, time : 1.8871
+step : 3700, epoch : 4, mse : 0.001721, psnr : 32.6861, time : 1.8875
+step : 3800, epoch : 4, mse : 0.001722, psnr : 32.7216, time : 1.8871
+step : 3900, epoch : 4, mse : 0.001747, psnr : 32.6372, time : 1.8850
+step : 4000, epoch : 4, mse : 0.001709, psnr : 32.6040, time : 1.8831
+step : 4100, epoch : 4, mse : 0.001701, psnr : 32.7096, time : 1.8836
+epoch : 5, iter : 4115, test mse : 0.001729, test_psnr : 28.8965
+step : 4200, epoch : 5, mse : 0.001717, psnr : 32.7385, time : 2.0033
+step : 4300, epoch : 5, mse : 0.001718, psnr : 32.6814, time : 1.8853
+step : 4400, epoch : 5, mse : 0.001715, psnr : 32.7978, time : 1.8859
+step : 4500, epoch : 5, mse : 0.001670, psnr : 32.7194, time : 1.8869
+step : 4600, epoch : 5, mse : 0.001783, psnr : 32.5112, time : 1.8886
+step : 4700, epoch : 5, mse : 0.001669, psnr : 32.7721, time : 1.8870
+step : 4800, epoch : 5, mse : 0.001769, psnr : 32.5502, time : 1.8865
+step : 4900, epoch : 5, mse : 0.001666, psnr : 32.7028, time : 1.8868
+epoch : 6, iter : 4938, test mse : 0.001698, test_psnr : 28.9526
+step : 5000, epoch : 6, mse : 0.001694, psnr : 32.7940, time : 2.0057
+step : 5100, epoch : 6, mse : 0.001693, psnr : 32.8249, time : 1.8873
+step : 5200, epoch : 6, mse : 0.001714, psnr : 32.6837, time : 1.8872
+step : 5300, epoch : 6, mse : 0.001707, psnr : 32.6035, time : 1.8872
+step : 5400, epoch : 6, mse : 0.001734, psnr : 32.6650, time : 1.8874
+step : 5500, epoch : 6, mse : 0.001700, psnr : 32.6166, time : 1.8878
+step : 5600, epoch : 6, mse : 0.001692, psnr : 32.9229, time : 1.8855
+step : 5700, epoch : 6, mse : 0.001736, psnr : 32.5483, time : 1.8834
+epoch : 7, iter : 5761, test mse : 0.001716, test_psnr : 28.9137
+step : 5800, epoch : 7, mse : 0.001737, psnr : 32.5941, time : 2.0025
+step : 5900, epoch : 7, mse : 0.001763, psnr : 32.5104, time : 1.8846
+step : 6000, epoch : 7, mse : 0.001744, psnr : 32.7950, time : 1.8875
+step : 6100, epoch : 7, mse : 0.001697, psnr : 32.7669, time : 1.8841
+step : 6200, epoch : 7, mse : 0.001690, psnr : 32.7855, time : 1.8850
+step : 6300, epoch : 7, mse : 0.001666, psnr : 32.7954, time : 1.8885
+step : 6400, epoch : 7, mse : 0.001674, psnr : 32.7831, time : 1.8860
+step : 6500, epoch : 7, mse : 0.001705, psnr : 32.7377, time : 1.8888
+epoch : 8, iter : 6584, test mse : 0.001695, test_psnr : 28.9581
+step : 6600, epoch : 8, mse : 0.001682, psnr : 32.7088, time : 2.0038
+step : 6700, epoch : 8, mse : 0.001759, psnr : 32.7371, time : 1.8876
+step : 6800, epoch : 8, mse : 0.001740, psnr : 32.5638, time : 1.8859
+step : 6900, epoch : 8, mse : 0.001681, psnr : 32.8947, time : 1.8886
+step : 7000, epoch : 8, mse : 0.001718, psnr : 32.4935, time : 1.8866
+step : 7100, epoch : 8, mse : 0.001677, psnr : 32.7597, time : 1.8887
+step : 7200, epoch : 8, mse : 0.001667, psnr : 32.7927, time : 1.8872
+step : 7300, epoch : 8, mse : 0.001656, psnr : 32.9420, time : 1.8870
+step : 7400, epoch : 8, mse : 0.001674, psnr : 32.7999, time : 1.8879
+epoch : 9, iter : 7407, test mse : 0.001691, test_psnr : 29.0153
+step : 7500, epoch : 9, mse : 0.001725, psnr : 32.8384, time : 2.0060
+step : 7600, epoch : 9, mse : 0.001611, psnr : 32.8524, time : 1.8888
+step : 7700, epoch : 9, mse : 0.001721, psnr : 32.8193, time : 1.8862
+step : 7800, epoch : 9, mse : 0.001677, psnr : 32.6894, time : 1.8879
+step : 7900, epoch : 9, mse : 0.001671, psnr : 32.9114, time : 1.8852
+step : 8000, epoch : 9, mse : 0.001675, psnr : 32.8269, time : 1.8888
+step : 8100, epoch : 9, mse : 0.001730, psnr : 32.6383, time : 1.8855
+step : 8200, epoch : 9, mse : 0.001720, psnr : 32.6040, time : 1.8892
+epoch : 10, iter : 8230, test mse : 0.001719, test_psnr : 28.9560
+step : 8300, epoch : 10, mse : 0.001672, psnr : 32.7108, time : 2.0050
+step : 8400, epoch : 10, mse : 0.001672, psnr : 32.8254, time : 1.8883
+step : 8500, epoch : 10, mse : 0.001711, psnr : 32.7624, time : 1.8865
+step : 8600, epoch : 10, mse : 0.001678, psnr : 32.8953, time : 1.8885
+step : 8700, epoch : 10, mse : 0.001695, psnr : 32.6382, time : 1.8881
+step : 8800, epoch : 10, mse : 0.001694, psnr : 32.7452, time : 1.8871

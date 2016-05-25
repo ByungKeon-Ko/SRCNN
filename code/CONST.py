@@ -3,18 +3,20 @@
 # lenPATCH = 35
 
 # lenPATCH = 42
-lenPATCH = 44
-# lenPATCH = 64
+# lenPATCH = 44
+lenPATCH = 64
 
 # lenPATCH = 300
-nBATCH = 64
-# nBATCH = 32
+# nBATCH = 64
+nBATCH = 32
+# nBATCH = 8
 SCALE = 3.
 
 ## About Networks
 nLAYER = 10
 # nLAYER = 7		# 14 + 6(resunit)
-SHORT_CUT = 1	# '1' : residual, '0' : plain
+SHORT_CUT = 0	# '1' : residual, '0' : plain
+ABS_PATH = 1
 PRE_ACTIVE = 1
 BOTTLENECK = 1
 COLOR_IN = 1
@@ -49,9 +51,9 @@ ITER1 = 10*1000
 ITER2 = 15*1000
 ITER3 = 20*1000
 
-# CKPT_FILE	= "../ckpt_file/sr_50.test.ckpt"
-# ACC_TRAIN	= "../output_data/sr_50_train.test.txt"
-# ACC_TEST	= "../output_data/sr_50_test.test.txt"
+CKPT_FILE	= "../ckpt_file/sr_50.test.ckpt"
+ACC_TRAIN	= "../output_data/sr_50_train.test.txt"
+ACC_TEST	= "../output_data/sr_50_test.test.txt"
 
 # CKPT_FILE	= "../ckpt_file/sr_50.vdsr_adam.ckpt"	# Scale 30
 # ACC_TRAIN	= "../output_data/sr_50_train.vdsr_adam.txt"
@@ -65,9 +67,9 @@ ITER3 = 20*1000
 # ACC_TRAIN	= "../output_data/sr_50_train.vdsr2.txt"
 # ACC_TEST	= "../output_data/sr_50_test.vdsr2.txt"
 
-CKPT_FILE	= "../ckpt_file/sr_50.vdsr3.ckpt"
-ACC_TRAIN	= "../output_data/sr_50_train.vdsr3.txt"
-ACC_TEST	= "../output_data/sr_50_test.vdsr3.txt"
+# CKPT_FILE	= "../ckpt_file/sr_50.vdsr3.ckpt"
+# ACC_TRAIN	= "../output_data/sr_50_train.vdsr3.txt"
+# ACC_TEST	= "../output_data/sr_50_test.vdsr3.txt"
 
 # CKPT_FILE	= "../ckpt_file/sr_50.residual.ckpt"
 # ACC_TRAIN	= "../output_data/sr_50_train.residual.txt"
@@ -77,4 +79,4 @@ ACC_TEST	= "../output_data/sr_50_test.vdsr3.txt"
 # ACC_TRAIN	= "../output_data/sr_50_train.res2.txt"
 # ACC_TEST	= "../output_data/sr_50_test.res2.txt"
 
-SEL_GPU = '/gpu:1'
+SEL_GPU = '/gpu:0'

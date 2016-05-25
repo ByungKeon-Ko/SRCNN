@@ -131,7 +131,7 @@ def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 				# 	save_path = saver.save(sess, CONST.CKPT_FILE)
 				# 	print "Save ckpt file", CONST.CKPT_FILE
 
-		# NET.train_step_run( feed_dict= {NET.x:batch[0], NET.y_: batch[1], NET.phase_train:True } )
+		# NET.train_step.run( feed_dict= {NET.x:batch[0], NET.y_: batch[1], NET.phase_train:True } )
 		sess.run(NET.train_step_run, feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True})
 
 	save_path = saver.save(sess, CONST.CKPT_FILE)

@@ -1,0 +1,95 @@
+main.py start!! ../ckpt_file/sr_50.test.ckpt /gpu:0 0 1
+Image Loading Done !!
+========= BICUBIC MSE : 0.00227523048358, PSNR : 27.5445308928 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.001705, psnr : 29.6307, time : 0.0144
+step : 100, epoch : 0, mse : 0.001847, psnr : 30.0665, time : 2.6715
+step : 200, epoch : 0, mse : 0.002384, psnr : 30.7215, time : 2.6913
+step : 300, epoch : 0, mse : 0.002427, psnr : 30.4571, time : 2.6902
+step : 400, epoch : 0, mse : 0.002428, psnr : 30.4005, time : 2.6894
+step : 500, epoch : 0, mse : 0.002357, psnr : 30.6019, time : 2.6884
+step : 600, epoch : 0, mse : 0.002425, psnr : 30.3200, time : 2.6873
+step : 700, epoch : 0, mse : 0.002429, psnr : 30.4857, time : 2.6871
+epoch : 1, iter : 745, test mse : 0.002279, test_psnr : 27.5287
+step : 800, epoch : 1, mse : 0.002271, psnr : 30.6426, time : 4.1230
+step : 900, epoch : 1, mse : 0.002284, psnr : 30.4119, time : 2.6864
+step : 1000, epoch : 1, mse : 0.002383, psnr : 30.3347, time : 2.6864
+step : 1100, epoch : 1, mse : 0.002310, psnr : 30.5727, time : 2.6869
+step : 1200, epoch : 1, mse : 0.002336, psnr : 30.4097, time : 2.6864
+step : 1300, epoch : 1, mse : 0.002275, psnr : 30.5190, time : 2.6868
+step : 1400, epoch : 1, mse : 0.002307, psnr : 30.5312, time : 2.6857
+epoch : 2, iter : 1491, test mse : 0.002275, test_psnr : 27.5445
+step : 1500, epoch : 2, mse : 0.002408, psnr : 30.3233, time : 4.1150
+step : 1600, epoch : 2, mse : 0.002297, psnr : 30.6139, time : 2.6863
+step : 1700, epoch : 2, mse : 0.002302, psnr : 30.4331, time : 2.6867
+step : 1800, epoch : 2, mse : 0.002344, psnr : 30.2936, time : 2.6869
+step : 1900, epoch : 2, mse : 0.002287, psnr : 30.4124, time : 2.6865
+step : 2000, epoch : 2, mse : 0.002325, psnr : 30.3842, time : 2.6870
+step : 2100, epoch : 2, mse : 0.002348, psnr : 30.5454, time : 2.6863
+step : 2200, epoch : 2, mse : 0.002314, psnr : 30.5514, time : 2.6870
+epoch : 3, iter : 2237, test mse : 0.002275, test_psnr : 27.5443
+step : 2300, epoch : 3, mse : 0.002332, psnr : 30.5411, time : 4.1155
+step : 2400, epoch : 3, mse : 0.002337, psnr : 30.6070, time : 2.6874
+step : 2500, epoch : 3, mse : 0.002271, psnr : 30.3723, time : 2.6863
+step : 2600, epoch : 3, mse : 0.002347, psnr : 30.3915, time : 2.6869
+step : 2700, epoch : 3, mse : 0.002337, psnr : 30.4294, time : 2.6864
+step : 2800, epoch : 3, mse : 0.002329, psnr : 30.4590, time : 2.6871
+step : 2900, epoch : 3, mse : 0.002239, psnr : 30.5579, time : 2.6871
+epoch : 4, iter : 2983, test mse : 0.002275, test_psnr : 27.5438
+step : 3000, epoch : 4, mse : 0.002428, psnr : 30.2430, time : 4.1179
+step : 3100, epoch : 4, mse : 0.002296, psnr : 30.4931, time : 2.6865
+step : 3200, epoch : 4, mse : 0.002386, psnr : 30.3838, time : 2.6862
+step : 3300, epoch : 4, mse : 0.002377, psnr : 30.4256, time : 2.6865
+step : 3400, epoch : 4, mse : 0.002318, psnr : 30.5285, time : 2.6871
+step : 3500, epoch : 4, mse : 0.002293, psnr : 30.3022, time : 2.6869
+step : 3600, epoch : 4, mse : 0.002334, psnr : 30.2968, time : 2.6866
+step : 3700, epoch : 4, mse : 0.002228, psnr : 30.7890, time : 2.6869
+epoch : 5, iter : 3729, test mse : 0.002275, test_psnr : 27.5443
+step : 3800, epoch : 5, mse : 0.002388, psnr : 30.3661, time : 4.1163
+step : 3900, epoch : 5, mse : 0.002360, psnr : 30.4048, time : 2.6861
+step : 4000, epoch : 5, mse : 0.002332, psnr : 30.4197, time : 2.6864
+step : 4100, epoch : 5, mse : 0.002322, psnr : 30.2128, time : 2.6863
+step : 4200, epoch : 5, mse : 0.002291, psnr : 30.4948, time : 2.6858
+step : 4300, epoch : 5, mse : 0.002298, psnr : 30.5734, time : 2.6861
+step : 4400, epoch : 5, mse : 0.002273, psnr : 30.7113, time : 2.6872
+epoch : 6, iter : 4475, test mse : 0.002275, test_psnr : 27.5441
+step : 4500, epoch : 6, mse : 0.002321, psnr : 30.6571, time : 4.1166
+step : 4600, epoch : 6, mse : 0.002329, psnr : 30.2906, time : 2.6865
+step : 4700, epoch : 6, mse : 0.002363, psnr : 30.4077, time : 2.6865
+step : 4800, epoch : 6, mse : 0.002295, psnr : 30.5267, time : 2.6870
+step : 4900, epoch : 6, mse : 0.002300, psnr : 30.4570, time : 2.6870
+step : 5000, epoch : 6, mse : 0.002315, psnr : 30.4969, time : 2.6861
+step : 5100, epoch : 6, mse : 0.002370, psnr : 30.4632, time : 2.6869
+step : 5200, epoch : 6, mse : 0.002347, psnr : 30.4135, time : 2.6868
+epoch : 7, iter : 5221, test mse : 0.002275, test_psnr : 27.5443
+step : 5300, epoch : 7, mse : 0.002334, psnr : 30.4956, time : 4.1145
+step : 5400, epoch : 7, mse : 0.002325, psnr : 30.3986, time : 2.6868
+step : 5500, epoch : 7, mse : 0.002349, psnr : 30.3134, time : 2.6867
+step : 5600, epoch : 7, mse : 0.002338, psnr : 30.4161, time : 2.6862
+step : 5700, epoch : 7, mse : 0.002341, psnr : 30.3901, time : 2.6866
+step : 5800, epoch : 7, mse : 0.002257, psnr : 30.5891, time : 2.6859
+step : 5900, epoch : 7, mse : 0.002374, psnr : 30.5506, time : 2.6865
+epoch : 8, iter : 5967, test mse : 0.002275, test_psnr : 27.5444
+step : 6000, epoch : 8, mse : 0.002292, psnr : 30.5975, time : 4.1185
+step : 6100, epoch : 8, mse : 0.002301, psnr : 30.4523, time : 2.6867
+step : 6200, epoch : 8, mse : 0.002299, psnr : 30.5409, time : 2.6858
+step : 6300, epoch : 8, mse : 0.002306, psnr : 30.5649, time : 2.6856
+step : 6400, epoch : 8, mse : 0.002330, psnr : 30.4018, time : 2.6863
+step : 6500, epoch : 8, mse : 0.002294, psnr : 30.4856, time : 2.6866
+step : 6600, epoch : 8, mse : 0.002306, psnr : 30.4496, time : 2.6864
+step : 6700, epoch : 8, mse : 0.002346, psnr : 30.4985, time : 2.6858
+epoch : 9, iter : 6713, test mse : 0.002275, test_psnr : 27.5445
+step : 6800, epoch : 9, mse : 0.002366, psnr : 30.1989, time : 4.1179
+step : 6900, epoch : 9, mse : 0.002438, psnr : 30.2387, time : 2.6861
+step : 7000, epoch : 9, mse : 0.002298, psnr : 30.4453, time : 2.6866
+step : 7100, epoch : 9, mse : 0.002294, psnr : 30.5521, time : 2.6862
+step : 7200, epoch : 9, mse : 0.002358, psnr : 30.3860, time : 2.6863
+step : 7300, epoch : 9, mse : 0.002312, psnr : 30.5508, time : 2.6856
+step : 7400, epoch : 9, mse : 0.002237, psnr : 30.6844, time : 2.6863
+epoch : 10, iter : 7459, test mse : 0.002275, test_psnr : 27.5443
+step : 7500, epoch : 10, mse : 0.002306, psnr : 30.5996, time : 4.1141
+step : 7600, epoch : 10, mse : 0.002217, psnr : 30.7353, time : 2.6868
+step : 7700, epoch : 10, mse : 0.002359, psnr : 30.3684, time : 2.6989

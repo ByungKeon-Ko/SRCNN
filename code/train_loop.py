@@ -88,18 +88,18 @@ def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 				cnt_loss = 0
 
 				print "step : %d, epoch : %d, mse : %0.6f, psnr : %3.4f, time : %0.4f" %(iterate, epoch, avg_mse, psnr, (time.time() - start_time)/60. )
-				print "==================================================================================="
+				# print "==================================================================================="
 				# grad_0  = NET.w_grad_0.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# grad_5  = NET.w_grad_5.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# grad_10 = NET.w_grad_10.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# # grad_15 = NET.w_grad_15.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# # grad_20 = NET.w_grad_20.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
-				print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
-				print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
+				# print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
+				# print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
+				# print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
 				# # print " grad_15 : ", np.mean(abs(grad_15) ), np.max(abs(grad_15 )), np.shape(grad_15)
 				# # print " grad_20 : ", np.mean(abs(grad_20) ), np.max(abs(grad_20 )), np.shape(grad_20)
-				print "==================================================================================="
+				# print "==================================================================================="
 				start_time = time.time()
 				acctr_file.write("%d %0.6f\n" %(iterate, psnr) )
 

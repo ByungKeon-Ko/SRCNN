@@ -10,6 +10,7 @@ import ImageLoader
 import batch_manager
 import Image
 from scipy import ndimage
+from compute_psnr import compute_psnr
 
 dset_train, dset_test, dset_full_gt, dset_full_low = ImageLoader.ImageLoad()
 
@@ -47,8 +48,8 @@ print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
 
 patch_low  = np.multiply(                       bic_batch[0][3, :,:,0], 255.0 ).astype(np.uint8) 
 patch_high = np.multiply( np.minimum(np.maximum(bic_batch[1][3, :,:,0]+0.5, 0.0), 1.0), 255.0 ).astype(np.uint8) 
-Image.fromarray( patch_low ).show()
-Image.fromarray( patch_high ).show()
+# Image.fromarray( patch_low ).show()
+# Image.fromarray( patch_high ).show()
 
 #	## Calculate PSNR on whole image
 #	im_low_freq  = dset_test[1][:,:,0]
@@ -65,19 +66,22 @@ Image.fromarray( patch_high ).show()
 
 ## Calculate PSNR on whole image --- Set14
 mse_sum = 0
-psnr = 0
+psnr_sum = 0
 
-for i in xrange(14):
-	bic_img =[dset_full_low[i], dset_full_gt[i] ]
-	mse = np.mean( np.square( bic_img[1] - bic_img[0] ) )
+def shave(img, scale):
+	size = np.shape(img)
+	return img[scale:size[0]-scale, scale:size[1]-scale]
+
+num_img = 14
+for i in xrange(num_img):
+	mse, psnr = compute_psnr( dset_full_gt[i], dset_full_low[i], scale )
 	mse_sum = mse_sum + mse
-	psnr = psnr + 20*math.log10( 1.0/math.sqrt(mse) )
+	psnr_sum = psnr_sum + psnr
 
-mse = mse_sum/14.
-psnr = psnr/14.
+mse_sum = mse_sum/num_img
+psnr_sum = psnr_sum/num_img
 
-print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse, psnr)
-
+print "========= BICUBIC ENTIRE IMAGE : %s, PSNR : %s ==================" %(mse_sum, psnr_sum)
 
 
 

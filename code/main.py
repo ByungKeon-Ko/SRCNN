@@ -15,6 +15,7 @@ import batch_manager
 import CONST
 import sr_network
 from train_loop import train_loop
+from compute_psnr import compute_psnr
 # import PreProc
 # from save_std import save_std
 
@@ -37,18 +38,19 @@ BM.init(dset_train, dset_test)
 
 ## Calculate PSNR, MSE of BICUBIC
 mse_sum = 0
-psnr = 0
-bic_batch = BM.testsample()
-nTBATCH = np.shape(bic_batch)[1]
-for i in xrange(nTBATCH):
-	tmp_bic = bic_batch[1][i,:,:,0] - bic_batch[0][i,:,:,0]
-	mse = np.mean( np.square(tmp_bic) )
-	mse_sum = mse_sum + mse
-	psnr = psnr + 20*math.log10(1.0/math.sqrt(mse+1e-10) )
+psnr_sum = 0
 
-mse = mse_sum/nTBATCH
-psnr = psnr/nTBATCH
-print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse, psnr)
+for k in xrange(14) :
+	t_x   = dset_full_low[k]
+	t_org = dset_full_gt[k]
+
+	mse, psnr = compute_psnr( t_org, t_x, CONST.SCALE )
+	mse_sum = mse_sum + mse
+	psnr_sum = psnr_sum + psnr
+
+mse_sum = mse_sum / 14.
+psnr_sum = psnr_sum / 14.
+print "========= BICUBIC MSE : %s, PSNR : %s ==================" %(mse_sum, psnr_sum)
 
 ## Session Open
 with tf.device(CONST.SEL_GPU) :

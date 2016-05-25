@@ -17,6 +17,7 @@ import time
 
 import CONST
 import batch_manager
+from compute_psnr import compute_psnr
 
 ITER_TEST = 1000
 
@@ -87,24 +88,24 @@ def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 				cnt_loss = 0
 
 				print "step : %d, epoch : %d, mse : %0.6f, psnr : %3.4f, time : %0.4f" %(iterate, epoch, avg_mse, psnr, (time.time() - start_time)/60. )
-				# print "==================================================================================="
+				print "==================================================================================="
 				# grad_0  = NET.w_grad_0.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# grad_5  = NET.w_grad_5.eval( feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# grad_10 = NET.w_grad_10.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# # grad_15 = NET.w_grad_15.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
 				# # grad_20 = NET.w_grad_20.eval(feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:False})
-				# print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
-				# print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
-				# print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
+				print " grad_0  : ", np.mean(abs(grad_0 ) ), np.max(abs(grad_0  )), np.shape(grad_0 )
+				print " grad_5  : ", np.mean(abs(grad_5 ) ), np.max(abs(grad_5  )), np.shape(grad_5 )
+				print " grad_10 : ", np.mean(abs(grad_10) ), np.max(abs(grad_10 )), np.shape(grad_10)
 				# # print " grad_15 : ", np.mean(abs(grad_15) ), np.max(abs(grad_15 )), np.shape(grad_15)
 				# # print " grad_20 : ", np.mean(abs(grad_20) ), np.max(abs(grad_20 )), np.shape(grad_20)
-				# print "==================================================================================="
+				print "==================================================================================="
 				start_time = time.time()
 				acctr_file.write("%d %0.6f\n" %(iterate, psnr) )
 
 		if (new_epoch_flag == 1) :
 			epoch = epoch + 1
-			if epoch % 2 == 0 :
+			if epoch % 1 == 0 :
 				mse_sum = 0
 				psnr_sum = 0
 
@@ -114,14 +115,11 @@ def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 	
 					size = np.shape(t_x)
 					t_x_1   = np.reshape(t_x,   [1, size[0], size[1], 1] )
-					t_org_1 = np.reshape(t_org, [1, size[0], size[1], 1] )
 
-					full_out = NET.image_gen.eval(feed_dict={NET.x:t_x_1, NET.phase_train:False} )[0]
-					shape = np.shape(full_out)
-					error = full_out - t_org_1
-					mse = np.mean(np.square( error ).astype(np.float32))
+					img_out = NET.image_gen.eval(feed_dict={NET.x:t_x_1, NET.phase_train:False} )[0]
+					img_out = np.reshape(img_out, [size[0], size[1]] )
+					mse, psnr = compute_psnr( t_org, img_out, CONST.SCALE )
 					mse_sum = mse_sum + mse
-					psnr = 20*math.log10(1.0/math.sqrt(mse) )
 					psnr_sum = psnr_sum + psnr
 
 				mse_sum = mse_sum / 14.

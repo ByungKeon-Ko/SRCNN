@@ -14,12 +14,12 @@ def ImageLoad():
 		path_bsd_data  = "../patch_64/train_data_bsd.bin"
 		path_bsd_label = "../patch_64/train_label_bsd.bin"
 		
-		path_test_data  = "../patch_64/test_data.bin"
-		path_test_label = "../patch_64/test_label.bin"
+		# path_test_data  = "../patch_64/test_data.bin"
+		# path_test_label = "../patch_64/test_label.bin"
 
-		n_train = 3078
-		n_test  = 668
-		n_bsd   = 20800
+		n_train = 1947
+		# n_test  = 668
+		n_bsd   = 12000
 
 	elif CONST.lenPATCH == 44 :
 		path_train_data  = "../patch_44/train_data.bin"
@@ -28,12 +28,12 @@ def ImageLoad():
 		path_bsd_data  = "../patch_44/train_data_bsd.bin"
 		path_bsd_label = "../patch_44/train_label_bsd.bin"
 		
-		path_test_data  = "../patch_44/test_data.bin"
-		path_test_label = "../patch_44/test_label.bin"
+		# path_test_data  = "../patch_44/test_data.bin"
+		# path_test_label = "../patch_44/test_label.bin"
 
-		n_train = 7100
-		n_test  = 1509
-		n_bsd   = 45600
+		n_train = 2284
+		# n_test  = 1509
+		n_bsd   = 14000
 	
 	tmp_file = np.fromfile(path_train_data, dtype=np.float32)
 	tmp_file = np.maximum( tmp_file, 0.0)
@@ -72,26 +72,26 @@ def ImageLoad():
 	train_data  = np.transpose( train_data, (2,1,0) )
 	train_label = np.transpose( train_label, (2,1,0) )
 	
-	tmp_file = np.fromfile(path_test_data, dtype=np.float32)
-	tmp_file = np.maximum( tmp_file, 0.0)
-	tmp_file = np.minimum( tmp_file, 1.0)
-	
-	test_data = np.reshape( tmp_file, (n_test, CONST.lenPATCH,CONST.lenPATCH) )
-	# test_data = np.reshape( tmp_file, (13, CONST.lenPATCH,CONST.lenPATCH) )
-	test_data = np.transpose( test_data, (2,1,0) )
-	# test_data_1 = np.multiply( test_data, 255.0 ).astype(np.uint8)
-	
-	tmp_file = np.fromfile(path_test_label, dtype=np.float32)
-	tmp_file = np.maximum( tmp_file, 0.0)
-	tmp_file = np.minimum( tmp_file, 1.0)
-	
-	test_label = np.reshape( tmp_file, (n_test, CONST.lenPATCH,CONST.lenPATCH) )
-	# test_label = np.reshape( tmp_file, (13, CONST.lenPATCH,CONST.lenPATCH) )
-	test_label = np.transpose( test_label, (2,1,0) )
-	# test_label_1 = np.multiply( test_label, 255.0 ).astype(np.uint8)
+	#	tmp_file = np.fromfile(path_test_data, dtype=np.float32)
+	#	tmp_file = np.maximum( tmp_file, 0.0)
+	#	tmp_file = np.minimum( tmp_file, 1.0)
+	#	
+	#	test_data = np.reshape( tmp_file, (n_test, CONST.lenPATCH,CONST.lenPATCH) )
+	#	# test_data = np.reshape( tmp_file, (13, CONST.lenPATCH,CONST.lenPATCH) )
+	#	test_data = np.transpose( test_data, (2,1,0) )
+	#	# test_data_1 = np.multiply( test_data, 255.0 ).astype(np.uint8)
+	#	
+	#	tmp_file = np.fromfile(path_test_label, dtype=np.float32)
+	#	tmp_file = np.maximum( tmp_file, 0.0)
+	#	tmp_file = np.minimum( tmp_file, 1.0)
+	#	
+	#	test_label = np.reshape( tmp_file, (n_test, CONST.lenPATCH,CONST.lenPATCH) )
+	#	# test_label = np.reshape( tmp_file, (13, CONST.lenPATCH,CONST.lenPATCH) )
+	#	test_label = np.transpose( test_label, (2,1,0) )
+	#	# test_label_1 = np.multiply( test_label, 255.0 ).astype(np.uint8)
 
 	dset_train = [train_label-train_data, train_data, train_label ]
-	dset_test  = [test_label -test_data,  test_data,  test_label  ]
+	# dset_test  = [test_label -test_data,  test_data,  test_label  ]
 
 	path_gt = "../full_image_gt"
 	path_low = "../full_image_low"
@@ -121,5 +121,5 @@ def ImageLoad():
 		tmp_file = np.minimum( tmp_file, 1.0 )
 		dset_full_low.append( tmp_file )
 
-	return dset_train, dset_test, dset_full_gt, dset_full_low
+	return dset_train, dset_full_gt, dset_full_low
 

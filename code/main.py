@@ -19,11 +19,11 @@ from compute_psnr import compute_psnr
 # import PreProc
 # from save_std import save_std
 
-print "main.py start!!", CONST.CKPT_FILE, CONST.SEL_GPU, CONST.SHORT_CUT, CONST.ABS_PATH
+print "main.py start!!", CONST.CKPT_FILE, CONST.SEL_GPU, "SHORT_CUT", CONST.SHORT_CUT, "ABS_PATH", CONST.ABS_PATH, "lenPATCH", CONST.lenPATCH
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.95 )
 
 ## Image Loading & PreProcessing
-dset_train, dset_test, dset_full_gt, dset_full_low = ImageLoader.ImageLoad()
+dset_train, dset_full_gt, dset_full_low = ImageLoader.ImageLoad()
 print "Image Loading Done !!"
 
 # img_train, img_test = PreProc.PreProc(preimg_train, preimg_test)
@@ -31,7 +31,7 @@ print "Image Loading Done !!"
 
 ## Batch Manager Instantiation
 BM = batch_manager.BatchManager()
-BM.init(dset_train, dset_test)
+BM.init(dset_train, 0)
 
 ## Garbage Collecting
 # dset_train = 0

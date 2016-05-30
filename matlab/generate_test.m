@@ -1,19 +1,12 @@
 clear;close all;
 %% settings
 folder = '../../SRCNN_dataset/SRCNN/Test/Set14';
-<<<<<<< HEAD
-size_input = 42;
+% size_input = 64;
+size_input = 44;
 % size_label = 21;
-size_label = 42;
+size_label = size_input;
 scale = 3;
-stride = 42;
-=======
-size_input = 36;
-% size_label = 21;
-size_label = 36;
-scale = 3;
-stride = 36;
->>>>>>> c66cc691ada07a665fc7f4a531be2d0ec2ec8e7d
+stride = size_input;
 
 %% initialization
 data = zeros(size_input, size_input, 1, 1);

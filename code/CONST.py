@@ -25,7 +25,7 @@ COLOR_IN = 1
 COLOR_OUT = 1
 
 ## About Training
-SKIP_TRAIN = 0
+SKIP_TRAIN = 1
 WARM_UP = 0
 WEIGHT_DECAY = 1e-4
 # WEIGHT_DECAY = 1e-2

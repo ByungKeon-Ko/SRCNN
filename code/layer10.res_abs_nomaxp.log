@@ -1,0 +1,35 @@
+main.py start!! ../ckpt_file/layer10.res_abs_nomaxp.ckpt /gpu:0 SHORT_CUT 1 ABS_PATH 0 lenPATCH 64
+Image Loading Done !!
+========= BICUBIC MSE : 0.00227523048358, PSNR : 27.5445308928 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.001512, psnr : 31.0033, time : 0.0099
+step : 100, epoch : 0, mse : 0.002202, psnr : 30.3999, time : 1.9946
+step : 200, epoch : 0, mse : 0.002036, psnr : 31.2113, time : 2.0295
+epoch : 1, iter : 216, test mse : 0.001904, test_psnr : 28.3329
+step : 300, epoch : 1, mse : 0.001955, psnr : 31.2877, time : 2.0731
+step : 400, epoch : 1, mse : 0.001897, psnr : 31.3790, time : 2.0246
+epoch : 2, iter : 433, test mse : 0.001747, test_psnr : 28.8511
+step : 500, epoch : 2, mse : 0.001879, psnr : 31.4953, time : 2.0715
+step : 600, epoch : 2, mse : 0.001821, psnr : 31.5814, time : 2.0167
+epoch : 3, iter : 650, test mse : 0.001708, test_psnr : 29.0305
+step : 700, epoch : 3, mse : 0.001834, psnr : 31.5715, time : 2.0667
+step : 800, epoch : 3, mse : 0.001858, psnr : 31.5551, time : 2.0091
+epoch : 4, iter : 867, test mse : 0.001684, test_psnr : 29.0917
+Save ckpt file ../ckpt_file/layer10.res_abs_nomaxp.ckpt
+step : 900, epoch : 4, mse : 0.001756, psnr : 31.7941, time : 2.0834
+step : 1000, epoch : 4, mse : 0.001869, psnr : 31.5503, time : 2.0267
+epoch : 5, iter : 1084, test mse : 0.001684, test_psnr : 29.0925
+step : 1100, epoch : 5, mse : 0.001812, psnr : 31.6936, time : 2.0759
+step : 1200, epoch : 5, mse : 0.001818, psnr : 31.6486, time : 2.0148
+step : 1300, epoch : 5, mse : 0.001805, psnr : 31.7639, time : 2.0201
+epoch : 6, iter : 1301, test mse : 0.001669, test_psnr : 29.1338
+step : 1400, epoch : 6, mse : 0.001762, psnr : 31.7741, time : 2.0678
+step : 1500, epoch : 6, mse : 0.001831, psnr : 31.6886, time : 2.0068
+epoch : 7, iter : 1518, test mse : 0.001663, test_psnr : 29.1750
+step : 1600, epoch : 7, mse : 0.001796, psnr : 31.8488, time : 2.0851
+step : 1700, epoch : 7, mse : 0.001812, psnr : 31.6662, time : 2.0062
+epoch : 8, iter : 1735, test mse : 0.001646, test_psnr : 29.2122
+Save ckpt file ../ckpt_file/layer10.res_abs_nomaxp.ckpt

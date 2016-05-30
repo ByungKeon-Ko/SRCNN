@@ -127,9 +127,9 @@ def train_loop (NET, BM, saver, sess, dset_full_low, dset_full_gt ) :
 				print "epoch : %d, iter : %d, test mse : %1.6f, test_psnr : %3.4f" %(epoch, iterate, mse_sum, psnr_sum)
 				accte_file.write("%d %0.6f\n" %(iterate, psnr_sum) )
 
-				# if epoch%1 == 0 :
-				# 	save_path = saver.save(sess, CONST.CKPT_FILE)
-				# 	print "Save ckpt file", CONST.CKPT_FILE
+				if epoch%4 == 0 :
+					save_path = saver.save(sess, CONST.CKPT_FILE)
+					print "Save ckpt file", CONST.CKPT_FILE
 
 		# NET.train_step.run( feed_dict= {NET.x:batch[0], NET.y_: batch[1], NET.phase_train:True } )
 		sess.run(NET.train_step_run, feed_dict={NET.x:batch[0], NET.y_:batch[1], NET.phase_train:True})

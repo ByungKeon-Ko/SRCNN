@@ -1,0 +1,251 @@
+main.py start!! ../ckpt_file/sr_50.abs_vdsr.ckpt /gpu:1 SHORT_CUT 1 ABS_PATH 1 lenPATCH 64
+Image Loading Done !!
+========= BICUBIC MSE : 0.00227523048358, PSNR : 27.5445308928 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.001514, psnr : 30.9189, time : 0.0169
+step : 100, epoch : 0, mse : 0.002144, psnr : 30.5225, time : 4.1632
+step : 200, epoch : 0, mse : 0.001978, psnr : 31.3034, time : 4.1936
+epoch : 1, iter : 216, test mse : 0.001834, test_psnr : 28.5814
+step : 300, epoch : 1, mse : 0.001854, psnr : 31.4840, time : 4.5456
+step : 400, epoch : 1, mse : 0.001894, psnr : 31.4264, time : 4.1941
+epoch : 2, iter : 433, test mse : 0.001703, test_psnr : 29.0148
+step : 500, epoch : 2, mse : 0.001838, psnr : 31.6116, time : 4.5454
+step : 600, epoch : 2, mse : 0.001809, psnr : 31.6263, time : 4.1932
+epoch : 3, iter : 650, test mse : 0.001689, test_psnr : 29.0982
+step : 700, epoch : 3, mse : 0.001817, psnr : 31.6390, time : 4.5421
+step : 800, epoch : 3, mse : 0.001781, psnr : 31.7810, time : 4.1916
+epoch : 4, iter : 867, test mse : 0.001688, test_psnr : 29.0753
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 900, epoch : 4, mse : 0.001806, psnr : 31.6145, time : 4.5796
+step : 1000, epoch : 4, mse : 0.001731, psnr : 31.9231, time : 4.1925
+epoch : 5, iter : 1084, test mse : 0.001649, test_psnr : 29.2135
+step : 1100, epoch : 5, mse : 0.001825, psnr : 31.6775, time : 4.5432
+step : 1200, epoch : 5, mse : 0.001788, psnr : 31.6970, time : 4.1927
+step : 1300, epoch : 5, mse : 0.001744, psnr : 31.8939, time : 4.1933
+epoch : 6, iter : 1301, test mse : 0.001629, test_psnr : 29.2910
+step : 1400, epoch : 6, mse : 0.001761, psnr : 31.8056, time : 4.5435
+step : 1500, epoch : 6, mse : 0.001749, psnr : 31.9271, time : 4.1936
+epoch : 7, iter : 1518, test mse : 0.001628, test_psnr : 29.2913
+step : 1600, epoch : 7, mse : 0.001771, psnr : 31.8238, time : 4.5423
+step : 1700, epoch : 7, mse : 0.001733, psnr : 31.8958, time : 4.1933
+epoch : 8, iter : 1735, test mse : 0.001618, test_psnr : 29.3139
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 1800, epoch : 8, mse : 0.001782, psnr : 31.8865, time : 4.5802
+step : 1900, epoch : 8, mse : 0.001715, psnr : 31.9665, time : 4.1943
+epoch : 9, iter : 1952, test mse : 0.001620, test_psnr : 29.3202
+step : 2000, epoch : 9, mse : 0.001724, psnr : 31.8881, time : 4.5441
+step : 2100, epoch : 9, mse : 0.001742, psnr : 31.8576, time : 4.1937
+epoch : 10, iter : 2169, test mse : 0.001619, test_psnr : 29.3151
+step : 2200, epoch : 10, mse : 0.001730, psnr : 31.9377, time : 4.5430
+step : 2300, epoch : 10, mse : 0.001765, psnr : 31.9062, time : 4.1934
+epoch : 11, iter : 2386, test mse : 0.001613, test_psnr : 29.3501
+step : 2400, epoch : 11, mse : 0.001727, psnr : 31.9897, time : 4.5438
+step : 2500, epoch : 11, mse : 0.001744, psnr : 31.8297, time : 4.1931
+step : 2600, epoch : 11, mse : 0.001715, psnr : 32.0293, time : 4.1935
+epoch : 12, iter : 2603, test mse : 0.001595, test_psnr : 29.3991
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 2700, epoch : 12, mse : 0.001724, psnr : 31.9612, time : 4.5791
+step : 2800, epoch : 12, mse : 0.001711, psnr : 32.0205, time : 4.1935
+epoch : 13, iter : 2820, test mse : 0.001605, test_psnr : 29.3922
+step : 2900, epoch : 13, mse : 0.001771, psnr : 31.9209, time : 4.5440
+step : 3000, epoch : 13, mse : 0.001696, psnr : 32.0217, time : 4.1939
+epoch : 14, iter : 3037, test mse : 0.001606, test_psnr : 29.3517
+step : 3100, epoch : 14, mse : 0.001703, psnr : 32.0419, time : 4.5430
+step : 3200, epoch : 14, mse : 0.001717, psnr : 31.9555, time : 4.1937
+epoch : 15, iter : 3254, test mse : 0.001605, test_psnr : 29.3607
+step : 3300, epoch : 15, mse : 0.001728, psnr : 32.0011, time : 4.5435
+step : 3400, epoch : 15, mse : 0.001714, psnr : 31.9794, time : 4.1933
+epoch : 16, iter : 3471, test mse : 0.001601, test_psnr : 29.3886
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 3500, epoch : 16, mse : 0.001758, psnr : 31.8979, time : 4.5791
+step : 3600, epoch : 16, mse : 0.001721, psnr : 31.9360, time : 4.1941
+epoch : 17, iter : 3688, test mse : 0.001593, test_psnr : 29.4092
+step : 3700, epoch : 17, mse : 0.001684, psnr : 32.1614, time : 4.5438
+step : 3800, epoch : 17, mse : 0.001734, psnr : 31.9687, time : 4.1938
+step : 3900, epoch : 17, mse : 0.001692, psnr : 32.0569, time : 4.1932
+epoch : 18, iter : 3905, test mse : 0.001589, test_psnr : 29.4538
+step : 4000, epoch : 18, mse : 0.001749, psnr : 31.8885, time : 4.5431
+step : 4100, epoch : 18, mse : 0.001673, psnr : 32.1594, time : 4.1932
+epoch : 19, iter : 4122, test mse : 0.001587, test_psnr : 29.4472
+step : 4200, epoch : 19, mse : 0.001756, psnr : 31.8365, time : 4.5434
+step : 4300, epoch : 19, mse : 0.001686, psnr : 32.0921, time : 4.1929
+epoch : 20, iter : 4339, test mse : 0.001589, test_psnr : 29.4171
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 4400, epoch : 20, mse : 0.001721, psnr : 32.0410, time : 4.5810
+step : 4500, epoch : 20, mse : 0.001694, psnr : 32.0641, time : 4.1938
+epoch : 21, iter : 4556, test mse : 0.001603, test_psnr : 29.3574
+step : 4600, epoch : 21, mse : 0.001686, psnr : 32.1129, time : 4.5441
+step : 4700, epoch : 21, mse : 0.001708, psnr : 32.0955, time : 4.1936
+epoch : 22, iter : 4773, test mse : 0.001590, test_psnr : 29.4446
+step : 4800, epoch : 22, mse : 0.001728, psnr : 31.9195, time : 4.5434
+step : 4900, epoch : 22, mse : 0.001690, psnr : 32.0231, time : 4.1930
+epoch : 23, iter : 4990, test mse : 0.001575, test_psnr : 29.4731
+step : 5000, epoch : 23, mse : 0.001694, psnr : 32.1039, time : 4.5421
+step : 5100, epoch : 23, mse : 0.001751, psnr : 31.8830, time : 4.1926
+step : 5200, epoch : 23, mse : 0.001668, psnr : 32.1662, time : 4.1924
+epoch : 24, iter : 5207, test mse : 0.001593, test_psnr : 29.4318
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 5300, epoch : 24, mse : 0.001745, psnr : 32.0319, time : 4.5779
+step : 5400, epoch : 24, mse : 0.001658, psnr : 32.0707, time : 4.1930
+epoch : 25, iter : 5424, test mse : 0.001585, test_psnr : 29.4583
+step : 5500, epoch : 25, mse : 0.001700, psnr : 32.0722, time : 4.5420
+step : 5600, epoch : 25, mse : 0.001688, psnr : 32.0839, time : 4.1927
+epoch : 26, iter : 5641, test mse : 0.001591, test_psnr : 29.4416
+step : 5700, epoch : 26, mse : 0.001737, psnr : 31.9862, time : 4.5417
+step : 5800, epoch : 26, mse : 0.001704, psnr : 32.0211, time : 4.1922
+epoch : 27, iter : 5858, test mse : 0.001586, test_psnr : 29.4405
+step : 5900, epoch : 27, mse : 0.001693, psnr : 32.0983, time : 4.5427
+step : 6000, epoch : 27, mse : 0.001699, psnr : 32.1032, time : 4.1927
+epoch : 28, iter : 6075, test mse : 0.001597, test_psnr : 29.4074
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 6100, epoch : 28, mse : 0.001702, psnr : 31.9866, time : 4.5798
+step : 6200, epoch : 28, mse : 0.001647, psnr : 32.1781, time : 4.1927
+epoch : 29, iter : 6292, test mse : 0.001607, test_psnr : 29.4016
+step : 6300, epoch : 29, mse : 0.001750, psnr : 32.0004, time : 4.5433
+step : 6400, epoch : 29, mse : 0.001717, psnr : 32.0029, time : 4.1930
+step : 6500, epoch : 29, mse : 0.001674, psnr : 32.1401, time : 4.1934
+epoch : 30, iter : 6509, test mse : 0.001603, test_psnr : 29.3857
+step : 6600, epoch : 30, mse : 0.001682, psnr : 32.1028, time : 4.5425
+step : 6700, epoch : 30, mse : 0.001704, psnr : 32.0753, time : 4.1929
+epoch : 31, iter : 6726, test mse : 0.001583, test_psnr : 29.4534
+step : 6800, epoch : 31, mse : 0.001699, psnr : 32.0862, time : 4.5432
+step : 6900, epoch : 31, mse : 0.001702, psnr : 32.0264, time : 4.1930
+epoch : 32, iter : 6943, test mse : 0.001574, test_psnr : 29.4912
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 7000, epoch : 32, mse : 0.001666, psnr : 32.1571, time : 4.5780
+step : 7100, epoch : 32, mse : 0.001707, psnr : 32.0786, time : 4.1925
+epoch : 33, iter : 7160, test mse : 0.001578, test_psnr : 29.4807
+step : 7200, epoch : 33, mse : 0.001676, psnr : 32.0357, time : 4.5421
+step : 7300, epoch : 33, mse : 0.001721, psnr : 32.0900, time : 4.1915
+epoch : 34, iter : 7377, test mse : 0.001590, test_psnr : 29.4042
+step : 7400, epoch : 34, mse : 0.001686, psnr : 32.0815, time : 4.5416
+step : 7500, epoch : 34, mse : 0.001698, psnr : 32.0924, time : 4.1921
+epoch : 35, iter : 7594, test mse : 0.001598, test_psnr : 29.4255
+step : 7600, epoch : 35, mse : 0.001701, psnr : 32.0166, time : 4.5421
+step : 7700, epoch : 35, mse : 0.001702, psnr : 32.1646, time : 4.1923
+step : 7800, epoch : 35, mse : 0.001680, psnr : 32.0573, time : 4.1918
+epoch : 36, iter : 7811, test mse : 0.001585, test_psnr : 29.4694
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 7900, epoch : 36, mse : 0.001695, psnr : 32.0435, time : 4.5774
+step : 8000, epoch : 36, mse : 0.001671, psnr : 32.1289, time : 4.1927
+epoch : 37, iter : 8028, test mse : 0.001581, test_psnr : 29.4629
+step : 8100, epoch : 37, mse : 0.001737, psnr : 32.0215, time : 4.5421
+step : 8200, epoch : 37, mse : 0.001677, psnr : 32.1160, time : 4.1921
+epoch : 38, iter : 8245, test mse : 0.001592, test_psnr : 29.3989
+step : 8300, epoch : 38, mse : 0.001674, psnr : 32.0693, time : 4.5433
+step : 8400, epoch : 38, mse : 0.001698, psnr : 32.0516, time : 4.1921
+epoch : 39, iter : 8462, test mse : 0.001606, test_psnr : 29.3595
+step : 8500, epoch : 39, mse : 0.001706, psnr : 32.0053, time : 4.5414
+step : 8600, epoch : 39, mse : 0.001691, psnr : 32.1336, time : 4.1920
+epoch : 40, iter : 8679, test mse : 0.001583, test_psnr : 29.4601
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 8700, epoch : 40, mse : 0.001709, psnr : 32.0952, time : 4.5772
+step : 8800, epoch : 40, mse : 0.001700, psnr : 31.9425, time : 4.1922
+epoch : 41, iter : 8896, test mse : 0.001582, test_psnr : 29.4691
+step : 8900, epoch : 41, mse : 0.001673, psnr : 32.2452, time : 4.5420
+step : 9000, epoch : 41, mse : 0.001727, psnr : 31.9619, time : 4.1924
+step : 9100, epoch : 41, mse : 0.001662, psnr : 32.1770, time : 4.1927
+epoch : 42, iter : 9113, test mse : 0.001587, test_psnr : 29.4601
+step : 9200, epoch : 42, mse : 0.001687, psnr : 32.0971, time : 4.5417
+step : 9300, epoch : 42, mse : 0.001673, psnr : 32.1828, time : 4.1924
+epoch : 43, iter : 9330, test mse : 0.001594, test_psnr : 29.4328
+step : 9400, epoch : 43, mse : 0.001698, psnr : 32.0327, time : 4.5419
+step : 9500, epoch : 43, mse : 0.001715, psnr : 32.0528, time : 4.1918
+epoch : 44, iter : 9547, test mse : 0.001591, test_psnr : 29.4092
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 9600, epoch : 44, mse : 0.001704, psnr : 31.9764, time : 4.5794
+step : 9700, epoch : 44, mse : 0.001687, psnr : 32.1101, time : 4.1931
+epoch : 45, iter : 9764, test mse : 0.001582, test_psnr : 29.4682
+step : 9800, epoch : 45, mse : 0.001704, psnr : 32.0324, time : 4.5430
+step : 9900, epoch : 45, mse : 0.001703, psnr : 32.0969, time : 4.1931
+epoch : 46, iter : 9981, test mse : 0.001602, test_psnr : 29.3546
+step : 10000, epoch : 46, mse : 0.001664, psnr : 32.1565, time : 4.5425
+step : 10100, epoch : 46, mse : 0.001728, psnr : 31.9223, time : 4.1927
+epoch : 47, iter : 10198, test mse : 0.001587, test_psnr : 29.4370
+step : 10200, epoch : 47, mse : 0.001665, psnr : 32.2007, time : 4.5426
+step : 10300, epoch : 47, mse : 0.001719, psnr : 32.0610, time : 4.1930
+step : 10400, epoch : 47, mse : 0.001676, psnr : 32.0811, time : 4.1923
+epoch : 48, iter : 10415, test mse : 0.001581, test_psnr : 29.4817
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 10500, epoch : 48, mse : 0.001728, psnr : 31.8893, time : 4.5807
+step : 10600, epoch : 48, mse : 0.001665, psnr : 32.1982, time : 4.1928
+epoch : 49, iter : 10632, test mse : 0.001581, test_psnr : 29.4692
+step : 10700, epoch : 49, mse : 0.001671, psnr : 32.1209, time : 4.5423
+step : 10800, epoch : 49, mse : 0.001702, psnr : 32.0741, time : 4.1933
+epoch : 50, iter : 10849, test mse : 0.001611, test_psnr : 29.3729
+step : 10900, epoch : 50, mse : 0.001698, psnr : 32.0085, time : 4.5431
+step : 11000, epoch : 50, mse : 0.001729, psnr : 32.0343, time : 4.1936
+epoch : 51, iter : 11066, test mse : 0.001586, test_psnr : 29.4498
+step : 11100, epoch : 51, mse : 0.001647, psnr : 32.2039, time : 4.5439
+step : 11200, epoch : 51, mse : 0.001717, psnr : 32.0097, time : 4.1943
+epoch : 52, iter : 11283, test mse : 0.001594, test_psnr : 29.4420
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 11300, epoch : 52, mse : 0.001690, psnr : 32.0795, time : 4.5795
+step : 11400, epoch : 52, mse : 0.001704, psnr : 31.9244, time : 4.1942
+step : 11500, epoch : 52, mse : 0.001691, psnr : 32.1720, time : 4.1942
+epoch : 53, iter : 11500, test mse : 0.001582, test_psnr : 29.4665
+step : 11600, epoch : 53, mse : 0.001704, psnr : 32.0982, time : 4.5441
+step : 11700, epoch : 53, mse : 0.001706, psnr : 31.9919, time : 4.1929
+epoch : 54, iter : 11717, test mse : 0.001620, test_psnr : 29.3467
+step : 11800, epoch : 54, mse : 0.001694, psnr : 32.0295, time : 4.5433
+step : 11900, epoch : 54, mse : 0.001650, psnr : 32.1837, time : 4.1930
+epoch : 55, iter : 11934, test mse : 0.001610, test_psnr : 29.3804
+step : 12000, epoch : 55, mse : 0.001713, psnr : 32.0344, time : 4.5427
+step : 12100, epoch : 55, mse : 0.001711, psnr : 32.0596, time : 4.1923
+epoch : 56, iter : 12151, test mse : 0.001590, test_psnr : 29.4299
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 12200, epoch : 56, mse : 0.001729, psnr : 31.8737, time : 4.5771
+step : 12300, epoch : 56, mse : 0.001702, psnr : 32.0163, time : 4.1931
+epoch : 57, iter : 12368, test mse : 0.001606, test_psnr : 29.3566
+step : 12400, epoch : 57, mse : 0.001700, psnr : 32.1208, time : 4.5419
+step : 12500, epoch : 57, mse : 0.001679, psnr : 32.0348, time : 4.1940
+epoch : 58, iter : 12585, test mse : 0.001604, test_psnr : 29.3660
+step : 12600, epoch : 58, mse : 0.001695, psnr : 32.1240, time : 4.5429
+step : 12700, epoch : 58, mse : 0.001693, psnr : 32.0128, time : 4.1943
+step : 12800, epoch : 58, mse : 0.001734, psnr : 31.9672, time : 4.1932
+epoch : 59, iter : 12802, test mse : 0.001585, test_psnr : 29.4518
+step : 12900, epoch : 59, mse : 0.001688, psnr : 32.1339, time : 4.5417
+step : 13000, epoch : 59, mse : 0.001716, psnr : 31.9274, time : 4.1935
+epoch : 60, iter : 13019, test mse : 0.001592, test_psnr : 29.4365
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 13100, epoch : 60, mse : 0.001684, psnr : 32.0914, time : 4.5806
+step : 13200, epoch : 60, mse : 0.001748, psnr : 31.9615, time : 4.1938
+epoch : 61, iter : 13236, test mse : 0.001591, test_psnr : 29.4130
+step : 13300, epoch : 61, mse : 0.001703, psnr : 32.0236, time : 4.5430
+step : 13400, epoch : 61, mse : 0.001651, psnr : 32.0638, time : 4.1938
+epoch : 62, iter : 13453, test mse : 0.001586, test_psnr : 29.4415
+step : 13500, epoch : 62, mse : 0.001747, psnr : 31.9100, time : 4.5439
+step : 13600, epoch : 62, mse : 0.001700, psnr : 32.0896, time : 4.1958
+epoch : 63, iter : 13670, test mse : 0.001622, test_psnr : 29.3461
+step : 13700, epoch : 63, mse : 0.001718, psnr : 32.0838, time : 4.5508
+step : 13800, epoch : 63, mse : 0.001732, psnr : 31.9411, time : 4.2023
+epoch : 64, iter : 13887, test mse : 0.001605, test_psnr : 29.3748
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 13900, epoch : 64, mse : 0.001675, psnr : 31.9657, time : 4.5830
+step : 14000, epoch : 64, mse : 0.001699, psnr : 32.0727, time : 4.1994
+step : 14100, epoch : 64, mse : 0.001715, psnr : 31.9679, time : 4.1993
+epoch : 65, iter : 14104, test mse : 0.001634, test_psnr : 29.2663
+step : 14200, epoch : 65, mse : 0.001745, psnr : 32.0275, time : 4.5493
+step : 14300, epoch : 65, mse : 0.001669, psnr : 32.0439, time : 4.1989
+epoch : 66, iter : 14321, test mse : 0.001624, test_psnr : 29.3316
+step : 14400, epoch : 66, mse : 0.001709, psnr : 31.9267, time : 4.5489
+step : 14500, epoch : 66, mse : 0.001726, psnr : 32.0353, time : 4.1995
+epoch : 67, iter : 14538, test mse : 0.001612, test_psnr : 29.3825
+step : 14600, epoch : 67, mse : 0.001680, psnr : 32.0497, time : 4.5474
+step : 14700, epoch : 67, mse : 0.001725, psnr : 31.9674, time : 4.1990
+epoch : 68, iter : 14755, test mse : 0.001667, test_psnr : 29.2358
+Save ckpt file ../ckpt_file/sr_50.abs_vdsr.ckpt
+step : 14800, epoch : 68, mse : 0.001748, psnr : 31.8144, time : 4.5835
+step : 14900, epoch : 68, mse : 0.001712, psnr : 32.0183, time : 4.1994
+epoch : 69, iter : 14972, test mse : 0.001642, test_psnr : 29.2987
+step : 15000, epoch : 69, mse : 0.001703, psnr : 32.0243, time : 4.5493
+step : 15100, epoch : 69, mse : 0.001700, psnr : 32.0264, time : 4.1990
+epoch : 70, iter : 15189, test mse : 0.001661, test_psnr : 29.2340
+step : 15200, epoch : 70, mse : 0.001728, psnr : 31.9830, time : 4.5463
+step : 15300, epoch : 70, mse : 0.001690, psnr : 32.0646, time : 4.1959
+step : 15400, epoch : 70, mse : 0.001737, psnr : 31.9136, time : 4.1982
+epoch : 71, iter : 15406, test mse : 0.001609, test_psnr : 29.3665
+step : 15500, epoch : 71, mse : 0.001745, psnr : 31.9285, time : 4.5459

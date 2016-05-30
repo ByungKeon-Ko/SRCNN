@@ -3,6 +3,7 @@ import Image
 import CONST
 import batch_manager
 import os
+import compute_psnr
 
 # --- Image Load ------------------------------------------------------------ #
 def ImageLoad():
@@ -22,18 +23,28 @@ def ImageLoad():
 		n_bsd   = 12000
 
 	elif CONST.lenPATCH == 44 :
-		path_train_data  = "../patch_44/train_data.bin"
-		path_train_label = "../patch_44/train_label.bin"
 		
-		path_bsd_data  = "../patch_44/train_data_bsd.bin"
-		path_bsd_label = "../patch_44/train_label_bsd.bin"
-		
-		# path_test_data  = "../patch_44/test_data.bin"
-		# path_test_label = "../patch_44/test_label.bin"
-
-		n_train = 2284
-		# n_test  = 1509
-		n_bsd   = 14000
+		if CONST.SCALE == 2 :
+			path_train_data  = "../scale2/patch_44/train_data.bin"
+			path_train_label = "../scale2/patch_44/train_label.bin"
+			path_bsd_data    = "../scale2/patch_44/train_data_bsd.bin"
+			path_bsd_label   = "../scale2/patch_44/train_label_bsd.bin"
+			n_train = 2224
+			n_bsd   = 14000
+		elif CONST.SCALE == 3 :
+			path_train_data  = "../patch_44/train_data.bin"
+			path_train_label = "../patch_44/train_label.bin"
+			path_bsd_data    = "../patch_44/train_data_bsd.bin"
+			path_bsd_label   = "../patch_44/train_label_bsd.bin"
+			n_train = 2284
+			n_bsd   = 14000
+		else :
+			path_train_data  = "../scale4/patch_44/train_data.bin"
+			path_train_label = "../scale4/patch_44/train_label.bin"
+			path_bsd_data    = "../scale4/patch_44/train_data_bsd.bin"
+			path_bsd_label   = "../scale4/patch_44/train_label_bsd.bin"
+			n_train = 2164
+			n_bsd   = 14000
 	
 	tmp_file = np.fromfile(path_train_data, dtype=np.float32)
 	tmp_file = np.maximum( tmp_file, 0.0)
@@ -93,8 +104,19 @@ def ImageLoad():
 	dset_train = [train_label-train_data, train_data, train_label ]
 	# dset_test  = [test_label -test_data,  test_data,  test_label  ]
 
-	path_gt = "../full_image_gt"
-	path_low = "../full_image_low"
+	if CONST.SCALE == 2 :
+		path_gt  = "../scale2/full_image_gt"
+		path_low = "../scale2/full_image_low"
+		print "Scale 2 !!"
+	elif CONST.SCALE == 3 :
+		path_gt = "../full_image_gt"
+		path_low = "../full_image_low"
+		print "Scale 3 !!"
+	else :
+		path_gt  = "../scale4/full_image_gt"
+		path_low = "../scale4/full_image_low"
+		print "Scale 4 !!"
+
 	bmp_path = "../SRCNN_dataset/Test/Set14"
 	file_list = os.listdir(bmp_path)
 	dset_full_gt = []
@@ -107,15 +129,17 @@ def ImageLoad():
 		size = np.shape(tmp_bmp)[0:2]
 		size = size - np.mod(size, CONST.SCALE)
 		size = size.astype(np.uint)
-		tmp_file = np.fromfile("%s/%s_gt.bin"%(path_gt, img_name ), dtype=np.float32 )
+		tmp_file = np.fromfile("%s/%s_gt.bin"%(path_gt, img_name ), dtype=np.double )
 		tmp_file = np.reshape( tmp_file, [size[1], size[0]] )
+		tmp_file = compute_psnr.shave(tmp_file, CONST.SCALE)
 		tmp_file = np.transpose( tmp_file, (1,0) )
 		tmp_file = np.maximum( tmp_file, 0.0 )
 		tmp_file = np.minimum( tmp_file, 1.0 )
 		dset_full_gt.append( tmp_file )
 
-		tmp_file = np.fromfile("%s/%s_low.bin"%(path_low, img_name), dtype=np.float32 )
+		tmp_file = np.fromfile("%s/%s_low.bin"%(path_low, img_name), dtype=np.double )
 		tmp_file = np.reshape( tmp_file, [size[1], size[0]] )
+		tmp_file = compute_psnr.shave(tmp_file, CONST.SCALE)
 		tmp_file = np.transpose( tmp_file, (1,0) )
 		tmp_file = np.maximum( tmp_file, 0.0 )
 		tmp_file = np.minimum( tmp_file, 1.0 )

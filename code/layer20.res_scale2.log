@@ -1,0 +1,1 @@
+main.py start!! ../ckpt_file/layer20.scale2_res.ckpt /gpu:1 SHORT_CUT 1 ABS_PATH 0 lenPATCH 44

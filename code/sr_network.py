@@ -152,7 +152,7 @@ with tf.device(CONST.SEL_GPU) :
 					else :
 						self.gr_mat1[i] = inst_res_unit(self.gr_mat1[i-1].out, i, sizeFeature, short_cut, 1, 0, zero_pad, self.phase_train, self.abstr_path )
 
-				self.fc_in = self.gr_mat1[n-1].out
+				self.fc_in = self.gr_mat1[n-1].out[:,:,:,0:64]
 
 				# ----- FC layer --------------------- #
 				self.W_fc1		= weight_variable_uniform( [1, 1, 64, CONST.COLOR_OUT], 'w_fc1', 1./math.sqrt(64.) )
@@ -205,7 +205,10 @@ with tf.device(CONST.SEL_GPU) :
 		class inst_res_unit(object):
 			def __init__(self, input_x, index, sizeFeature, short_cut, stride, IsFirst, zero_pad, phase_train, abstr_path):
 				k2d = sizeFeature[0]*sizeFeature[1]*64
-				abs_depth = 0
+				if (CONST.ABS_PATH == 1) & (IsFirst==1) :
+					abs_depth = 32
+				else :
+					abs_depth = 0
 
 				# self.concat1	= tf.concat( 3, [input_x, abstr_path] )
 
@@ -233,37 +236,35 @@ with tf.device(CONST.SEL_GPU) :
 		class inst_res_unit(object):
 			def __init__(self, input_x, index, sizeFeature, short_cut, stride, IsFirst, zero_pad, phase_train, abstr_path):
 				if short_cut :
-					if IsFirst :
-						if CONST.ABS_PATH == 1 :
-							abs_depth = 32
-
-							k2d = sizeFeature[0]*sizeFeature[1]*64
-							self.W_conv1	= weight_variable ( [3, 3, 64/stride + abs_depth, 64], 'w_conv%d_%d'%(64, index), k2d )
-							self.B_conv1	= bias_variable ( [64], 'B_conv%d_%d'%(64, index) )
-							self.linear_unit1	= conv2d(input_x, self.W_conv1, 1, zero_pad) + self.B_conv1
-						else :
-							k2d = sizeFeature[0]*sizeFeature[1]*64
-							self.W_conv1	= weight_variable ( [3, 3, 64/stride, 64], 'w_conv%d_%d'%(64, index), k2d )
-							self.B_conv1	= bias_variable ( [64], 'B_conv%d_%d'%(64, index) )
-							self.linear_unit1	= conv2d(input_x, self.W_conv1, 1, zero_pad) + self.B_conv1
+					if CONST.ABS_PATH == 1 :
+						abs_depth = 32
 					else :
-						self.bn_unit1	= batch_norm(input_x, 64, phase_train)
+						abs_depth = 0
+
+					if IsFirst :
+						k2d = sizeFeature[0]*sizeFeature[1]*64
+						self.W_conv1	= weight_variable ( [3, 3, 64/stride + abs_depth, 64 +abs_depth], 'w_conv%d_%d'%(64, index), k2d )
+						self.B_conv1	= bias_variable ( [64 +abs_depth], 'B_conv%d_%d'%(64, index) )
+						self.linear_unit1	= conv2d(input_x, self.W_conv1, 1, zero_pad) + self.B_conv1
+					else :
+						self.bn_unit1	= batch_norm(input_x, 64 +abs_depth, phase_train)
 						self.relu_unit1	= tf.nn.relu ( self.bn_unit1)
 
 						k2d = sizeFeature[0]*sizeFeature[1]*64
-						self.W_conv1	= weight_variable ( [3, 3, 64/stride, 64], 'w_conv%d_%d'%(64, index), k2d )
-						self.B_conv1	= bias_variable ( [64], 'B_conv%d_%d'%(64, index) )
+						self.W_conv1	= weight_variable ( [3, 3, 64/stride +abs_depth, 64 +abs_depth], 'w_conv%d_%d'%(64, index), k2d )
+						self.B_conv1	= bias_variable ( [64 +abs_depth], 'B_conv%d_%d'%(64, index) )
 						self.linear_unit1	= conv2d(self.relu_unit1, self.W_conv1, 1, zero_pad) + self.B_conv1
 
-					self.bn_unit2	= batch_norm(self.linear_unit1, 64, phase_train)
+					self.bn_unit2	= batch_norm(self.linear_unit1, 64 +abs_depth, phase_train)
 					self.relu_unit2	= tf.nn.relu ( self.bn_unit2)
 
-					self.W_conv2	= weight_variable ( [3, 3, 64/stride, 64], 'w_conv%d_%d'%(64, index), k2d )
-					self.B_conv2	= bias_variable ( [64], 'B_conv%d_%d'%(64, index) )
+					self.W_conv2	= weight_variable ( [3, 3, 64/stride +abs_depth, 64 +abs_depth], 'w_conv%d_%d'%(64, index), k2d )
+					self.B_conv2	= bias_variable ( [64 +abs_depth], 'B_conv%d_%d'%(64, index) )
 					self.linear_unit2	= conv2d(self.relu_unit2, self.W_conv2, 1, zero_pad) + self.B_conv2
 
 					if zero_pad :
-						self.shortcut_path = input_x[:,:,:,0:64]
+						# self.shortcut_path = input_x[:,:,:,0:64]
+						self.shortcut_path = input_x
 					else :
 						self.shortcut_path = tf.slice(input_x, [0, 1, 1, 0], [-1, sizeFeature[0]-2, sizeFeature[1]-2, 64] )
 
@@ -295,7 +296,7 @@ with tf.device(CONST.SEL_GPU) :
 	
 	class pooling_2x2(object) :
 		def __init__(self, x):
-			self.out = tf.nn.avg_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
+			self.out = tf.nn.max_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 	
 	class abstr_unit(object):
 		def __init__(self, input_x, sizeFeature, phase_train):
@@ -312,6 +313,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.pool_1 	= pooling_2x2(self.linear_1)
 
 			self.bn_unit1	= batch_norm(self.pool_1.out, depth, phase_train)
+			# self.bn_unit1	= batch_norm(self.linear_1, depth, phase_train)
 			self.relu_unit1	= tf.nn.relu ( self.bn_unit1)
 
 			k2d = sizeFeature[0]*sizeFeature[1]*depth
@@ -320,6 +322,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.B_conv2	= bias_variable ( [depth], 'B_conv_abs1' )
 			self.linear_2	= conv2d(self.relu_unit1, self.W_conv2, 1, zero_pad) + self.B_conv2
 			self.pool_2 	= pooling_2x2(self.linear_2)
+			# self.linear_2	= conv2d(self.relu_unit1, self.W_conv2, 2, zero_pad) + self.B_conv2
 
 			self.bn_unit2	= batch_norm(self.pool_2.out, depth, phase_train)
 			self.relu_unit2	= tf.nn.relu ( self.bn_unit2)
@@ -329,6 +332,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.B_conv3	= bias_variable ( [depth], 'B_conv_abs1' )
 			self.linear_3	= conv2d(self.relu_unit2, self.W_conv3, 1, zero_pad) + self.B_conv3
 			self.pool_3 	= pooling_2x2(self.linear_3)
+			# self.linear_3	= conv2d(self.relu_unit2, self.W_conv3, 2, zero_pad) + self.B_conv3
 
 			self.bn_unit3	= batch_norm(self.pool_3.out, depth, phase_train)
 			self.relu_unit3	= tf.nn.relu( self.bn_unit3)
@@ -338,6 +342,7 @@ with tf.device(CONST.SEL_GPU) :
 			self.B_conv4	= bias_variable ( [depth], 'B_conv_abs1' )
 			self.linear_4	= conv2d(self.relu_unit3, self.W_conv4, 1, zero_pad) + self.B_conv4
 			self.pool_4 	= pooling_2x2(self.linear_4)
+			# self.linear_4	= conv2d(self.relu_unit3, self.W_conv4, 2, zero_pad) + self.B_conv4
 
 			self.bn_unit4	= batch_norm(self.pool_4.out, depth, phase_train)
 			self.relu_unit4	= tf.nn.relu( self.bn_unit4)
@@ -347,27 +352,29 @@ with tf.device(CONST.SEL_GPU) :
 			self.B_conv5	= bias_variable ( [depth], 'B_conv_abs1' )
 			self.linear_5	= conv2d(self.relu_unit4, self.W_conv5, 1, zero_pad) + self.B_conv5
 			self.pool_5 	= pooling_2x2(self.linear_5)
+			# self.linear_5	= conv2d(self.relu_unit4, self.W_conv5, 2, zero_pad) + self.B_conv5
 
 			self.bn_unit5	= batch_norm(self.pool_5.out, depth, phase_train)
 			self.relu_unit5	= tf.nn.relu( self.bn_unit5)
 
-			# ## Receptive field 64x64
-			# self.W_conv6	= weight_variable ( [3, 3, depth, depth], 'w_conv_abs1', k2d )
-			# self.B_conv6	= bias_variable ( [depth], 'B_conv_abs1' )
-			# self.linear_6	= conv2d(self.relu_unit5, self.W_conv6, 1, zero_pad) + self.B_conv6
-			# self.pool_6 	= pooling_2x2(self.linear_6)
+			## Receptive field 64x64
+			self.W_conv6	= weight_variable ( [3, 3, depth, depth], 'w_conv_abs1', k2d )
+			self.B_conv6	= bias_variable ( [depth], 'B_conv_abs1' )
+			self.linear_6	= conv2d(self.relu_unit5, self.W_conv6, 1, zero_pad) + self.B_conv6
+			self.pool_6 	= pooling_2x2(self.linear_6)
+			# self.linear_6	= conv2d(self.relu_unit5, self.W_conv6, 2, zero_pad) + self.B_conv6
 
-			# self.bn_unit6	= batch_norm(self.pool_6.out, depth, phase_train)
-			# self.relu_unit6	= tf.nn.relu( self.bn_unit6)
+			self.bn_unit6	= batch_norm(self.pool_6.out, depth, phase_train)
+			self.relu_unit6	= tf.nn.relu( self.bn_unit6)
 
-			# ## Receptive field 128x128
-			# self.W_conv7	= weight_variable ( [3, 3, 32, 32], 'w_conv_abs1', k2d )
-			# self.B_conv7	= bias_variable ( [32], 'B_conv_abs1' )
-			# self.linear_7	= conv2d(self.relu_unit6, self.W_conv7, 1, zero_pad) + self.B_conv7
+			## Receptive field 128x128
+			self.W_conv7	= weight_variable ( [3, 3, depth, depth], 'w_conv_abs1', k2d )
+			self.B_conv7	= bias_variable ( [depth], 'B_conv_abs1' )
+			self.linear_7	= conv2d(self.relu_unit6, self.W_conv7, 1, zero_pad) + self.B_conv7
 			# self.pool_7 	= pooling_2x2(self.linear_7)
 
-			# self.bn_unit7	= batch_norm(self.pool_7, 32, phase_train)
-			# self.relu_unit7	= tf.nn.relu( self.bn_unit7)
+			self.bn_unit7	= batch_norm(self.linear_7, depth, phase_train)
+			self.relu_unit7	= tf.nn.relu( self.bn_unit7)
 
 			## Feed Forward Channels
 			output_size = tf.shape(self.linear_1)
@@ -379,18 +386,23 @@ with tf.device(CONST.SEL_GPU) :
 			# self.feed1 = tf.nn.conv2d_transpose(self.relu_unit5, self.W_deconv1, output_size, strides=[1, 32, 32, 1], padding='SAME', name=None) + self.B_deconv1
 			# self.feed2 = tf.nn.conv2d_transpose(self.relu_unit6, self.W_deconv2, output_size, strides=[1, 64, 64, 1], padding='SAME', name=None) + self.B_deconv2
 
-			self.W_deconv1	= tf.constant (1.0, shape=[32, 32, depth, depth] )
-			# self.W_deconv2	= tf.constant (1.0, shape=[64, 64, depth, depth] )
-			# self.W_deconv3	= tf.constant (1.0, shape=[16, 16, depth, depth] )
-			self.feed1 = tf.nn.conv2d_transpose(self.relu_unit5, self.W_deconv1, output_size, strides=[1, 32, 32, 1], padding='SAME', name=None)
-			# self.feed2 = tf.nn.conv2d_transpose(self.relu_unit6, self.W_deconv2, output_size, strides=[1, 64, 64, 1], padding='SAME', name=None)
-			# self.feed3 = tf.nn.conv2d_transpose(self.relu_unit4, self.W_deconv3, output_size, strides=[1, 16, 16, 1], padding='SAME', name=None)
+			self.W_deconv1	= tf.constant (1.0, shape=[64, 64, depth, depth] )
+			self.W_deconv2	= tf.constant (1.0, shape=[32, 32, depth, depth] )
+			self.W_deconv3	= tf.constant (1.0, shape=[16, 16, depth, depth] )
+			self.feed1 = tf.nn.conv2d_transpose(self.relu_unit7, self.W_deconv1, output_size, strides=[1, 64, 64, 1], padding='SAME', name=None)
+			self.feed2 = tf.nn.conv2d_transpose(self.relu_unit5, self.W_deconv2, output_size, strides=[1, 32, 32, 1], padding='SAME', name=None)
+			self.feed3 = tf.nn.conv2d_transpose(self.relu_unit4, self.W_deconv3, output_size, strides=[1, 16, 16, 1], padding='SAME', name=None)
 
-			# self.concat_fc = tf.concat( 3, [self.feed1, self.feed2, self.feed3] )
+			# shape_0 = tf.shape(input_x)[0]
+			# shape_1 = tf.shape(input_x)[1]
+			# shape_2 = tf.shape(input_x)[2]
+
+			# self.feed1 = tf.image.resize_bilinear(self.relu_unit7, [shape_0, shape_1, shape_2, depth], align_corners=None, name=None)
+
+			self.concat_fc = tf.concat( 3, [self.feed1, self.feed2, self.feed3] )
 			# self.W_deconv_fc	= tf.constant (1.0, shape=[1, 1, depth, depth*3] )
 			# self.feed_out = tf.nn.conv2d_transpose(self.concat_fc, self.W_deconv_fc, output_size, strides=[1, 1, 1, 1], padding='SAME', name=None)
-			self.W_deconv_fc	= tf.constant (1.0, shape=[1, 1, depth, depth] )
-			self.feed_out = tf.nn.conv2d_transpose(self.feed1, self.W_deconv_fc, output_size, strides=[1, 1, 1, 1], padding='SAME', name=None)
-
-
+			self.W_deconv_fc	= tf.Variable( tf.constant (1.0, shape=[1, 1, depth*3, depth] ) )
+			# self.feed_out = tf.nn.conv2d_transpose(self.concat_fc, self.W_deconv_fc, output_size, strides=[1, 1, 1, 1], padding='SAME', name=None)
+			self.feed_out = conv2d(self.concat_fc, self.W_deconv_fc, 1, zero_pad)
 

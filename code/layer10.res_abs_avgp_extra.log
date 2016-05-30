@@ -1,0 +1,297 @@
+main.py start!! ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt /gpu:0 SHORT_CUT 1 ABS_PATH 0 lenPATCH 64
+Image Loading Done !!
+========= BICUBIC MSE : 0.00227523048358, PSNR : 27.5445308928 ==================
+STAGE : Batch Init Finish!
+STAGE : Network Init Finish!
+STAGE : Session Init Finish!
+train loop start!!
+step : 1, epoch : 0, mse : 0.001515, psnr : 30.9891, time : 0.0099
+step : 100, epoch : 0, mse : 0.002184, psnr : 30.4481, time : 1.9819
+step : 200, epoch : 0, mse : 0.002030, psnr : 31.2282, time : 2.0084
+epoch : 1, iter : 216, test mse : 0.001908, test_psnr : 28.2952
+step : 300, epoch : 1, mse : 0.001919, psnr : 31.3377, time : 2.0583
+step : 400, epoch : 1, mse : 0.001890, psnr : 31.3994, time : 1.9947
+epoch : 2, iter : 433, test mse : 0.001754, test_psnr : 28.8073
+step : 500, epoch : 2, mse : 0.001872, psnr : 31.6624, time : 2.0666
+step : 600, epoch : 2, mse : 0.001871, psnr : 31.3567, time : 2.0013
+epoch : 3, iter : 650, test mse : 0.001694, test_psnr : 29.0583
+step : 700, epoch : 3, mse : 0.001824, psnr : 31.6110, time : 2.0620
+step : 800, epoch : 3, mse : 0.001834, psnr : 31.6773, time : 2.0014
+epoch : 4, iter : 867, test mse : 0.001670, test_psnr : 29.1400
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 900, epoch : 4, mse : 0.001812, psnr : 31.6298, time : 2.0769
+step : 1000, epoch : 4, mse : 0.001835, psnr : 31.5649, time : 2.0040
+epoch : 5, iter : 1084, test mse : 0.001731, test_psnr : 28.9180
+step : 1100, epoch : 5, mse : 0.001803, psnr : 31.7448, time : 2.0647
+step : 1200, epoch : 5, mse : 0.001775, psnr : 31.7572, time : 2.0029
+step : 1300, epoch : 5, mse : 0.001835, psnr : 31.6501, time : 2.0011
+epoch : 6, iter : 1301, test mse : 0.001669, test_psnr : 29.1360
+step : 1400, epoch : 6, mse : 0.001774, psnr : 31.7964, time : 2.0562
+step : 1500, epoch : 6, mse : 0.001814, psnr : 31.7008, time : 1.9955
+epoch : 7, iter : 1518, test mse : 0.001658, test_psnr : 29.1720
+step : 1600, epoch : 7, mse : 0.001833, psnr : 31.6505, time : 2.0723
+step : 1700, epoch : 7, mse : 0.001752, psnr : 31.8398, time : 2.0017
+epoch : 8, iter : 1735, test mse : 0.001658, test_psnr : 29.1927
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 1800, epoch : 8, mse : 0.001812, psnr : 31.6861, time : 2.0783
+step : 1900, epoch : 8, mse : 0.001753, psnr : 31.8872, time : 1.9998
+epoch : 9, iter : 1952, test mse : 0.001641, test_psnr : 29.2269
+step : 2000, epoch : 9, mse : 0.001799, psnr : 31.8062, time : 2.0604
+step : 2100, epoch : 9, mse : 0.001815, psnr : 31.5964, time : 1.9995
+epoch : 10, iter : 2169, test mse : 0.001633, test_psnr : 29.2731
+step : 2200, epoch : 10, mse : 0.001757, psnr : 31.8888, time : 2.0611
+step : 2300, epoch : 10, mse : 0.001760, psnr : 31.9032, time : 1.9994
+epoch : 11, iter : 2386, test mse : 0.001632, test_psnr : 29.2653
+step : 2400, epoch : 11, mse : 0.001782, psnr : 31.7454, time : 2.0613
+step : 2500, epoch : 11, mse : 0.001796, psnr : 31.7605, time : 1.9985
+step : 2600, epoch : 11, mse : 0.001762, psnr : 31.8765, time : 1.9993
+epoch : 12, iter : 2603, test mse : 0.001625, test_psnr : 29.2967
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 2700, epoch : 12, mse : 0.001760, psnr : 31.9892, time : 2.0750
+step : 2800, epoch : 12, mse : 0.001768, psnr : 31.7174, time : 1.9989
+epoch : 13, iter : 2820, test mse : 0.001640, test_psnr : 29.2224
+step : 2900, epoch : 13, mse : 0.001759, psnr : 31.9507, time : 2.0595
+step : 3000, epoch : 13, mse : 0.001791, psnr : 31.7387, time : 2.0029
+epoch : 14, iter : 3037, test mse : 0.001632, test_psnr : 29.2578
+step : 3100, epoch : 14, mse : 0.001770, psnr : 31.7980, time : 2.0644
+step : 3200, epoch : 14, mse : 0.001757, psnr : 31.8396, time : 2.0107
+epoch : 15, iter : 3254, test mse : 0.001623, test_psnr : 29.3197
+step : 3300, epoch : 15, mse : 0.001755, psnr : 31.9161, time : 2.0649
+step : 3400, epoch : 15, mse : 0.001758, psnr : 31.9644, time : 1.9960
+epoch : 16, iter : 3471, test mse : 0.001616, test_psnr : 29.3228
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 3500, epoch : 16, mse : 0.001767, psnr : 31.7877, time : 2.0710
+step : 3600, epoch : 16, mse : 0.001788, psnr : 31.8680, time : 2.0090
+epoch : 17, iter : 3688, test mse : 0.001628, test_psnr : 29.2930
+step : 3700, epoch : 17, mse : 0.001709, psnr : 31.9474, time : 2.0593
+step : 3800, epoch : 17, mse : 0.001779, psnr : 31.7994, time : 1.9996
+step : 3900, epoch : 17, mse : 0.001732, psnr : 31.9878, time : 1.9984
+epoch : 18, iter : 3905, test mse : 0.001616, test_psnr : 29.3452
+step : 4000, epoch : 18, mse : 0.001757, psnr : 31.9045, time : 2.0599
+step : 4100, epoch : 18, mse : 0.001740, psnr : 31.9176, time : 1.9995
+epoch : 19, iter : 4122, test mse : 0.001619, test_psnr : 29.3229
+step : 4200, epoch : 19, mse : 0.001750, psnr : 31.8857, time : 2.0598
+step : 4300, epoch : 19, mse : 0.001764, psnr : 31.9195, time : 1.9985
+epoch : 20, iter : 4339, test mse : 0.001622, test_psnr : 29.3090
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 4400, epoch : 20, mse : 0.001782, psnr : 31.7876, time : 2.0744
+step : 4500, epoch : 20, mse : 0.001745, psnr : 31.9419, time : 1.9986
+epoch : 21, iter : 4556, test mse : 0.001626, test_psnr : 29.2982
+step : 4600, epoch : 21, mse : 0.001763, psnr : 31.8529, time : 2.0604
+step : 4700, epoch : 21, mse : 0.001721, psnr : 31.9230, time : 1.9987
+epoch : 22, iter : 4773, test mse : 0.001600, test_psnr : 29.3875
+step : 4800, epoch : 22, mse : 0.001776, psnr : 31.9363, time : 2.0616
+step : 4900, epoch : 22, mse : 0.001723, psnr : 31.8786, time : 1.9946
+epoch : 23, iter : 4990, test mse : 0.001615, test_psnr : 29.3365
+step : 5000, epoch : 23, mse : 0.001747, psnr : 31.9815, time : 2.0686
+step : 5100, epoch : 23, mse : 0.001746, psnr : 32.0016, time : 2.0006
+step : 5200, epoch : 23, mse : 0.001755, psnr : 31.8536, time : 2.0028
+epoch : 24, iter : 5207, test mse : 0.001609, test_psnr : 29.3444
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 5300, epoch : 24, mse : 0.001769, psnr : 31.9322, time : 2.0786
+step : 5400, epoch : 24, mse : 0.001724, psnr : 31.9059, time : 2.0052
+epoch : 25, iter : 5424, test mse : 0.001617, test_psnr : 29.3346
+step : 5500, epoch : 25, mse : 0.001785, psnr : 31.8749, time : 2.0558
+step : 5600, epoch : 25, mse : 0.001744, psnr : 31.9381, time : 1.9940
+epoch : 26, iter : 5641, test mse : 0.001597, test_psnr : 29.4012
+step : 5700, epoch : 26, mse : 0.001682, psnr : 32.0174, time : 2.0548
+step : 5800, epoch : 26, mse : 0.001786, psnr : 31.8662, time : 1.9938
+epoch : 27, iter : 5858, test mse : 0.001607, test_psnr : 29.3716
+step : 5900, epoch : 27, mse : 0.001766, psnr : 31.8883, time : 2.0541
+step : 6000, epoch : 27, mse : 0.001723, psnr : 31.9663, time : 1.9920
+########## ITER2 start ########## 
+epoch : 28, iter : 6075, test mse : 0.001592, test_psnr : 29.4179
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 6100, epoch : 28, mse : 0.001714, psnr : 32.0149, time : 2.1307
+step : 6200, epoch : 28, mse : 0.001765, psnr : 31.8763, time : 1.9971
+epoch : 29, iter : 6292, test mse : 0.001590, test_psnr : 29.4307
+step : 6300, epoch : 29, mse : 0.001713, psnr : 32.0419, time : 2.0577
+step : 6400, epoch : 29, mse : 0.001691, psnr : 32.0780, time : 1.9968
+step : 6500, epoch : 29, mse : 0.001767, psnr : 31.8804, time : 1.9967
+epoch : 30, iter : 6509, test mse : 0.001587, test_psnr : 29.4392
+step : 6600, epoch : 30, mse : 0.001680, psnr : 32.1418, time : 2.0570
+step : 6700, epoch : 30, mse : 0.001758, psnr : 31.9256, time : 1.9966
+epoch : 31, iter : 6726, test mse : 0.001588, test_psnr : 29.4363
+step : 6800, epoch : 31, mse : 0.001742, psnr : 31.9411, time : 2.0577
+step : 6900, epoch : 31, mse : 0.001752, psnr : 31.9608, time : 1.9962
+epoch : 32, iter : 6943, test mse : 0.001589, test_psnr : 29.4311
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 7000, epoch : 32, mse : 0.001718, psnr : 31.9789, time : 2.0808
+step : 7100, epoch : 32, mse : 0.001715, psnr : 31.9855, time : 1.9960
+epoch : 33, iter : 7160, test mse : 0.001587, test_psnr : 29.4365
+step : 7200, epoch : 33, mse : 0.001753, psnr : 32.0093, time : 2.0579
+step : 7300, epoch : 33, mse : 0.001718, psnr : 32.0150, time : 1.9961
+epoch : 34, iter : 7377, test mse : 0.001585, test_psnr : 29.4419
+step : 7400, epoch : 34, mse : 0.001740, psnr : 32.0407, time : 2.0582
+step : 7500, epoch : 34, mse : 0.001706, psnr : 31.9577, time : 1.9972
+epoch : 35, iter : 7594, test mse : 0.001583, test_psnr : 29.4517
+step : 7600, epoch : 35, mse : 0.001751, psnr : 31.9406, time : 2.0572
+step : 7700, epoch : 35, mse : 0.001749, psnr : 31.9950, time : 1.9974
+step : 7800, epoch : 35, mse : 0.001710, psnr : 32.0152, time : 1.9962
+epoch : 36, iter : 7811, test mse : 0.001586, test_psnr : 29.4424
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 7900, epoch : 36, mse : 0.001719, psnr : 31.9694, time : 2.0828
+step : 8000, epoch : 36, mse : 0.001722, psnr : 32.0550, time : 1.9960
+epoch : 37, iter : 8028, test mse : 0.001589, test_psnr : 29.4238
+step : 8100, epoch : 37, mse : 0.001751, psnr : 31.8980, time : 2.0577
+step : 8200, epoch : 37, mse : 0.001719, psnr : 31.9495, time : 1.9968
+epoch : 38, iter : 8245, test mse : 0.001591, test_psnr : 29.4186
+step : 8300, epoch : 38, mse : 0.001749, psnr : 32.0900, time : 2.0572
+step : 8400, epoch : 38, mse : 0.001730, psnr : 31.8719, time : 1.9967
+epoch : 39, iter : 8462, test mse : 0.001589, test_psnr : 29.4318
+step : 8500, epoch : 39, mse : 0.001705, psnr : 32.0733, time : 2.0576
+step : 8600, epoch : 39, mse : 0.001697, psnr : 32.1282, time : 1.9956
+epoch : 40, iter : 8679, test mse : 0.001586, test_psnr : 29.4378
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 8700, epoch : 40, mse : 0.001785, psnr : 31.7760, time : 2.0814
+step : 8800, epoch : 40, mse : 0.001719, psnr : 32.0373, time : 1.9955
+epoch : 41, iter : 8896, test mse : 0.001587, test_psnr : 29.4375
+step : 8900, epoch : 41, mse : 0.001708, psnr : 32.0663, time : 2.0585
+step : 9000, epoch : 41, mse : 0.001733, psnr : 32.0030, time : 1.9960
+step : 9100, epoch : 41, mse : 0.001751, psnr : 31.9522, time : 1.9965
+epoch : 42, iter : 9113, test mse : 0.001583, test_psnr : 29.4517
+step : 9200, epoch : 42, mse : 0.001729, psnr : 32.0482, time : 2.0585
+step : 9300, epoch : 42, mse : 0.001728, psnr : 31.9915, time : 1.9962
+epoch : 43, iter : 9330, test mse : 0.001587, test_psnr : 29.4382
+step : 9400, epoch : 43, mse : 0.001732, psnr : 31.9054, time : 2.0586
+step : 9500, epoch : 43, mse : 0.001722, psnr : 31.9501, time : 1.9963
+epoch : 44, iter : 9547, test mse : 0.001586, test_psnr : 29.4398
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 9600, epoch : 44, mse : 0.001709, psnr : 32.1426, time : 2.0826
+step : 9700, epoch : 44, mse : 0.001751, psnr : 31.8811, time : 1.9960
+epoch : 45, iter : 9764, test mse : 0.001583, test_psnr : 29.4481
+step : 9800, epoch : 45, mse : 0.001720, psnr : 31.9955, time : 2.0579
+step : 9900, epoch : 45, mse : 0.001776, psnr : 31.8873, time : 1.9968
+epoch : 46, iter : 9981, test mse : 0.001589, test_psnr : 29.4300
+step : 10000, epoch : 46, mse : 0.001688, psnr : 32.0888, time : 2.0572
+step : 10100, epoch : 46, mse : 0.001779, psnr : 31.9988, time : 1.9973
+epoch : 47, iter : 10198, test mse : 0.001583, test_psnr : 29.4497
+step : 10200, epoch : 47, mse : 0.001675, psnr : 32.0069, time : 2.0575
+step : 10300, epoch : 47, mse : 0.001737, psnr : 31.8907, time : 1.9964
+step : 10400, epoch : 47, mse : 0.001739, psnr : 32.0356, time : 1.9971
+epoch : 48, iter : 10415, test mse : 0.001587, test_psnr : 29.4350
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 10500, epoch : 48, mse : 0.001676, psnr : 32.0793, time : 2.0817
+step : 10600, epoch : 48, mse : 0.001761, psnr : 31.9533, time : 1.9964
+epoch : 49, iter : 10632, test mse : 0.001584, test_psnr : 29.4467
+step : 10700, epoch : 49, mse : 0.001738, psnr : 32.0227, time : 2.0579
+step : 10800, epoch : 49, mse : 0.001714, psnr : 31.9352, time : 1.9971
+epoch : 50, iter : 10849, test mse : 0.001585, test_psnr : 29.4498
+step : 10900, epoch : 50, mse : 0.001738, psnr : 31.9647, time : 2.0570
+step : 11000, epoch : 50, mse : 0.001728, psnr : 32.0148, time : 1.9965
+epoch : 51, iter : 11066, test mse : 0.001586, test_psnr : 29.4402
+step : 11100, epoch : 51, mse : 0.001724, psnr : 32.0106, time : 2.0583
+step : 11200, epoch : 51, mse : 0.001765, psnr : 31.9299, time : 1.9961
+epoch : 52, iter : 11283, test mse : 0.001587, test_psnr : 29.4336
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 11300, epoch : 52, mse : 0.001698, psnr : 32.0652, time : 2.0815
+step : 11400, epoch : 52, mse : 0.001713, psnr : 32.0176, time : 1.9960
+step : 11500, epoch : 52, mse : 0.001731, psnr : 31.9979, time : 1.9969
+epoch : 53, iter : 11500, test mse : 0.001587, test_psnr : 29.4400
+step : 11600, epoch : 53, mse : 0.001736, psnr : 31.9502, time : 2.0571
+step : 11700, epoch : 53, mse : 0.001691, psnr : 32.1016, time : 1.9972
+epoch : 54, iter : 11717, test mse : 0.001585, test_psnr : 29.4440
+step : 11800, epoch : 54, mse : 0.001803, psnr : 31.7506, time : 2.0578
+step : 11900, epoch : 54, mse : 0.001687, psnr : 32.1535, time : 1.9969
+epoch : 55, iter : 11934, test mse : 0.001582, test_psnr : 29.4531
+step : 12000, epoch : 55, mse : 0.001681, psnr : 32.0344, time : 2.0572
+########## ITER3 start ########## 
+step : 12100, epoch : 55, mse : 0.001770, psnr : 31.9755, time : 2.0570
+epoch : 56, iter : 12151, test mse : 0.001585, test_psnr : 29.4474
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 12200, epoch : 56, mse : 0.001731, psnr : 31.9910, time : 2.0912
+step : 12300, epoch : 56, mse : 0.001700, psnr : 32.0745, time : 1.9975
+epoch : 57, iter : 12368, test mse : 0.001584, test_psnr : 29.4475
+step : 12400, epoch : 57, mse : 0.001762, psnr : 31.8076, time : 2.0583
+step : 12500, epoch : 57, mse : 0.001708, psnr : 32.0454, time : 1.9975
+epoch : 58, iter : 12585, test mse : 0.001584, test_psnr : 29.4499
+step : 12600, epoch : 58, mse : 0.001715, psnr : 32.0814, time : 2.0573
+step : 12700, epoch : 58, mse : 0.001671, psnr : 32.1928, time : 1.9974
+step : 12800, epoch : 58, mse : 0.001778, psnr : 31.8537, time : 1.9963
+epoch : 59, iter : 12802, test mse : 0.001584, test_psnr : 29.4504
+step : 12900, epoch : 59, mse : 0.001747, psnr : 31.9323, time : 2.0591
+step : 13000, epoch : 59, mse : 0.001733, psnr : 32.0160, time : 1.9965
+epoch : 60, iter : 13019, test mse : 0.001583, test_psnr : 29.4509
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 13100, epoch : 60, mse : 0.001695, psnr : 31.9806, time : 2.0920
+step : 13200, epoch : 60, mse : 0.001754, psnr : 32.0088, time : 1.9970
+epoch : 61, iter : 13236, test mse : 0.001584, test_psnr : 29.4490
+step : 13300, epoch : 61, mse : 0.001719, psnr : 32.0002, time : 2.0584
+step : 13400, epoch : 61, mse : 0.001730, psnr : 31.9850, time : 1.9968
+epoch : 62, iter : 13453, test mse : 0.001585, test_psnr : 29.4448
+step : 13500, epoch : 62, mse : 0.001737, psnr : 31.9416, time : 2.0584
+step : 13600, epoch : 62, mse : 0.001702, psnr : 32.1256, time : 1.9977
+epoch : 63, iter : 13670, test mse : 0.001583, test_psnr : 29.4522
+step : 13700, epoch : 63, mse : 0.001761, psnr : 31.9215, time : 2.0580
+step : 13800, epoch : 63, mse : 0.001718, psnr : 32.0252, time : 1.9966
+epoch : 64, iter : 13887, test mse : 0.001583, test_psnr : 29.4499
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 13900, epoch : 64, mse : 0.001726, psnr : 31.9475, time : 2.0906
+step : 14000, epoch : 64, mse : 0.001714, psnr : 32.0151, time : 1.9971
+step : 14100, epoch : 64, mse : 0.001727, psnr : 32.0464, time : 1.9961
+epoch : 65, iter : 14104, test mse : 0.001583, test_psnr : 29.4514
+step : 14200, epoch : 65, mse : 0.001718, psnr : 31.9927, time : 2.0588
+step : 14300, epoch : 65, mse : 0.001718, psnr : 32.0313, time : 1.9965
+epoch : 66, iter : 14321, test mse : 0.001583, test_psnr : 29.4526
+step : 14400, epoch : 66, mse : 0.001740, psnr : 32.0464, time : 2.0584
+step : 14500, epoch : 66, mse : 0.001744, psnr : 31.8626, time : 1.9962
+epoch : 67, iter : 14538, test mse : 0.001583, test_psnr : 29.4489
+step : 14600, epoch : 67, mse : 0.001703, psnr : 32.0074, time : 2.0585
+step : 14700, epoch : 67, mse : 0.001728, psnr : 32.0465, time : 1.9963
+epoch : 68, iter : 14755, test mse : 0.001583, test_psnr : 29.4509
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 14800, epoch : 68, mse : 0.001713, psnr : 32.1027, time : 2.0899
+step : 14900, epoch : 68, mse : 0.001711, psnr : 32.0113, time : 1.9976
+epoch : 69, iter : 14972, test mse : 0.001584, test_psnr : 29.4496
+step : 15000, epoch : 69, mse : 0.001773, psnr : 31.8307, time : 2.0580
+step : 15100, epoch : 69, mse : 0.001704, psnr : 32.0704, time : 1.9969
+epoch : 70, iter : 15189, test mse : 0.001584, test_psnr : 29.4498
+step : 15200, epoch : 70, mse : 0.001729, psnr : 32.0168, time : 2.0588
+step : 15300, epoch : 70, mse : 0.001722, psnr : 31.9278, time : 1.9975
+step : 15400, epoch : 70, mse : 0.001723, psnr : 32.0580, time : 1.9966
+epoch : 71, iter : 15406, test mse : 0.001584, test_psnr : 29.4458
+step : 15500, epoch : 71, mse : 0.001726, psnr : 32.0660, time : 2.0588
+step : 15600, epoch : 71, mse : 0.001734, psnr : 31.9460, time : 1.9967
+epoch : 72, iter : 15623, test mse : 0.001582, test_psnr : 29.4517
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 15700, epoch : 72, mse : 0.001727, psnr : 31.9617, time : 2.0905
+step : 15800, epoch : 72, mse : 0.001718, psnr : 32.0353, time : 1.9969
+epoch : 73, iter : 15840, test mse : 0.001583, test_psnr : 29.4525
+step : 15900, epoch : 73, mse : 0.001725, psnr : 32.1603, time : 2.0588
+step : 16000, epoch : 73, mse : 0.001746, psnr : 31.8837, time : 1.9958
+epoch : 74, iter : 16057, test mse : 0.001583, test_psnr : 29.4504
+step : 16100, epoch : 74, mse : 0.001733, psnr : 31.9997, time : 2.0583
+step : 16200, epoch : 74, mse : 0.001677, psnr : 32.0223, time : 1.9962
+epoch : 75, iter : 16274, test mse : 0.001584, test_psnr : 29.4481
+step : 16300, epoch : 75, mse : 0.001741, psnr : 32.0155, time : 2.0586
+step : 16400, epoch : 75, mse : 0.001757, psnr : 31.9643, time : 1.9969
+epoch : 76, iter : 16491, test mse : 0.001583, test_psnr : 29.4524
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 16500, epoch : 76, mse : 0.001706, psnr : 32.0045, time : 2.0920
+step : 16600, epoch : 76, mse : 0.001731, psnr : 32.0109, time : 1.9969
+step : 16700, epoch : 76, mse : 0.001724, psnr : 31.9645, time : 1.9971
+epoch : 77, iter : 16708, test mse : 0.001583, test_psnr : 29.4505
+step : 16800, epoch : 77, mse : 0.001721, psnr : 31.9318, time : 2.0577
+step : 16900, epoch : 77, mse : 0.001707, psnr : 32.1706, time : 1.9969
+epoch : 78, iter : 16925, test mse : 0.001583, test_psnr : 29.4525
+step : 17000, epoch : 78, mse : 0.001744, psnr : 31.8823, time : 2.0579
+step : 17100, epoch : 78, mse : 0.001724, psnr : 31.9785, time : 1.9977
+epoch : 79, iter : 17142, test mse : 0.001582, test_psnr : 29.4549
+step : 17200, epoch : 79, mse : 0.001729, psnr : 32.0936, time : 2.0569
+step : 17300, epoch : 79, mse : 0.001732, psnr : 31.8832, time : 1.9975
+epoch : 80, iter : 17359, test mse : 0.001582, test_psnr : 29.4556
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+step : 17400, epoch : 80, mse : 0.001720, psnr : 32.0553, time : 2.0902
+step : 17500, epoch : 80, mse : 0.001720, psnr : 31.9940, time : 1.9966
+epoch : 81, iter : 17576, test mse : 0.001583, test_psnr : 29.4485
+step : 17600, epoch : 81, mse : 0.001731, psnr : 32.0045, time : 2.0588
+step : 17700, epoch : 81, mse : 0.001747, psnr : 31.9435, time : 1.9978
+epoch : 82, iter : 17793, test mse : 0.001584, test_psnr : 29.4475
+step : 17800, epoch : 82, mse : 0.001698, psnr : 32.0801, time : 2.0594
+step : 17900, epoch : 82, mse : 0.001722, psnr : 32.0056, time : 1.9980
+step : 18000, epoch : 82, mse : 0.001731, psnr : 31.9983, time : 1.9986
+Save ckpt file ../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt
+Finish training!!
+STAGE : Training Loop Finish!
+'../ckpt_file/layer10.res_abs_maxp_bilinear.ckpt'
+'../ckpt_file/layer10.res_abs_maxp_3ch.ckpt'

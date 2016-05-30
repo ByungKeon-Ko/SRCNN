@@ -242,3 +242,5 @@ step : 16600, epoch : 65, mse : 0.001754, psnr : 32.4620, time : 3.2148
 step : 16700, epoch : 65, mse : 0.001743, psnr : 32.6222, time : 2.9261
 epoch : 66, iter : 16763, test mse : 0.001621, test_psnr : 29.2877
 step : 16800, epoch : 66, mse : 0.001730, psnr : 32.5466, time : 3.2157
+step : 16900, epoch : 66, mse : 0.001690, psnr : 32.6181, time : 2.9266
+step : 17000, epoch : 66, mse : 0.001757, psnr : 32.6005, time : 2.9256
